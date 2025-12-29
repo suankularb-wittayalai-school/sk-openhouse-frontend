@@ -20,9 +20,13 @@ const bodyFontTH = Sarabun({
   weight: ["300", "400", "500", "700"],
   subsets: ["thai"],
 });
-const displayFontTH = IBM_Plex_Sans_Thai({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["thai"],
+// The font is downloaded from https://seed.line.me/index_th.html.
+// In the zip file downloaded, there is multiple woff2 files.
+// I choosed this one because I think W_Th stands for "with Thai".
+const displayFontTH = localFont({
+  src: "../public/fonts/LINESeedSansTH_W_Th.woff2",
+  weight: "300 400 500 700",
+  style: "normal",
 });
 
 // Mono font

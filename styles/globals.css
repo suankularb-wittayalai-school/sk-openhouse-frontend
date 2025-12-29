@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  --spacing-content-max: 1280px; 
+
   --background: #fbfafa;
   --on-background: #ffffff;
   --on-surface-variant: #0000007f;
@@ -13,6 +15,8 @@
 }
 
 @theme inline {
+  --spacing-content-max: var(--spacing-content-max);
+
   --color-background: var(--background);
   --color-on-background: var(--on-background);
   --color-foreground: var(--foreground);
@@ -25,12 +29,13 @@
 
   --color-on-surface-variant: var(--on-surface-variant);
 
-  --font-sans: var(--font-geist-sans);
+  --color-primary-border: var(--primary-border);
+
+  --font-line-seed: var(--font-line-seed);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "LINE Seed Sans TH", sans-serif;
 }

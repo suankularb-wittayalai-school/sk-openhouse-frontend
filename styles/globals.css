@@ -2,16 +2,19 @@
 
 :root {
   --background: #fbfafa;
+  --on-background: #ffffff;
   --on-surface-variant: #0000007f;
   --foreground: #171717;
   --primary: #1e4394;
   --on-primary: #ffffff;
+  --primary-border: #cfd5e6;
   --secondary: #ff7474;
   --on-secondary: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-on-background: var(--on-background);
   --color-foreground: var(--foreground);
 
   --color-primary: var(--primary);

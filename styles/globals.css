@@ -5,6 +5,7 @@
 
   --background: #fbfafa;
   --on-background: #ffffff;
+  --primary-surface: #e8ecf4;
   --on-surface-variant: #0000007f;
   --foreground: #171717;
   --primary: #1e4394;
@@ -29,6 +30,7 @@
   --color-secondary: var(--secondary);
   --color-on-secondary: var(--on-secondary);
 
+  --color-primary-surface: var(--primary-surface);
   --color-on-surface-variant: var(--on-surface-variant);
 
   --color-primary-border: var(--primary-border);

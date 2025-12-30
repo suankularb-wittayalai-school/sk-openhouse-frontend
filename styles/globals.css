@@ -14,7 +14,7 @@
   --primary-border: #cfd5e6;
   --secondary: #ff7474;
   --on-secondary: #ffffff;
-  --teitiary: #070d1d;
+  --tertiary: #070d1d;
 }
 
 @theme inline {
@@ -31,7 +31,7 @@
   --color-secondary: var(--secondary);
   --color-on-secondary: var(--on-secondary);
 
-  --color-teitiary: var(--teitiary);
+  --color-tertiary: var(--tertiary);
 
   --color-primary-surface: var(--primary-surface);
   --color-on-surface-variant: var(--on-surface-variant);

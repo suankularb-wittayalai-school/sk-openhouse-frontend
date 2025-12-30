@@ -36,7 +36,7 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
   return (
     <Card style={style} className={cn("items-center self-center", className)}>
       {count && (
-        <Text type="body" className="!opacity-100">
+        <Text type="body" className="opacity-100!">
           {count + ". "}
         </Text>
       )}

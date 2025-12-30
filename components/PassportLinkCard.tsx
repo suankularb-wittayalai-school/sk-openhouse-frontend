@@ -24,7 +24,7 @@ const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
       </Text>
       <Button
         className={cn(
-          "ml-auto !h-8 !rounded-lg",
+          "ml-auto h-8! rounded-lg!",
           isLinked ? "border-primary-border border" : null,
         )}
         varient={isLinked ? "transparent" : "primary"}

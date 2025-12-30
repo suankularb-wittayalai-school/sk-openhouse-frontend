@@ -5,12 +5,14 @@ import React from "react";
 const Button: StylableFC<{
   varient: "primary" | "primarySurface" | "transparent";
   children: React.ReactNode;
+  disabled?: boolean;
   onClick: () => void;
-}> = ({ varient, children, onClick, style, className }) => {
+}> = ({ varient, children, disabled = false, onClick, style, className }) => {
   const BUTTON_VARIENT = {
     transparent: "text-primary",
     primary: "bg-primary text-on-primary",
-    primarySurface: "bg-primary-surface text-primary border border-primary-border",
+    primarySurface:
+      "bg-primary-surface text-primary border border-primary-border",
   };
   return (
     <button
@@ -20,9 +22,10 @@ const Button: StylableFC<{
         BUTTON_VARIENT[varient],
         className,
       )}
+      disabled={disabled}
       onClick={onClick}
     >
-      <div className="flex flex-1 items-center justify-center gap-2 self-stretch px-6 py-2.5">
+      <div className="flex flex-1 items-center justify-center gap-2 self-stretch px-6 py-2.5 text-sm leading-[140%] font-normal">
         {children}
       </div>
     </button>

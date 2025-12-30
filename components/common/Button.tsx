@@ -25,7 +25,7 @@ const Button: StylableFC<{
       disabled={disabled}
       onClick={onClick}
     >
-      <div className="flex flex-1 items-center justify-center gap-2 self-stretch px-6 py-2.5">
+      <div className="flex flex-1 items-center justify-center gap-2 self-stretch px-6 py-2.5 text-sm leading-[140%] font-normal">
         {children}
       </div>
     </button>

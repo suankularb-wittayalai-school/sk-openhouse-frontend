@@ -42,6 +42,6 @@ export type person = {
     nickname: string | undefined;
     school: string | undefined;
     expected_graduation_year: number | undefined;
-    passport_id: string | undefined;
+    passport_id: string | null | undefined;
   };
 };

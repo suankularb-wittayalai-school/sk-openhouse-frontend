@@ -11,6 +11,8 @@ import Text from "@/components/common/Text";
 import cn from "@/utils/helpers/cn";
 import { useTranslations } from "next-intl";
 import { differenceInYears } from "date-fns";
+import constructName from "@/utils/helpers/constructName";
+import { pick } from "radash";
 
 /**
  * A card that shows details of a person.
@@ -47,11 +49,7 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
       )}
       <div className="flex flex-col">
         <Text type="title">
-          {PREFIX[person.prefix] +
-            " " +
-            person.firstname +
-            " " +
-            person.lastname}
+          {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
         </Text>
         <Text type="body">
           {t(`relationshipToChild.${person.relationship_to_child}`) +

@@ -11,7 +11,7 @@ const Text: StylableFC<{
   const TYPE_STYLE = {
     headline: "text-primary text-2xl font-bold leading-[120%]",
     title: "text-primary text-sm font-normal leading-[140%]",
-    body: "text-tertiary text-xs font-normal leading-[140%] opacity-",
+    body: "text-tertiary text-xs font-normal leading-[140%] opacity-50",
   };
   return (
     <Element style={style} className={cn(TYPE_STYLE[type], className)}>

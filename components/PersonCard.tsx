@@ -1,18 +1,14 @@
 // Imports
-import { StylableFC } from "@/utils/types/common";
-import { gender, person } from "@/utils/types/person";
-import {
-  FaceOutlined,
-  Face4Outlined,
-  Face5Outlined,
-} from "@mui/icons-material";
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
 import cn from "@/utils/helpers/cn";
-import { useTranslations } from "next-intl";
-import { differenceInYears } from "date-fns";
 import constructName from "@/utils/helpers/constructName";
+import { StylableFC } from "@/utils/types/common";
+import { gender, person } from "@/utils/types/person";
+import { differenceInYears } from "date-fns";
+import { useTranslations } from "next-intl";
 import { pick } from "radash";
+import MaterialIcon from "./common/MaterialIcon";
 
 /**
  * A card that shows details of a person.
@@ -40,13 +36,31 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
           {count + ". "}
         </Text>
       )}
-      {person.is_child ? (
+
+      {/* 
+        Generally, I don't think this method is *that* good since you wouldn't
+        be able to know if this is an icon component if you don't know the name.
+
+        Take a look at this approach, it might be better?
+
+        - pixelpxed
+      */}
+      {/* {person.is_child ? (
         <Face5Outlined className="text-primary" />
       ) : person.gender == gender.female ? (
         <Face4Outlined className="text-primary" />
       ) : (
         <FaceOutlined className="text-primary" />
-      )}
+      )} */}
+      <MaterialIcon
+        icon={
+          person.is_child
+            ? "face_5"
+            : person.gender == gender.female
+              ? "face_4"
+              : "face"
+        }
+      />
       <div className="flex flex-col">
         <Text type="title">
           {constructName(pick(person, ["prefix", "firstname", "lastname"]))}

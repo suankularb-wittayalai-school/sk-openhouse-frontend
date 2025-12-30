@@ -10,7 +10,7 @@ const Button: StylableFC<{
   const BUTTON_VARIENT = {
     transparent: "text-primary",
     primary: "bg-primary text-on-primary",
-    primarySurface: "bg-primary-surface text-primary",
+    primarySurface: "bg-primary-surface text-primary border border-primary-border",
   };
   return (
     <button

@@ -1,6 +1,5 @@
 import cn from "@/utils/helpers/cn";
 import { StylableFC } from "@/utils/types/common";
-import React from "react";
 
 const Button: StylableFC<{
   varient: "primary" | "primarySurface" | "transparent";

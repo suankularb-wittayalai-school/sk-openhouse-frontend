@@ -4,6 +4,12 @@ type BusRouteContainerType = {
   routes: string[];
 };
 
+/**
+ * A list of routes to show, seperated and wrapped around nicely by 0.25rem.
+ * 
+ * @param routes  A list of bus routes to display. [str[]]
+ */
+
 const BusRouteContainer = ({ routes }: BusRouteContainerType) => {
   return (
     <div className="flex flex-wrap gap-1">

@@ -2,6 +2,13 @@ type BusRouteChipType = {
   children: React.ReactNode;
 };
 
+/**
+ * A bus route is seperated by colored boxes, without making them too lean when 
+ * the content is too short.
+ * 
+ * @param children  Literally the text inside of the box. [DOM]
+ */
+
 const BusRouteContent = ({ children }: BusRouteChipType) => {
   return (
     <div

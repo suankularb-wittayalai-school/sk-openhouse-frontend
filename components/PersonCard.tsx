@@ -17,7 +17,7 @@ import { differenceInYears } from "date-fns";
  * @param person The person to show.
  * @param count Number to show at the begining of the card. (optional)
  */
-const PersonCard: StylableFC<{ person: person; count: number }> = ({
+const PersonCard: StylableFC<{ person: person; count?: number }> = ({
   person,
   count,
   style,

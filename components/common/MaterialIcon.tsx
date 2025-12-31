@@ -20,7 +20,7 @@ const MaterialIcon: StylableFC<{
   weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700;
   grade?: -25 | 0 | 200;
   size?: 20 | 24 | 40 | 48;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
   className?: string;
 }> = ({
   icon,

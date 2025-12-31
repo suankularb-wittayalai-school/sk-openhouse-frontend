@@ -6,7 +6,7 @@ import Link from "next/link";
 import { FC } from "react";
 
 const Header: FC = () => {
-  const t = useTranslations("registration");
+  const t = useTranslations("common");
 
   const isLogin = false; // change later when auth is ready
 
@@ -32,10 +32,10 @@ const Header: FC = () => {
         ) : (
           <>
             <Link href="/login">
-              <Button variant="transparent">{t("login")}</Button>
+              <Button variant="transparent">{t("header.login")}</Button>
             </Link>
             <Link href="/register">
-              <Button variant="primary">{t("signup")}</Button>
+              <Button variant="primary">{t("header.register")}</Button>
             </Link>
           </>
         )}

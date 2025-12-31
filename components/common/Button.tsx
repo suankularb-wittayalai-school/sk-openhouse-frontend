@@ -4,9 +4,18 @@ import { StylableFC } from "@/utils/types/common";
 const Button: StylableFC<{
   variant: "primary" | "primarySurface" | "transparent";
   children: React.ReactNode;
+  icon?: React.ReactNode;
   disabled?: boolean;
   onClick?: () => void;
-}> = ({ variant, children, disabled = false, onClick, style, className }) => {
+}> = ({
+  variant,
+  children,
+  icon,
+  disabled = false,
+  onClick,
+  style,
+  className,
+}) => {
   const BUTTON_VARIANT = {
     transparent: `text-primary hover:bg-primary/10`,
     primary: `bg-primary text-on-primary hover:brightness-80`,
@@ -31,6 +40,7 @@ const Button: StylableFC<{
           py-2.5 text-sm leading-[140%] font-normal`,
         )}
       >
+        {icon}
         {children}
       </div>
     </button>

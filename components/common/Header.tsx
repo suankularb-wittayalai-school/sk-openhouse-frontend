@@ -1,7 +1,14 @@
 import Image from "next/image";
 import Button from "./Button";
+import { FC } from "react";
+import { useTranslations } from "next-intl";
+import MaterialIcon from "./MaterialIcon";
 
-const Header = () => {
+const Header: FC = () => {
+  const t = useTranslations();
+
+  const isLogin = false; // change later when auth is ready
+
   const handleOnClick = () => {};
 
   return (
@@ -14,12 +21,23 @@ const Header = () => {
       />
 
       <div className="flex">
-        <Button onClick={handleOnClick} varient="transparent">
-          เข้าสู่ระบบ
-        </Button>
-        <Button onClick={handleOnClick} varient="primary">
-          ลงทะเบียน
-        </Button>
+        {isLogin ? (
+          <div
+            className="bg-primary-surface flex h-8 w-8 items-center
+              justify-center rounded-full"
+          >
+            <MaterialIcon icon="face" size={24} />
+          </div>
+        ) : (
+          <>
+            <Button onClick={handleOnClick} variant="transparent">
+              {t("registration.login")}
+            </Button>
+            <Button onClick={handleOnClick} variant="primary">
+              {t("registration.signup")}
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

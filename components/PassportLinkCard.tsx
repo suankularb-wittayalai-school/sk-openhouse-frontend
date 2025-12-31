@@ -36,7 +36,7 @@ const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
           "ml-auto h-8! rounded-lg!",
           isLinked ? "border-primary-border border" : null,
         )}
-        varient={isLinked ? "transparent" : "primary"}
+        variant={isLinked ? "transparent" : "primary"}
         onClick={() => {}}
         disabled={isLinked}
       >

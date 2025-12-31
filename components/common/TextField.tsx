@@ -1,6 +1,6 @@
 // Imports
 import { StylableFC } from "@/utils/types/common";
-import Text from "./Text";
+import Text from "@/components/common/Text";
 import cn from "@/utils/helpers/cn";
 
 const TextField: StylableFC<{

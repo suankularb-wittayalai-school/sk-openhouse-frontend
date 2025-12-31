@@ -20,7 +20,7 @@ const Header: FC = () => {
         height={48}
       />
 
-      <div className="flex">
+      <div className="flex gap-1">
         {isLogin ? (
           <div
             className="bg-primary-surface flex h-8 w-8 items-center

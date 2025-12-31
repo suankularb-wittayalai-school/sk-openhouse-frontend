@@ -1,9 +1,0 @@
-{
-  "year": "ปี",
-  "relationshipToChild": {
-    "father": "บิดา",
-    "mother": "มารดา",
-    "legalGuardian": "ผู้ปกครองตามกฎหมาย",
-    "other": "อื่น ๆ"
-  }
-}

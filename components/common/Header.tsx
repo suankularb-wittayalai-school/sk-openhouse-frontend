@@ -1,25 +1,25 @@
-import Image from "next/image";
-import Button from "./Button";
-import { FC } from "react";
+import Button from "@/components/common/Button";
+import MaterialIcon from "@/components/common/MaterialIcon";
 import { useTranslations } from "next-intl";
-import MaterialIcon from "./MaterialIcon";
+import Image from "next/image";
+import Link from "next/link";
+import { FC } from "react";
 
 const Header: FC = () => {
   const t = useTranslations("registration");
 
   const isLogin = false; // change later when auth is ready
 
-  const handleLogin = () => {};
-  const handleSignup = () => {};
-
   return (
     <div className="flex items-center justify-between">
-      <Image
-        src={"/icons/OPH_logo.png"}
-        alt="Open House Logo"
-        width={48}
-        height={48}
-      />
+      <Link href="/">
+        <Image
+          src={"/icons/OPH_logo.png"}
+          alt="Open House Logo"
+          width={48}
+          height={48}
+        />
+      </Link>
 
       <div className="flex gap-1">
         {isLogin ? (
@@ -31,12 +31,12 @@ const Header: FC = () => {
           </div>
         ) : (
           <>
-            <Button onClick={handleLogin} variant="transparent">
-              {t("login")}
-            </Button>
-            <Button onClick={handleSignup} variant="primary">
-              {t("signup")}
-            </Button>
+            <Link href="/login">
+              <Button variant="transparent">{t("login")}</Button>
+            </Link>
+            <Link href="/register">
+              <Button variant="primary">{t("signup")}</Button>
+            </Link>
           </>
         )}
       </div>

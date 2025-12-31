@@ -1,6 +1,4 @@
-type BusRouteChipProps = {
-  children: React.ReactNode;
-};
+import { StylableFC } from "@/utils/types/common";
 
 /**
  * A bus route is seperated by colored boxes, without making them too lean when
@@ -9,7 +7,9 @@ type BusRouteChipProps = {
  * @param children  Literally the text inside of the box. [DOM]
  */
 
-const BusRouteContent = ({ children }: BusRouteChipProps) => {
+const BusRouteContent: StylableFC<{
+  children: React.ReactNode
+}> = ({ children }) => {
   return (
     <div
       className="bg-primary-surface border-primary-border text-primary

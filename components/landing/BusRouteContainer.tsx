@@ -1,8 +1,5 @@
 import BusRouteContent from "@/components/landing/BusRouteContent";
-
-type BusRouteContainerProps = {
-  routes: string[];
-};
+import { StylableFC } from "@/utils/types/common";
 
 /**
  * A list of routes to show, seperated and wrapped around nicely by 0.25rem.
@@ -10,7 +7,9 @@ type BusRouteContainerProps = {
  * @param routes  A list of bus routes to display. [str[]]
  */
 
-const BusRouteContainer = ({ routes }: BusRouteContainerProps) => {
+const BusRouteContainer: StylableFC<{
+  routes: string[];
+}> = ({ routes }) => {
   return (
     <div className="flex flex-wrap gap-1">
       {routes.map((route, _i) => {

@@ -21,7 +21,9 @@ const TextField: StylableFC<{
         onChange={(event) => setValue(event.target.value)}
         placeholder={label}
         className={cn(
-          "border-primary-border text-tertiary flex h-8 items-center gap-2.5 self-stretch rounded-sm border px-2 py-1.5 text-sm leading-[120%] font-normal",
+          `border-primary-border text-tertiary flex h-8 items-center gap-2.5
+          self-stretch rounded-sm border px-2 py-1.5 text-sm leading-[120%]
+          font-normal`,
           disabled ? "pointer-events-none cursor-not-allowed opacity-50" : null,
         )}
         disabled={disabled}

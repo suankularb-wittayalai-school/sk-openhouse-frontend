@@ -3,15 +3,21 @@ import { StylableFC } from "@/utils/types/common";
 import Text from "@/components/common/Text";
 import MaterialIcon from "@/components/common/MaterialIcon";
 
-const Select: StylableFC<{ label: string; children: React.ReactNode }> = ({
-  label,
-  children,
-}) => {
+const Select: StylableFC<{
+  name: string;
+  value: any;
+  setValue: (value: any) => void;
+  label: string;
+  children: React.ReactNode;
+}> = ({ name, value, setValue, label, children }) => {
   return (
     <div className="flex flex-1 flex-col gap-0.5">
       <Text type="body">{label}</Text>
       <div className="self-strech relative flex flex-col">
         <select
+          name={name}
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
           className="border-primary-border text-tertiary appearance-none gap-2.5
             rounded-sm border py-1 pr-8 pl-2 text-sm leading-[120%] font-normal
             focus:outline-none"

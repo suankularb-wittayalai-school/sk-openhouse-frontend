@@ -18,15 +18,6 @@ const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
   const isLinked = !!person.child.passport_id;
   return (
     <Card className="items-center">
-      {/* 
-        Generally, I don't think this method is *that* good since you wouldn't
-        be able to know if this is an icon component if you don't know the name.
-
-        Take a look at this approach, it might be better?
-
-        - pixelpxed
-      */}
-      {/* <Face5Outlined className="text-primary" /> */}
       <MaterialIcon icon="face_5" />
       <Text type="title">
         {constructName(pick(person, ["prefix", "firstname", "lastname"]))}

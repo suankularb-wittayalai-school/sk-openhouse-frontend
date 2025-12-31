@@ -22,13 +22,7 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
   className,
 }) => {
   const t = useTranslations();
-  const PREFIX = {
-    master: "ด.ช.",
-    mr: "นาย",
-    miss: "ด.ญ.",
-    ms: "นางสาว",
-    mrs: "นาง",
-  };
+
   return (
     <Card style={style} className={cn("items-center self-center", className)}>
       {count && (
@@ -37,21 +31,6 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
         </Text>
       )}
 
-      {/* 
-        Generally, I don't think this method is *that* good since you wouldn't
-        be able to know if this is an icon component if you don't know the name.
-
-        Take a look at this approach, it might be better?
-
-        - pixelpxed
-      */}
-      {/* {person.is_child ? (
-        <Face5Outlined className="text-primary" />
-      ) : person.gender == gender.female ? (
-        <Face4Outlined className="text-primary" />
-      ) : (
-        <FaceOutlined className="text-primary" />
-      )} */}
       <MaterialIcon
         icon={
           person.is_child

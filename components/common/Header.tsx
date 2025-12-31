@@ -30,10 +30,10 @@ const Header: FC = () => {
           </div>
         ) : (
           <>
-            <Button onClick={handleOnClick} varient="transparent">
+            <Button onClick={handleOnClick} variant="transparent">
               {t("registration.login")}
             </Button>
-            <Button onClick={handleOnClick} varient="primary">
+            <Button onClick={handleOnClick} variant="primary">
               {t("registration.signup")}
             </Button>
           </>

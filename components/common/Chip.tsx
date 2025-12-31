@@ -6,7 +6,7 @@ const Chip: StylableFC<{
   variant: "primary" | "surface" | "outline";
   apperance: "square" | "rounded";
 }> = ({ children, style, className, variant, apperance }) => {
-  const CHIP_VARIENT = {
+  const CHIP_VARIANT = {
     outline: "text-primary border border-primary-border",
     primary: "bg-primary text-on-primary",
     surface: "bg-primary-surface text-primary border border-primary-border",
@@ -20,7 +20,7 @@ const Chip: StylableFC<{
       style={style}
       className={cn(
         "flex w-fit shrink-0 border text-[12px]",
-        CHIP_VARIENT[variant],
+        CHIP_VARIANT[variant],
         CHIP_APPERANCE[apperance],
         className,
       )}

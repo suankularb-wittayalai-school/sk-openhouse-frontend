@@ -8,12 +8,13 @@ const Select: StylableFC<{ label: string; children: React.ReactNode }> = ({
   children,
 }) => {
   return (
-    <div className="items-strech mr-1 flex flex-1 flex-col gap-0.5">
+    <div className="flex flex-1 flex-col gap-0.5">
       <Text type="body">{label}</Text>
       <div className="self-strech relative flex flex-col">
         <select
-          className="border-primary-border appearance-none items-center gap-2.5
-            self-stretch rounded-sm border py-1 pr-8 pl-2 focus:outline-none"
+          className="border-primary-border text-tertiary appearance-none gap-2.5
+            rounded-sm border py-1 pr-8 pl-2 text-sm leading-[120%] font-normal
+            focus:outline-none"
         >
           {children}
         </select>

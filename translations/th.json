@@ -4,8 +4,17 @@
     "second": "Open House 2026",
     "description": "11 มกราคม พ.ศ. 2568 • 08:30 – 12:00 น."
   },
-  "registration":{
+  "registration": {
     "login": "เข้าสู่ระบบ",
     "signup": "ลงทะเบียน"
+  },
+  "person": {
+    "year": "ปี",
+    "relationshipToChild": {
+      "father": "บิดา",
+      "mother": "มารดา",
+      "legalGuardian": "ผู้ปกครองตามกฎหมาย",
+      "other": "อื่น ๆ"
+    }
   }
 }

@@ -5,11 +5,12 @@ import { useTranslations } from "next-intl";
 import MaterialIcon from "./MaterialIcon";
 
 const Header: FC = () => {
-  const t = useTranslations();
+  const t = useTranslations("registration");
 
   const isLogin = false; // change later when auth is ready
 
-  const handleOnClick = () => {};
+  const handleLogin = () => {};
+  const handleSignup = () => {};
 
   return (
     <div className="flex items-center justify-between">
@@ -30,11 +31,11 @@ const Header: FC = () => {
           </div>
         ) : (
           <>
-            <Button onClick={handleOnClick} variant="transparent">
-              {t("registration.login")}
+            <Button onClick={handleLogin} variant="transparent">
+              {t("login")}
             </Button>
-            <Button onClick={handleOnClick} variant="primary">
-              {t("registration.signup")}
+            <Button onClick={handleSignup} variant="primary">
+              {t("signup")}
             </Button>
           </>
         )}

@@ -3,5 +3,9 @@
     "first": "Suankularb",
     "second": "Open House 2026",
     "description": " 11 มกราคม พ.ศ. 2568 • 08:30 – 12:00 น."
+  },
+  "registration":{
+    "login": "เข้าสู่ระบบ",
+    "signup": "ลงทะเบียน"
   }
 }

@@ -6,7 +6,7 @@ const DatePicker: StylableFC<{
   name: string;
   label: string;
   date: string;
-  setDate: () => void;
+  setDate: (date: string) => void;
 }> = ({ name, label, date, setDate }) => {
   return (
     <div className="flex flex-1 flex-col items-start gap-0.5">
@@ -15,7 +15,7 @@ const DatePicker: StylableFC<{
         name={name}
         type="date"
         value={date}
-        onChange={setDate}
+        onChange={(event) => setDate(event.target.value)}
         className="self-strech border-primary-border text-tertiary flex
           items-center gap-2.5 rounded-sm border py-1 pr-1 pl-2 text-sm
           leading-[120%] font-normal"

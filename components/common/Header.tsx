@@ -12,7 +12,7 @@ const Header: FC = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <Link href="/">
+      <Link href="/" className="shrink-0">
         <Image
           src={"/icons/OPH_logo.png"}
           alt="Open House Logo"

@@ -19,7 +19,7 @@ const Chip: StylableFC<{
     <div
       style={style}
       className={cn(
-        "flex shrink-0 w-fit border text-[12px]",
+        "flex w-fit shrink-0 border text-[12px]",
         CHIP_VARIENT[variant],
         CHIP_APPERANCE[apperance],
         className,

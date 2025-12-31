@@ -7,7 +7,7 @@ const ChipSet: StylableFC<{ children: React.ReactNode }> = ({
   className,
 }) => {
   return (
-    <div style={style} className={cn("flex w-full gap-2 flex-wrap",className)}>
+    <div style={style} className={cn("flex w-full flex-wrap gap-2", className)}>
       {children}
     </div>
   );

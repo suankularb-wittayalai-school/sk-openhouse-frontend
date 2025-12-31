@@ -1,9 +1,0 @@
-{
-  "year": "years",
-  "relationshipToChild": {
-    "father": "Father",
-    "mother": "Mother",
-    "legalGuardian": "Legal Guardian",
-    "other": "Other"
-  }
-}

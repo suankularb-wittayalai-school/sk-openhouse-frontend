@@ -7,7 +7,7 @@ import constructName from "@/utils/helpers/constructName";
 import { StylableFC } from "@/utils/types/common";
 import { person } from "@/utils/types/person";
 import { pick } from "radash";
-import MaterialIcon from "./common/MaterialIcon";
+import MaterialIcon from "../common/MaterialIcon";
 
 /**
  * A card that shows if a child is linked to a passport or not and allows the

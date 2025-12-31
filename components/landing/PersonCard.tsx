@@ -8,7 +8,7 @@ import { gender, person } from "@/utils/types/person";
 import { differenceInYears } from "date-fns";
 import { useTranslations } from "next-intl";
 import { pick } from "radash";
-import MaterialIcon from "./common/MaterialIcon";
+import MaterialIcon from "../common/MaterialIcon";
 
 /**
  * A card that shows details of a person.

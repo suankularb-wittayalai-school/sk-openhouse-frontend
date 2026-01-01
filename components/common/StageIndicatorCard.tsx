@@ -15,13 +15,16 @@ import { useTranslations } from "next-intl";
 const StageIndicatorCard: StylableFC<{
   stages: string[];
   active: number;
-}> = ({ stages, active }) => {
+  experimental?: boolean;
+  className?: string;
+}> = ({ stages, active, experimental = false, className }) => {
   const t = useTranslations();
 
-  return (
+  return experimental == false ? (
     <div
       className={cn(
         "solid border-primary-border rounded-lg border bg-white p-3",
+        className,
       )}
     >
       {/* `mx-1` to cancel out the <StageIcon /> negative margin. */}
@@ -35,6 +38,32 @@ const StageIndicatorCard: StylableFC<{
           );
         })}
       </div>
+    </div>
+  ) : (
+    // Test Design for Stages Indicator
+    <div className={cn("flex gap-0.5 *:duration-500", className)}>
+      {stages.map((stage, i) => {
+        return (
+          <div className={cn("flex w-full flex-col")}>
+            <p
+              className={cn(
+                "p-1 pb-0.5 text-left text-sm transition-colors",
+                i <= active ? "text-primary" : "text-primary-border",
+              )}
+            >
+              <b>{i + 1}</b> - {stages[i]}
+            </p>
+            <div className="bg-primary-border h-1 w-full">
+              <div
+                className={cn(
+                  "bg-primary h-full w-0 transition-all",
+                  i <= active && "w-full",
+                )}
+              />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --spacing-content-max: 1280px; 
+  --spacing-content-max: 1280px;
 
   --background: #fbfafa;
   --on-background: #ffffff;
@@ -45,4 +45,13 @@
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+/**
+* For hiding the native calendar icon in date type <select>.
+**/
+@layer base {
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
 }

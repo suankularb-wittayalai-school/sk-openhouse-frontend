@@ -1,10 +1,11 @@
+import MaterialIcon from "@/components/common/MaterialIcon";
 import cn from "@/utils/helpers/cn";
 import { StylableFC } from "@/utils/types/common";
 
 const Button: StylableFC<{
   variant: "primary" | "primarySurface" | "transparent";
   children: React.ReactNode;
-  icon?: React.ReactNode;
+  icon?: string;
   disabled?: boolean;
   onClick?: () => void;
 }> = ({
@@ -27,7 +28,7 @@ const Button: StylableFC<{
       style={style}
       className={cn(
         `flex h-10 cursor-pointer flex-col items-center justify-center gap-2
-        self-stretch rounded-[6.25rem] transition-all`,
+        self-stretch rounded-full transition-all`,
         BUTTON_VARIANT[variant],
         className,
       )}
@@ -40,7 +41,7 @@ const Button: StylableFC<{
           py-2.5 text-sm leading-[140%] font-normal`,
         )}
       >
-        {icon}
+        {icon && <MaterialIcon icon={icon} />}
         {children}
       </div>
     </button>

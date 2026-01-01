@@ -33,7 +33,7 @@ export type person = {
   prefix: prefix;
   firstname: string;
   lastname: string;
-  birthdate: Date;
+  birthdate: string;
   gender: gender;
   tel: string;
   is_child: boolean;

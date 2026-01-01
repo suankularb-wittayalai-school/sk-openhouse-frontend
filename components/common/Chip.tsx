@@ -12,8 +12,8 @@ const Chip: StylableFC<{
     surface: "bg-primary-surface text-primary border border-primary-border",
   };
   const CHIP_APPERANCE = {
-    square: "text-primar px-1 py-0.5 rounded-sm",
-    rounded: "bg-primary text-on-primary px-2 py-1 rounded-full",
+    square: "px-1 py-0.5 rounded-sm",
+    rounded: "px-2 py-1 rounded-full",
   };
   return (
     <div

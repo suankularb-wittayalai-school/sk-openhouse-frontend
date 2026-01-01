@@ -6,6 +6,12 @@ import MaterialIcon from "@/components/common/MaterialIcon";
 import { AnimatePresence, motion } from "motion/react";
 import Button from "@/components/common/Button";
 
+/**
+ * A card that show question and answer as a drop down
+ * @param question The question to show.
+ * @param answer The answer to show under dropdown.
+ */
+
 const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
   style,
   className,
@@ -55,8 +61,7 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
             className="overflow-hidden"
           >
             <hr
-              className="border-primary-border w-[calc(100%+0.125rem)]
-                border-t"
+              className="border-primary-border w-[calc(100%+0.125rem)] border-t"
             />
             <div className="px-2 py-1">
               <Text type="body" className="opacity-100!">

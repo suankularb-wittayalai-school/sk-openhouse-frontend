@@ -7,14 +7,5 @@
   "registration": {
     "login": "เข้าสู่ระบบ",
     "signup": "ลงทะเบียน"
-  },
-  "person": {
-    "year": "ปี",
-    "relationshipToChild": {
-      "father": "บิดา",
-      "mother": "มารดา",
-      "legalGuardian": "ผู้ปกครองตามกฎหมาย",
-      "other": "อื่น ๆ"
-    }
   }
 }

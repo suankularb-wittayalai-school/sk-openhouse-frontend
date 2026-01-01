@@ -1,5 +1,6 @@
 // Imports
 import { person } from "@/utils/types/person";
+import { useTranslations } from "next-intl";
 
 /**
  * A function that connects the prefix, firstname and lastname of a person into
@@ -10,15 +11,9 @@ import { person } from "@/utils/types/person";
 export default function constructName(
   personName: Pick<person, "prefix" | "firstname" | "lastname">,
 ) {
-  const PREFIX = {
-    master: "ด.ช.",
-    mr: "นาย",
-    miss: "ด.ญ.",
-    ms: "นางสาว",
-    mrs: "นาง",
-  };
+  const t = useTranslations("person.prefix");
   return (
-    PREFIX[personName.prefix] +
+    t(personName.prefix) +
     " " +
     personName.firstname +
     " " +

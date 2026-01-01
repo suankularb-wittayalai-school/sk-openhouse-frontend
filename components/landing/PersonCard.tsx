@@ -21,7 +21,7 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
   style,
   className,
 }) => {
-  const t = useTranslations();
+  const t = useTranslations("person");
 
   return (
     <Card style={style} className={cn("items-center self-center", className)}>

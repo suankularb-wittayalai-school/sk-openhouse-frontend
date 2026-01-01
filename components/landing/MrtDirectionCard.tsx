@@ -30,7 +30,7 @@ const DirectionMrtCard: StylableFC<{}> = ({}) => {
         </Text>
       </div>
       {MRT_LOCATIONS.map((MRT_LOCATION, i) => (
-        <MrtStationCard mrtLocation={MRT_LOCATION} />
+        <MrtStationCard mrtLocation={MRT_LOCATION} key={i}/>
       ))}
     </Card>
   );

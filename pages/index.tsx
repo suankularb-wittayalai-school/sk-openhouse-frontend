@@ -20,7 +20,7 @@ const LandingPage: FC<{
 }> = ({ activities, faqs, busRoute }) => {
   const t = useTranslations("landing");
   return (
-    <div className="mt-5.5 flex flex-col gap-6 p-4 pt-0">
+    <div className="mt-5.5 flex flex-col gap-6 p-3 pt-0">
       {/* Title */}
       <EventTitle />
 
@@ -37,10 +37,15 @@ const LandingPage: FC<{
       {/* FAQs  */}
       <FAQsContainer faqs={faqs} />
 
-      <div className="flex flex-col gap-1">
-        <MrtDirectionCard/>
-        <BusRouteCard route={busRoute}/>
-        <WalkingMapCard/>
+      <div className="flex flex-col gap-2">
+        <Text type="body">{t("section.transit")}</Text>
+        <div className="flex w-full flex-col gap-1">
+          <div className="flex flex-col gap-1 md:flex-row">
+            <MrtDirectionCard />
+            <BusRouteCard route={busRoute} />
+          </div>
+          <WalkingMapCard />
+        </div>
       </div>
     </div>
   );

@@ -19,11 +19,7 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
   answer,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => {
-    if (open == false) {
-      setOpen(true);
-    } else setOpen(false);
-  };
+  const handleOpen = () => (setOpen(!open))
   return (
     <div
       style={style}

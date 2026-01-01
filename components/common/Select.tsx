@@ -18,15 +18,15 @@ const Select: StylableFC<{
           name={name}
           value={value}
           onChange={(event) => setValue(event.target.value)}
-          className="border-primary-border text-tertiary appearance-none gap-2.5
-            rounded-sm border py-1 pr-8 pl-2 text-sm leading-[120%] font-normal
-            focus:outline-none"
+          className="border-primary-border text-tertiary h-8 appearance-none
+            gap-2.5 rounded-sm border py-1 pr-8 pl-2 text-sm leading-[120%]
+            font-normal focus:outline-none"
         >
           {children}
         </select>
         <div
-          className="pointer-events-none absolute top-1/2 right-2 flex
-            -translate-y-1/2 flex-col items-center"
+          className="text-primary pointer-events-none absolute top-1/2 right-2
+            flex -translate-y-1/2 flex-col items-center"
         >
           <MaterialIcon icon="arrow_drop_down" />
         </div>

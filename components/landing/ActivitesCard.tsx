@@ -1,7 +1,7 @@
 import { StylableFC } from "@/utils/types/common";
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
-import ActivityCard from "@/components/landing/ActivityCard";
+import ActivityCard from "@/components/landing/subcomponents/ActivityCard";
 import { useTranslations } from "next-intl";
 
 const ActivitesCardContainer: StylableFC<{
@@ -9,8 +9,8 @@ const ActivitesCardContainer: StylableFC<{
 }> = ({ activities }) => {
   const t = useTranslations("landing")
   return (
-    <div>
-      <Text type="body">{t("activity")}</Text>
+    <div className="flex flex-col gap-2">
+      <Text type="body">{t("section.activity")}</Text>
       <div className="flex flex-col gap-1">
         {activities.map((activity, i) => (
           <ActivityCard activity={activity.name} location={activity.location} key={i}/>

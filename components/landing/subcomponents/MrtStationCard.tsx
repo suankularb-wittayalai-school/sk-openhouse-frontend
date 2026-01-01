@@ -7,26 +7,25 @@ import { useState } from "react";
 import { StylableFC } from "@/utils/types/common";
 import { MrtLocation } from "@/utils/types/landing";
 
-const MrtStationCard: StylableFC<{ mrtLocation: MrtLocation }> = ({ mrtLocation }) => {
-  const [open, setOpen] = useState<boolean>(false);
+const MrtStationCard: StylableFC<{ mrtLocation: MrtLocation }> = ({
+  mrtLocation,
+}) => {
+  const [open, setOpen] = useState<boolean>(true);
   const handleOpen = () => setOpen(!open);
   return (
     <div
-      className="border-primary-border w-full overflow-hidden rounded-xl border"
+      className="border-primary-border h-max w-full overflow-hidden rounded-md
+        border"
     >
       <div
-        className="bg-primary-surface flex items-center justify-between px-2
-          py-1"
+        className="flex cursor-pointer items-center justify-between p-2 pl-3"
+        onClick={handleOpen}
       >
-        <Text type="body" className="text-primary! opacity-100!">
+        <Text type="title" className="text-primary! opacity-100!">
           <span className="font-bold">{mrtLocation.station}</span>{" "}
           <span>{mrtLocation.exit}</span>
         </Text>
-        <Button
-          variant="transparent"
-          className="h-6! w-6! *:p-0!"
-          onClick={handleOpen}
-        >
+        {/* <Button variant="transparent" className="h-6! w-6! *:p-0! hover:bg-transparent!">
           <motion.div
             animate={{ rotate: open ? 0 : 180 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -34,7 +33,7 @@ const MrtStationCard: StylableFC<{ mrtLocation: MrtLocation }> = ({ mrtLocation 
           >
             <MaterialIcon icon="arrow_drop_down" />
           </motion.div>
-        </Button>
+        </Button> */}
       </div>
       <AnimatePresence initial={false}>
         <motion.div
@@ -43,14 +42,12 @@ const MrtStationCard: StylableFC<{ mrtLocation: MrtLocation }> = ({ mrtLocation 
             height: open ? "auto" : 0,
             opacity: open ? 1 : 0,
           }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="overflow-hidden"
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          className="border-primary-border overflow-hidden border-t"
         >
-          <hr className="border-primary-border w-[calc(100%+0.125rem)] border-t" />
           <iframe
-            src={`https://www.google.com/maps/embed/v1/directions?key=${process.env.NEXT_PUBLIC_MAPS_EMBED_API_KEY}&origin=${mrtLocation.mapLocation},Bangkok&destination=Suankularb+Wittayalai+School,Bangkok&mode=walking`}
-            className="w-full border-none"
-            height={250}
+            src={`https://www.google.com/maps/embed/v1/directions?key=${process.env.NEXT_PUBLIC_MAPS_EMBED_API_KEY}&origin=${mrtLocation.mapLocation},Bangkok&destination=Suankularb+Wittayalai+School,Bangkok&mode=walking&zoom=15`}
+            className="w-full h-full max-h-100 border-none"
             loading="lazy"
           />
         </motion.div>

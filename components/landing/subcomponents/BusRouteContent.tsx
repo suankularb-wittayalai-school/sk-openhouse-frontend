@@ -14,7 +14,7 @@ const BusRouteContent: StylableFC<{
     <div
       className="bg-primary-surface border-primary-border text-primary
         inline-flex min-w-6 justify-center rounded-sm border px-1 py-0.5
-        text-xs"
+        text-sm"
     >
       {children}
     </div>

@@ -1,4 +1,4 @@
-import BusRouteContent from "@/components/landing/BusRouteContent";
+import BusRouteContent from "@/components/landing/subcomponents/BusRouteContent";
 import { StylableFC } from "@/utils/types/common";
 
 /**

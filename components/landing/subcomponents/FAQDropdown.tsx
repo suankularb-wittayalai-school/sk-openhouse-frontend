@@ -19,7 +19,7 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
   answer,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => (setOpen(!open))
+  const handleOpen = () => setOpen(!open);
   return (
     <div
       style={style}
@@ -29,15 +29,14 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
         className,
       )}
     >
-      <div className="flex items-center justify-between px-2 py-1">
-        <Text type="body" className="text-primary! font-bold! opacity-100!">
+      <div
+        className="flex cursor-pointer items-center justify-between p-2 pl-3"
+        onClick={handleOpen}
+      >
+        <Text type="title" className="text-primary! opacity-100!">
           {question}
         </Text>
-        <Button
-          variant="transparent"
-          className="h-6! w-6! *:p-0!"
-          onClick={handleOpen}
-        >
+        <Button variant="transparent" className="h-6! w-6! *:p-0!">
           <motion.div
             animate={{ rotate: open ? 0 : 180 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -53,14 +52,11 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <hr
-              className="border-primary-border w-[calc(100%+0.125rem)] border-t"
-            />
-            <div className="px-2 py-1">
-              <Text type="body" className="opacity-100!">
+            <div className="p-2 border-t border-primary-border">
+              <Text type="title" className="opacity-100!">
                 {answer}
               </Text>
             </div>

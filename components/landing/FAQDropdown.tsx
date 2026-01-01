@@ -43,7 +43,7 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
           onClick={handleOpen}
         >
           <motion.div
-            animate={{ rotate: open ? 180 : 0 }}
+            animate={{ rotate: open ? 0 : 180 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
             className="flex items-center justify-center"
           >

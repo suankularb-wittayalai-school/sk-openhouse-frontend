@@ -6,13 +6,17 @@ import Link from "next/link";
 import ActivitesCardContainer from "@/components/landing/ActivitesCardContainer";
 import FAQsContainer from "@/components/landing/FAQsContainer";
 import { FC } from "react";
-import { ActivitiesList, Faqs } from "@/utils/types/landing";
+import { ActivitiesList, BusRoute, Faqs } from "@/utils/types/landing";
 import { useTranslations } from "next-intl";
+import MrtDirectionCard from "@/components/landing/MrtDirectionCard";
+import BusRouteCard from "@/components/landing/BusRouteCard";
+import WalkingMapCard from "@/components/landing/WalkingMapCard";
 
 const LandingPage: FC<{
   activities: ActivitiesList[];
   faqs: Faqs[];
-}> = ({ activities, faqs }) => {
+  busRoute: BusRoute;
+}> = ({ activities, faqs, busRoute }) => {
   const t = useTranslations("landing");
   return (
     <div className="mt-5.5 flex flex-col gap-6 p-4 pt-0">
@@ -31,6 +35,12 @@ const LandingPage: FC<{
 
       {/* FAQs  */}
       <FAQsContainer faqs={faqs} />
+
+      <div className="flex flex-col gap-1">
+        <MrtDirectionCard/>
+        <BusRouteCard route={busRoute}/>
+        <WalkingMapCard/>
+      </div>
     </div>
   );
 };
@@ -39,7 +49,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const messages = await getStaticTranslations("common", "landing");
 
   /* Tempoary !!!  */
-  const faqs = [
+  const faqs: Faqs[] = [
     {
       question: "ต้องแต่งชุดอะไรไป ?",
       answer: "อยากใส่ชุดอะไรก็ใส่เลยครับ",
@@ -55,7 +65,7 @@ export const getStaticProps: GetStaticProps = async () => {
   ];
 
   /* Tempoary !!!  */
-  const activities = [
+  const activities: ActivitiesList[] = [
     {
       name: "แนะนำภาพรวมหลักสูตร",
       location: "หอประชุมสวนกุหลาบรำลึก",
@@ -70,8 +80,24 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   ];
 
+  const busRoute: BusRoute = {
+    infront: ["6 / 4-1", "43 / 4-11"],
+    opposite: [
+      "3 / 2-37",
+      "2 / 3-1",
+      "2E / 3-2E",
+      "5",
+      "6 / 4-1",
+      "7ก / 4-48",
+      "9 / 4-37",
+      "42R / 4-10",
+      "53 / 2-9",
+      "82 / 4-15 ",
+    ],
+  };
+
   return {
-    props: { messages, activities, faqs },
+    props: { messages, activities, faqs, busRoute },
   };
 };
 

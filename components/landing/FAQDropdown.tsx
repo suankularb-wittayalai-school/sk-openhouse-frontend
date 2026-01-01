@@ -55,7 +55,7 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
             className="overflow-hidden"
           >
             <hr
-              className="border-primary-border -mx-px w-[calc(100%+0.125rem)]
+              className="border-primary-border w-[calc(100%+0.125rem)]
                 border-t"
             />
             <div className="px-2 py-1">

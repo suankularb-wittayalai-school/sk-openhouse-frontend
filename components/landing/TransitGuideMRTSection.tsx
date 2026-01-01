@@ -1,9 +1,9 @@
 import Card from "@/components/common/Card";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
+import MapsMRTStationLocation from "@/components/landing/subcomponents/MapsMRTStationLocation";
 import { StylableFC } from "@/utils/types/common";
 import { useTranslations } from "next-intl";
-import MrtStationCard from "./subcomponents/";
 
 const TransitGuideMRTSection: StylableFC<{}> = ({}) => {
   const t = useTranslations("landing");
@@ -31,7 +31,7 @@ const TransitGuideMRTSection: StylableFC<{}> = ({}) => {
       </div>
       <div className="flex flex-col gap-1">
         {MRT_LOCATIONS.map((MRT_LOCATION, i) => (
-          <MrtStationCard mrtLocation={MRT_LOCATION} key={i} />
+          <MapsMRTStationLocation mrtLocation={MRT_LOCATION} key={i} />
         ))}
       </div>
     </Card>

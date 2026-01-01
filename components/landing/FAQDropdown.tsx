@@ -2,8 +2,9 @@ import cn from "@/utils/helpers/cn";
 import { StylableFC } from "@/utils/types/common";
 import { useState } from "react";
 import Text from "@/components/common/Text";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import MaterialIcon from "@/components/common/MaterialIcon";
+import { AnimatePresence, motion } from "motion/react";
+import Button from "@/components/common/Button";
 
 const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
   style,
@@ -21,27 +22,50 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
     <div
       style={style}
       className={cn(
-        "bg-on-background border-primary-border flex flex-col gap-2 rounded-lg",
-        "border p-2",
+        "bg-on-background border-primary-border flex flex-col rounded-lg",
+        "border",
         className,
       )}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-2 py-1">
         <Text type="body" className="text-primary! font-bold! opacity-100!">
           {question}
         </Text>
-        <button onClick={handleOpen}>
-          {open ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
-        </button>
+        <Button
+          variant="transparent"
+          className="h-6! w-6! *:p-0!"
+          onClick={handleOpen}
+        >
+          <motion.div
+            animate={{ rotate: open ? 180 : 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="flex items-center justify-center"
+          >
+            <MaterialIcon icon="arrow_drop_down" />
+          </motion.div>
+        </Button>
       </div>
-      {open && (
-        <>
-          <hr className="border-primary-border -mx-2 w-[calc(100%+1rem)] border-t" />
-          <Text type="body" className="opacity-100!">
-          {answer}
-        </Text>
-        </>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <hr
+              className="border-primary-border -mx-px w-[calc(100%+0.125rem)]
+                border-t"
+            />
+            <div className="px-2 py-1">
+              <Text type="body" className="opacity-100!">
+                {answer}
+              </Text>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

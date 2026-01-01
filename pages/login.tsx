@@ -1,6 +1,6 @@
 import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
 
-const LandingPage = () => {
+const LoginPage = () => {
   return <></>;
 };
 
@@ -12,4 +12,4 @@ export async function getStaticProps() {
   };
 }
 
-export default LandingPage;
+export default LoginPage;

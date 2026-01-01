@@ -1,4 +1,6 @@
 {
+  "adult": "ผู้ใหญ่",
+  "registrant": "ผู้เข้าสู่ระบบ",
   "year": "ปี",
   "prefix": {
     "master": "ด.ช.",

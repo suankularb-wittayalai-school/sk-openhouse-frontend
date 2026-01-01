@@ -3,5 +3,16 @@
     "account": "บัญชี",
     "family": "ครอบครัว",
     "activity": "กิจกรรม"
+  },
+  "label": {
+    "prefix": "คำนำหน้า",
+    "firstname": "ชื่อจริง",
+    "lastname": "นามสกุล",
+    "gender": "เพศ",
+    "birthdate": "วันเกิด",
+    "tel": "เบอร์โทรศัพท์ (ไม่จำเป็น)",
+    "relationshipToChild": "ความสัมพันธ์ของคุณกับเด็ก",
+    "email": "อีเมล",
+    "eventExpectations": "คุณคาดหวังอะไรจากงานนี้"
   }
 }

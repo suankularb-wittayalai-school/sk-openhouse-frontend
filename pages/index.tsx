@@ -3,14 +3,14 @@ import Button from "@/components/common/Button";
 import EventTitle from "@/components/landing/EventTitle";
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import ActivitesCardContainer from "@/components/landing/ActivitesCard";
-import FAQsContainer from "@/components/landing/FAQCard";
+import ActivitesCardContainer from "@/components/landing/ActivitesSection";
+import FAQsContainer from "@/components/landing/FAQSection";
 import { FC } from "react";
 import { ActivitiesList, BusRoute, Faqs } from "@/utils/types/landing";
 import { useTranslations } from "next-intl";
-import MrtDirectionCard from "@/components/landing/TransitGuideMRTCard";
-import BusRouteCard from "@/components/landing/TransitGuideBusCard";
-import WalkingMapCard from "@/components/landing/subcomponents/WalkingMapCard";
+import MrtDirectionCard from "@/components/landing/TransitGuideMRTSection";
+import BusRouteCard from "@/components/landing/TransitGuideBusSection";
+import WalkingMapCard from "@/components/landing/subcomponents/MapsSchoolLocation";
 import Text from "@/components/common/Text";
 
 const LandingPage: FC<{

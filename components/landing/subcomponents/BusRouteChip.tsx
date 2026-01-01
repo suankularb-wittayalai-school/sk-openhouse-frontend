@@ -7,7 +7,7 @@ import { StylableFC } from "@/utils/types/common";
  * @param children  Literally the text inside of the box. [DOM]
  */
 
-const BusRouteContent: StylableFC<{
+const BusRouteChip: StylableFC<{
   children: React.ReactNode
 }> = ({ children }) => {
   return (
@@ -21,4 +21,4 @@ const BusRouteContent: StylableFC<{
   );
 };
 
-export default BusRouteContent;
+export default BusRouteChip;

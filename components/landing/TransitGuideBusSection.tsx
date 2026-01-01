@@ -1,12 +1,12 @@
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
-import BusRouteContainer from "./subcomponents/BusRouteContainer";
 import { StylableFC } from "@/utils/types/common";
 import { BusRoute } from "@/utils/types/landing";
-import MaterialIcon from "../common/MaterialIcon";
 import { useTranslations } from "next-intl";
+import MaterialIcon from "../common/MaterialIcon";
+import BusRouteContainer from "./subcomponents/BusRouteContainer";
 
-const TransitGuideBus: StylableFC<{ route: BusRoute }> = ({ route }) => {
+const TransitGuideBusSection: StylableFC<{ route: BusRoute }> = ({ route }) => {
   const t = useTranslations("landing");
   return (
     <Card className="w-full flex-col">
@@ -50,4 +50,4 @@ const TransitGuideBus: StylableFC<{ route: BusRoute }> = ({ route }) => {
   );
 };
 
-export default TransitGuideBus;
+export default TransitGuideBusSection;

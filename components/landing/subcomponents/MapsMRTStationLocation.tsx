@@ -7,7 +7,7 @@ import { useState } from "react";
 import { StylableFC } from "@/utils/types/common";
 import { MrtLocation } from "@/utils/types/landing";
 
-const MrtStationCard: StylableFC<{ mrtLocation: MrtLocation }> = ({
+const MapsMRTStationLocation: StylableFC<{ mrtLocation: MrtLocation }> = ({
   mrtLocation,
 }) => {
   const [open, setOpen] = useState<boolean>(true);
@@ -56,4 +56,4 @@ const MrtStationCard: StylableFC<{ mrtLocation: MrtLocation }> = ({
   );
 };
 
-export default MrtStationCard;
+export default MapsMRTStationLocation;

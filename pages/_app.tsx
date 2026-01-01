@@ -34,7 +34,7 @@ function App({ Component, pageProps }: AppProps) {
         className={cn(
           lineSeed.variable,
           "font-line-seed",
-          "max-w-content-max mx-auto p-4",
+          "max-w-content-max mx-auto",
         )}
       >
         <Header />

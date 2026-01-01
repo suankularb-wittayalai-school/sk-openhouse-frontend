@@ -7,14 +7,14 @@ const FAQsContainer: StylableFC<{
   faqs: Faqs[];
 }> = ({ faqs }) => {
   return (
-    <>
+    <div>
       <Text type="body">คำถามที่พบบ่อย</Text>
       <div className="flex flex-col gap-1">
         {faqs.map((faq) => (
           <FAQDropdown question={faq.question} answer={faq.answer} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

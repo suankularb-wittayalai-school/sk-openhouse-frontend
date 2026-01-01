@@ -7,14 +7,14 @@ const ActivitesCardContainer: StylableFC<{
   activities: { name: string; location: string }[];
 }> = ({ activities }) => {
   return (
-    <>
+    <div>
       <Text type="body">กิจกรรม</Text>
       <div className="flex flex-col gap-1">
         {activities.map((activity) => (
           <ActivityCard activity={activity.name} location={activity.location} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

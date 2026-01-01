@@ -13,19 +13,21 @@ const LandingPage: FC<{
   activities: ActivitiesList[];
   faqs: Faqs[];
 }> = ({ activities, faqs }) => {
-  const t = useTranslations("landing")
+  const t = useTranslations("landing");
   return (
-    <div className="mt-5.5 flex flex-col gap-5.5 px-2">
+    <div className="mt-5.5 flex flex-col gap-6 px-2">
       {/* Title */}
       <EventTitle />
 
       {/* Activities List */}
-      <ActivitesCardContainer activities={activities} />
-      <Link href={"/register"}>
-        <Button variant="primarySurface" className="w-full">
-          {t("register")}
-        </Button>
-      </Link>
+      <div className="flex flex-col gap-2">
+        <ActivitesCardContainer activities={activities} />
+        <Link href={"/register"}>
+          <Button variant="primarySurface" className="w-full">
+            {t("register")}
+          </Button>
+        </Link>
+      </div>
 
       {/* FAQs  */}
       <FAQsContainer faqs={faqs} />

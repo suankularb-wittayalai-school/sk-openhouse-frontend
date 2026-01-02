@@ -4,5 +4,6 @@
     "register": "ลงทะเบียน",
     "details": "รายละเอียดงาน",
     "myregistration": "การลงทะเบียนของฉัน"
-  }
+  },
+  "action": { "close": "ปิด" }
 }

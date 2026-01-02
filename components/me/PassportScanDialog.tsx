@@ -49,19 +49,19 @@ const PassportScanDialog: StylableFC<{
     <Dialog open={open}>
       <div className="flex flex-col">
         <Text type="body">{t("connect")}</Text>
-        <Text type="headline" className="!text-xl">
+        <Text type="headline" className="text-xl!">
           {constructName(pick(person, ["firstname", "lastname", "prefix"]))}
         </Text>
       </div>
       <div
-        className={`grid h-[20rem] w-[20rem] place-items-center self-center
-          bg-[url('/ring.svg')]`}
+        className={`grid aspect-square w-full place-items-center self-center
+          bg-[url('/ring.svg')] bg-cover`}
       >
         <div
-          className="border-primary-border aspect-65/64 h-64 w-[16.25rem]
-            rounded-lg border"
+          className="border-primary-border bg-primary-surface aspect-square h-64
+            w-64 rounded-2xl border"
         >
-          <video className="h-64 w-[16.25rem]" ref={videoRef} />
+          <video className="h-64 w-64" ref={videoRef} />
         </div>
       </div>
       <Button variant="primary" onClick={() => onClose()}>

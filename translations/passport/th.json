@@ -1,0 +1,9 @@
+{
+  "connect": "เชื่อมสูจิบัตร Open House กับ",
+  "confirmConnect": "ยืนยันการเชื่อมสูจิบัตร Open House กับ",
+  "action": {
+    "close": "ปิด",
+    "cancel": "ยกเลิก",
+    "link": "เชื่อม"
+  }
+}

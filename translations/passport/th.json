@@ -1,9 +1,22 @@
 {
-  "connect": "เชื่อมสูจิบัตร Open House กับ",
-  "confirmConnect": "ยืนยันการเชื่อมสูจิบัตร Open House กับ",
   "action": {
     "close": "ปิด",
     "cancel": "ยกเลิก",
-    "link": "เชื่อม"
+    "link": "เชื่อม",
+    "scanAgain": "สแกนใหม่"
+  },
+  "scanner": {
+    "title": "เชื่อมพาสปอร์ต Open House กับ",
+    "permissionRequest": "โปรดอนุญาตให้เว็บไซต์เข้าถึงกล้องของคุณ",
+    "dialog": {
+      "confirm": {
+        "title": "ยืนยันการเชื่อม",
+        "description": "คุณกำลังเชื่อมต่อพาสปอร์ต Open House นี้กับ"
+      },
+      "invalid": {
+        "title": "รูปแบบ QR Code ไม่ถูกต้อง",
+        "description": "โปรดตรวจสอบว่าคุณกำลังแสกน QR Code ที่ถูกต้อง แล้วลองใหม่อีกครั้ง"
+      }
+    }
   }
 }

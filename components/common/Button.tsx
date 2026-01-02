@@ -3,8 +3,8 @@ import cn from "@/utils/helpers/cn";
 import { StylableFC } from "@/utils/types/common";
 
 const Button: StylableFC<{
-  variant: "primary" | "primarySurface" | "transparent";
-  children: React.ReactNode;
+  variant: "primary" | "primarySurface" | "transparent"| "outline";
+  children?: React.ReactNode;
   icon?: string;
   disabled?: boolean;
   onClick?: () => void;
@@ -19,6 +19,8 @@ const Button: StylableFC<{
 }) => {
   const BUTTON_VARIANT = {
     transparent: `text-primary hover:bg-primary/10`,
+    outline: `text-primary hover:bg-primary/10 border 
+      border-primary-border`,
     primary: `bg-primary text-on-primary hover:brightness-80`,
     primarySurface: `bg-primary-surface text-primary border 
       border-primary-border hover:brightness-90`,

@@ -13,10 +13,6 @@ export default function constructName(
 ) {
   const t = useTranslations("person.prefix");
   return (
-    t(personName.prefix) +
-    " " +
-    personName.firstname +
-    " " +
-    personName.lastname
+    t(personName.prefix) + personName.firstname + " " + personName.lastname
   );
 }

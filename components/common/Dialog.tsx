@@ -3,12 +3,13 @@ import { useEffect, useRef } from "react";
 import Button from "@/components/common/Button";
 import Card from "@/components/common/Card";
 import { useTranslations } from "next-intl";
+import cn from "@/utils/helpers/cn";
 
 const Dialog: StylableFC<{
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
-}> = ({ open, onClose, children }) => {
+}> = ({ open, onClose, children, style, className }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     console.log("activated");
@@ -36,7 +37,10 @@ const Dialog: StylableFC<{
           items-center justify-center"
       >
         <div id="card">
-          <Card className="P-6 flex w-[23.125rem] flex-col gap-4">
+          <Card
+            style={style}
+            className={cn("P-6 flex w-[23.125rem] flex-col gap-4", className)}
+          >
             {children}
             <div id="closeButton" className="flex flex-col">
               <Button variant="primary" onClick={() => onClose()}>

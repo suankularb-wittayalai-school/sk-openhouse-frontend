@@ -17,8 +17,13 @@ import { useState } from "react";
  * user to link his / her child to a passport.
  * @param person The person (child) to show.
  */
-const PassportLinkCard: StylableFC<{ person: person; }> = ({ person }) => {
+const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
+  const t = useTranslations("passport")
+
   const isLinked = !!person.child.passport_id;
+
+  const [scanDialogOpen, setScanDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <div
@@ -40,6 +45,7 @@ const PassportLinkCard: StylableFC<{ person: person; }> = ({ person }) => {
           onClick={() => {setScanDialogOpen(true)}}
           disabled={isLinked}
         >
+          {isLinked ? t("linkCard.connected") : t("linkCard.connect")}
         </Button>
       </div>
       <AnimatePresence>

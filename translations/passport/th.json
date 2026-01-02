@@ -5,6 +5,10 @@
     "link": "เชื่อม",
     "scanAgain": "สแกนใหม่"
   },
+  "linkCard": {
+    "connect": "เชื่อม",
+    "connected": "เชื่อมแล้ว"
+  },
   "scanner": {
     "title": "เชื่อมพาสปอร์ต Open House กับ",
     "permissionRequest": "โปรดอนุญาตให้เว็บไซต์เข้าถึงกล้องของคุณ",

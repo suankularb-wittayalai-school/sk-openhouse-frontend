@@ -7,20 +7,20 @@ import localFont from "next/font/local";
 import cn from "@/utils/helpers/cn";
 
 const lineSeed = localFont({
-    src: [
-      {
-        path: "../public/fonts/LINESeedSansTH_W_Rg.woff2",
-        weight: "400",
-        style: "normal",
-      },
-      {
-        path: "../public/fonts/LINESeedSansTH_W_Bd.woff2",
-        weight: "700",
-        style: "normal",
-      },
-    ],
-    variable: "--font-line-seed",
-  });
+  src: [
+    {
+      path: "../public/fonts/LINESeedSansTH_W_Rg.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/LINESeedSansTH_W_Bd.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-line-seed",
+});
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -38,7 +38,9 @@ function App({ Component, pageProps }: AppProps) {
         )}
       >
         <Header />
-        <Component {...pageProps} />
+        <div className="max-w-3xl m-auto">
+          <Component {...pageProps} />
+        </div>
       </div>
     </NextIntlClientProvider>
   );

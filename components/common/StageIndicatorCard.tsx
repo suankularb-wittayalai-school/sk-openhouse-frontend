@@ -1,5 +1,5 @@
-import StageConnectingLines from "@/components/common/StageConnectingLines";
-import StageIcon from "@/components/common/StageIcon";
+import StageConnectingLines from "@/components/common/subcomponents/StageConnectingLines";
+import StageIcon from "@/components/common/subcomponents/StageIcon";
 import cn from "@/utils/helpers/cn";
 import { StylableFC } from "@/utils/types/common";
 import { useTranslations } from "next-intl";

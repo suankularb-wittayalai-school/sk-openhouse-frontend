@@ -7,12 +7,9 @@ const ActivityCard: StylableFC<{ activity: string; location: string }> = ({
   location,
 }) => {
   return (
-    <Card>
-      <Text type="title">
-        <span>{activity}</span>
-        <br />
-        <span className="text-on-surface-variant text-[12px]">{location}</span>
-      </Text>
+    <Card className="flex flex-col gap-0!">
+      <Text type="title">{activity}</Text>
+      <Text type="body">{location}</Text>
     </Card>
   );
 };

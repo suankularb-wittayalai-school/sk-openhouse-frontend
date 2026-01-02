@@ -3,14 +3,15 @@ import Button from "@/components/common/Button";
 import EventTitle from "@/components/landing/EventTitle";
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import ActivitesCardContainer from "@/components/landing/ActivitesCardContainer";
-import FAQsContainer from "@/components/landing/FAQsContainer";
+import ActivitesCardContainer from "@/components/landing/ActivitesSection";
+import FAQsContainer from "@/components/landing/FAQSection";
 import { FC } from "react";
 import { ActivitiesList, BusRoute, Faqs } from "@/utils/types/landing";
 import { useTranslations } from "next-intl";
-import MrtDirectionCard from "@/components/landing/MrtDirectionCard";
-import BusRouteCard from "@/components/landing/BusRouteCard";
-import WalkingMapCard from "@/components/landing/WalkingMapCard";
+import MrtDirectionCard from "@/components/landing/TransitGuideMRTSection";
+import BusRouteCard from "@/components/landing/TransitGuideBusSection";
+import WalkingMapCard from "@/components/landing/subcomponents/MapsSchoolLocation";
+import Text from "@/components/common/Text";
 
 const LandingPage: FC<{
   activities: ActivitiesList[];
@@ -19,7 +20,7 @@ const LandingPage: FC<{
 }> = ({ activities, faqs, busRoute }) => {
   const t = useTranslations("landing");
   return (
-    <div className="mt-5.5 flex flex-col gap-6 p-4 pt-0">
+    <div className="mt-5.5 flex flex-col gap-6 p-3 pt-0">
       {/* Title */}
       <EventTitle />
 
@@ -36,10 +37,15 @@ const LandingPage: FC<{
       {/* FAQs  */}
       <FAQsContainer faqs={faqs} />
 
-      <div className="flex flex-col gap-1">
-        <MrtDirectionCard/>
-        <BusRouteCard route={busRoute}/>
-        <WalkingMapCard/>
+      <div className="flex flex-col gap-2">
+        <Text type="body">{t("section.transit")}</Text>
+        <div className="flex w-full flex-col gap-1">
+          <div className="flex flex-col gap-1 md:flex-row">
+            <MrtDirectionCard />
+            <BusRouteCard route={busRoute} />
+          </div>
+          <WalkingMapCard />
+        </div>
       </div>
     </div>
   );

@@ -7,18 +7,18 @@ import { StylableFC } from "@/utils/types/common";
  * @param children  Literally the text inside of the box. [DOM]
  */
 
-const BusRouteContent: StylableFC<{
+const BusRouteChip: StylableFC<{
   children: React.ReactNode
 }> = ({ children }) => {
   return (
     <div
       className="bg-primary-surface border-primary-border text-primary
         inline-flex min-w-6 justify-center rounded-sm border px-1 py-0.5
-        text-xs"
+        text-sm"
     >
       {children}
     </div>
   );
 };
 
-export default BusRouteContent;
+export default BusRouteChip;

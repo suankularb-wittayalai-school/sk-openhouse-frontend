@@ -22,7 +22,7 @@ const RegisterLoginPage = () => {
   const [expStageIndicator, setExpStageIndicator] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col gap-6 p-2">
+    <div className="flex flex-col gap-6 p-3">
       <StageIndicatorCard
         stages={stages}
         active={page}

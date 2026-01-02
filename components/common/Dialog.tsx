@@ -26,7 +26,7 @@ const Dialog: StylableFC<{
         <div id="card">
           <Card
             style={style}
-            className={cn("P-6 flex w-[23.125rem] flex-col gap-4", className)}
+            className={cn("p-6 flex w-92.5 flex-col gap-4 rounded-[1.75rem]!", className)}
           >
             {children}
           </Card>

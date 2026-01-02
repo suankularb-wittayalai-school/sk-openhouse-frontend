@@ -18,10 +18,10 @@ const PassportLinkConfirmDialog: StylableFC<{
   return (
     <Dialog open={open}>
       <div className="flex flex-col">
-        <Text type="headline" className="!text-tertiary">
+        <Text type="headline" className="text-tertiary!">
           {t("confirmConnect")}
         </Text>
-        <Text type="headline" className="!text-xl">
+        <Text type="headline" className="text-xl!">
           {constructName(pick(person, ["firstname", "lastname", "prefix"]))}
         </Text>
       </div>

@@ -8,16 +8,20 @@ import FAQsContainer from "@/components/landing/FAQSection";
 import { FC } from "react";
 import { ActivitiesList, BusRoute, Faqs } from "@/utils/types/landing";
 import { useTranslations } from "next-intl";
-import MrtDirectionCard from "@/components/landing/TransitGuideMRTSection";
-import BusRouteCard from "@/components/landing/TransitGuideBusSection";
-import WalkingMapCard from "@/components/landing/subcomponents/MapsSchoolLocation";
+import TransitGuideMRTSection from "@/components/landing/TransitGuideMRTSection";
+import TransitGuideBusSection from "@/components/landing/TransitGuideBusSection";
+import MapsSchoolLocation from "@/components/landing/subcomponents/MapsSchoolLocation";
 import Text from "@/components/common/Text";
+import ScheduleCard from "@/components/landing/subcomponents/ScheduleCard";
+import CardContainer from "@/components/common/CardContainer";
+import { scheduleItem } from "@/utils/types/schedule";
 
 const LandingPage: FC<{
   activities: ActivitiesList[];
   faqs: Faqs[];
   busRoute: BusRoute;
-}> = ({ activities, faqs, busRoute }) => {
+  scheduleItems: scheduleItem[];
+}> = ({ activities, faqs, busRoute, scheduleItems }) => {
   const t = useTranslations("landing");
   return (
     <div className="mt-5.5 flex flex-col gap-6 p-3 pt-0">
@@ -34,17 +38,28 @@ const LandingPage: FC<{
         </Link>
       </div>
 
+      {/* Schedule */}
+      <div className="flex flex-col gap-2">
+        <Text type="body">{t("section.schedule")}</Text>
+        <CardContainer>
+          {scheduleItems.map((scheduleItem) => (
+            <ScheduleCard scheduleItem={scheduleItem} />
+          ))}
+        </CardContainer>
+      </div>
+
       {/* FAQs  */}
       <FAQsContainer faqs={faqs} />
 
+      {/* TransitGuide */}
       <div className="flex flex-col gap-2">
         <Text type="body">{t("section.transit")}</Text>
         <div className="flex w-full flex-col gap-1">
           <div className="flex flex-col gap-1 md:flex-row">
-            <MrtDirectionCard />
-            <BusRouteCard route={busRoute} />
+            <TransitGuideMRTSection />
+            <TransitGuideBusSection route={busRoute} />
           </div>
-          <WalkingMapCard />
+          <MapsSchoolLocation />
         </div>
       </div>
     </div>
@@ -102,8 +117,26 @@ export const getStaticProps: GetStaticProps = async () => {
     ],
   };
 
+  /* Tempoary !!!  */
+  const scheduleItems: scheduleItem[] = [
+    {
+      id: "a",
+      name: "บรรยายแผนการเรียนการสอน",
+      description: "หอประชุมสวนกุหลาบรำลึก",
+      start_time: "09:30",
+      end_time: "12:00",
+    },
+    {
+      id: "b",
+      name: "ซุ้มกิจกรรมแผนการเรียน",
+      description: "ใต้หอประชุม 123 ปีฯ",
+      start_time: "09:30",
+      end_time: "16:00",
+    },
+  ];
+
   return {
-    props: { messages, activities, faqs, busRoute },
+    props: { messages, activities, faqs, busRoute, scheduleItems },
   };
 };
 

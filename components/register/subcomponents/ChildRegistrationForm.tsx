@@ -22,16 +22,17 @@ const ChildRegistrationForm: StylableFC<{
   return (
     <Card className="flex-col">
       <div className="grid grid-cols-2 gap-1">
-        <Chip variant="surface" apperance="rounded">
+        <Chip variant="surface" apperance="rounded" className="h-max">
           {t("child") + " " + count}
         </Chip>
         <div
-          className="grid place-items-center justify-self-end rounded-full"
+          className="grid cursor-pointer place-items-center justify-self-end
+            rounded-full"
           onClick={() => {
             handleDeletePerson();
           }}
         >
-          <MaterialIcon icon="close" className="!text-[24px]" />
+          <MaterialIcon icon="close" className="text-2xl!" />
         </div>
       </div>
       <div className="grid grid-cols-3 gap-[0.38rem]">
@@ -44,10 +45,7 @@ const ChildRegistrationForm: StylableFC<{
           }}
         >
           <option value={prefix.master}>{t("prefix.master")}</option>
-          <option value={prefix.mr}>{t("prefix.mr")}</option>
           <option value={prefix.miss}>{t("prefix.miss")}</option>
-          <option value={prefix.ms}>{t("prefix.ms")}</option>
-          <option value={prefix.mrs}>{t("prefix.mrs")}</option>
         </Select>
         <TextField
           name="firstname"

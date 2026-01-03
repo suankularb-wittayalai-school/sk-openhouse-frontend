@@ -49,12 +49,13 @@ const AdultRegistrationForm: StylableFC<{
         </div>
         {!user && handleDeletePerson && (
           <div
-            className="grid place-items-center justify-self-end rounded-full"
+            className="grid cursor-pointer place-items-center justify-self-end
+              rounded-full"
             onClick={() => {
               handleDeletePerson();
             }}
           >
-            <MaterialIcon icon="close" className="!text-[24px]" />
+            <MaterialIcon icon="close" className="text-2xl!" />
           </div>
         )}
       </div>
@@ -67,9 +68,7 @@ const AdultRegistrationForm: StylableFC<{
             handlePersonChange({ ...person, prefix: prefix });
           }}
         >
-          <option value={prefix.master}>{t("prefix.master")}</option>
           <option value={prefix.mr}>{t("prefix.mr")}</option>
-          <option value={prefix.miss}>{t("prefix.miss")}</option>
           <option value={prefix.ms}>{t("prefix.ms")}</option>
           <option value={prefix.mrs}>{t("prefix.mrs")}</option>
         </Select>

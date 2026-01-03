@@ -4,26 +4,28 @@
     "family": "ครอบครัว",
     "activity": "กิจกรรม"
   },
-  "label": {
-    "prefix": "คำนำหน้า",
-    "firstname": "ชื่อจริง",
-    "lastname": "นามสกุล",
-    "gender": "เพศ",
-    "birthdate": "วันเกิด",
-    "tel": "เบอร์โทรศัพท์ (ไม่จำเป็น)",
-    "relationshipToChild": "ความสัมพันธ์ของคุณกับเด็ก",
-    "email": "อีเมล",
-    "eventExpectations": "คุณคาดหวังอะไรจากงานนี้",
-    "nickname": "ชื่อเล่น",
-    "expectedGraduationYear": "จะจบระดับชั้น ป.6 ในปีการศึกษา",
-    "school": "โรงเรียนที่ศึกษาอยู่ในปัจจุบัน"
+  "family": {
+    "label": {
+      "prefix": "คำนำหน้า",
+      "firstname": "ชื่อจริง",
+      "lastname": "นามสกุล",
+      "gender": "เพศ",
+      "birthdate": "วันเกิด",
+      "tel": "เบอร์โทรศัพท์ (ไม่จำเป็น)",
+      "relationshipToChild": "ความสัมพันธ์ของคุณกับเด็ก",
+      "email": "อีเมล",
+      "eventExpectations": "คุณคาดหวังอะไรจากงานนี้",
+      "nickname": "ชื่อเล่น",
+      "expectedGraduationYear": "จะจบระดับชั้น ป.6 ในปีการศึกษา",
+      "school": "โรงเรียนที่ศึกษาอยู่ในปัจจุบัน"
+    },
+    "title": {
+      "family": "ครอบครัวของคุณ",
+      "you": "คุณ",
+      "otherMembers": "ผู้เข้าร่วมอื่น ๆ"
+    },
+    "action": { "addChild": "เพิ่มเด็ก", "addAdult": "เพิ่มผู้ใหญ่" }
   },
-  "title": {
-    "family": "ครอบครัวของคุณ",
-    "you": "คุณ",
-    "otherMembers": "ผู้เข้าร่วมอื่น ๆ"
-  },
-  "action": { "addChild": "เพิ่มเด็ก", "addAdult": "เพิ่มผู้ใหญ่" },
   "activity": {
     "title": "กิจกรรมที่จะเข้าร่วม",
     "chip": "กิจกรรม",

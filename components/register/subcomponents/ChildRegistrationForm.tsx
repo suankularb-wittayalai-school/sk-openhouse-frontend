@@ -13,7 +13,7 @@ const ChildRegistrationForm: StylableFC<{
   handlePersonChange: (person: person) => void;
 }> = ({ person, count, handlePersonChange }) => {
   const t = useTranslations("person");
-  const tx = useTranslations("register.label");
+  const tx = useTranslations("register.family.label");
   const GRADUATION_YEAR = [
     2569, 2570, 5271, 2572, 2573, 2574, 2575, 2576, 2577, 2578, 2579, 2580,
   ];

@@ -24,7 +24,7 @@ const FamilySection: StylableFC<{
     child: person[];
   }) => void;
 }> = ({ family, onFamilyChange }) => {
-  const t = useTranslations("register");
+  const t = useTranslations("register.family");
   return (
     <div className="flex flex-col gap-3">
       <Text type="headline">{t("title.family")}</Text>

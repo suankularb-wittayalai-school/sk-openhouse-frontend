@@ -22,7 +22,7 @@ const AdultRegistrationForm: StylableFC<{
   handleUserChange?: (user: user) => void;
 }> = ({ type, person, user, count, handlePersonChange, handleUserChange }) => {
   const t = useTranslations("person");
-  const tx = useTranslations("register.label");
+  const tx = useTranslations("register.family.label");
   return (
     <Card className="flex-col">
       <div className="flex flex-row gap-1">

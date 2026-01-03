@@ -53,13 +53,9 @@ const PassportScanDialog: StylableFC<{
           maxScansPerSecond: 5,
         },
       );
-
-      // Let scanner breathe for a moment; prevents the scanner from
-      // disappearing in even counts of opening. (I don't know why.)
-      //  - @pixelpxed
-      setTimeout(() => {
-        qrScanner.start();
-      }, 1);
+      
+      // This is a bit finicky on dev, on build it's "fine".
+      qrScanner.start();
       return () => {
         qrScanner.stop();
       };

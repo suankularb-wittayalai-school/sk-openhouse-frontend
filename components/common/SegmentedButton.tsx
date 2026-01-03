@@ -10,9 +10,9 @@ const SegmentedButton: StylableFC<{ children: React.ReactNode }> = ({
     <div
       style={style}
       className={cn(
-        "flex flex-row [&>*:first-child]:rounded-r-none",
-        "[&>*:last-child]:rounded-l-none",
-        "[&>*:not(:first-child):not(:last-child)]:rounded-none",
+        `flex flex-row *:w-full [&>*:first-child]:rounded-r-none
+        [&>*:last-child]:rounded-l-none
+        [&>*:not(:first-child):not(:last-child)]:rounded-none`,
         className,
       )}
     >

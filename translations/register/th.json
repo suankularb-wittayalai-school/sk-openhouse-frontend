@@ -23,5 +23,10 @@
     "you": "คุณ",
     "otherMembers": "ผู้เข้าร่วมอื่น ๆ"
   },
-  "action": { "addChild": "เพิ่มเด็ก", "addAdult": "เพิ่มผู้ใหญ่" }
+  "action": { "addChild": "เพิ่มเด็ก", "addAdult": "เพิ่มผู้ใหญ่" },
+  "activity": {
+    "title": "กิจกรรมที่จะเข้าร่วม",
+    "chip": "กิจกรรม",
+    "activityName": "แนะนำภาพรวมหลักสูตร"
+  }
 }

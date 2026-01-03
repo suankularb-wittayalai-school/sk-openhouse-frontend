@@ -37,7 +37,7 @@ const RegisterLoginPage = () => {
         email: "",
         is_onboarded: false,
         event_expectations: "",
-        is_attending_seminar: false,
+        is_attending_seminar: true,
       },
       person: {
         firstname: "",
@@ -119,7 +119,15 @@ const RegisterLoginPage = () => {
                 transition: { duration: 0.25 },
               }}
             >
-              <ActivitiesSection />
+              <ActivitiesSection
+                user={familyForm.registrant.user}
+                onUserChange={(user: user) =>
+                  setFamilyForm({
+                    ...familyForm,
+                    registrant: { ...familyForm.registrant, user: user },
+                  })
+                }
+              />
             </motion.div>,
           ][page]
         }

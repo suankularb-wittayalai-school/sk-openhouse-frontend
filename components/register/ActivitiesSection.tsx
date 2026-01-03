@@ -1,47 +1,48 @@
 import SegmentedButton from "@/components/common/SegmentedButton";
 import Button from "@/components/common/Button";
 import Card from "@/components/common/Card";
+import { StylableFC } from "@/utils/types/common";
+import { user } from "@/utils/types/user";
+import { useTranslations } from "next-intl";
+import Text from "@/components/common/Text";
+import Chip from "@/components/common/Chip";
 
-const ActivitiesSection = () => {
+const ActivitiesSection: StylableFC<{
+  user: user;
+  onUserChange: (user: user) => void;
+}> = ({ user, onUserChange }) => {
+  const t = useTranslations("register.activity");
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-primary text-2xl font-bold">กิจกรรมที่จะเข้าร่วม</h1>
+      <Text type="headline">{t("title")}</Text>
       <div className="flex flex-col gap-1">
         <Card className="flex flex-col">
           <div className="flex items-center gap-2">
-            <div
-              className="bg-primary-surface border-primary-border text-primary
-                rounded-full border px-2 py-1 text-xs"
-            >
-              กิจกรรม
-            </div>
-            <p className="text-primary text-sm">แนะนำภาพรวมหลักสูตร</p>
+            <Chip apperance="rounded" variant="surface">
+              {t("chip")}
+            </Chip>
+            <Text type="title">{t("activityName")}</Text>
           </div>
-          <SegmentedButton>
-            <Button icon="check_small" variant="primarySurface">
-              เข้าร่วม
-            </Button>{" "}
-            <Button className="border-l-0!" variant="primarySurface">
-              ไม่เข้าร่วม
-            </Button>
-          </SegmentedButton>
-        </Card>
-        <Card className="flex flex-col">
-          <div className="flex items-center gap-2">
-            <div
-              className="bg-primary-surface border-primary-border text-primary
-                rounded-full border px-2 py-1 text-xs"
-            >
-              กิจกรรม
-            </div>
-            <p className="text-primary text-sm">School Tour</p>
-          </div>
-          <SegmentedButton>
-            <Button variant="primarySurface">เข้าร่วม</Button>{" "}
+          <SegmentedButton className="self-strech">
             <Button
-              className="border-l-0!"
-              icon="check_small"
-              variant="primarySurface"
+              icon={user.is_attending_seminar ? "check_small" : undefined}
+              variant={user.is_attending_seminar ? "primary" : "primarySurface"}
+              className="flex-grow-1"
+              onClick={() =>
+                onUserChange({ ...user, is_attending_seminar: true })
+              }
+            >
+              เข้าร่วม
+            </Button>
+            <Button
+              icon={!user.is_attending_seminar ? "check_small" : undefined}
+              variant={
+                !user.is_attending_seminar ? "primary" : "primarySurface"
+              }
+              className="flex-grow-1"
+              onClick={() =>
+                onUserChange({ ...user, is_attending_seminar: false })
+              }
             >
               ไม่เข้าร่วม
             </Button>

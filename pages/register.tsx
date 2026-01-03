@@ -68,57 +68,20 @@ const RegisterLoginPage = () => {
         experimental={expStageIndicator}
       />
       <AnimatePresence mode="wait" initial={false}>
-        {
-          [
-            <motion.div
-              key="account"
-              initial={{ translateY: "-0.5rem", opacity: 0 }}
-              animate={{
-                translateY: 0,
-                opacity: 1,
-                transition: { duration: 0.25 },
-              }}
-              exit={{
-                translateY: "0.5rem",
-                opacity: 0,
-                transition: { duration: 0.25 },
-              }}
-            >
-              <AccountSection />
-            </motion.div>,
-            <motion.div
-              key="family"
-              initial={{ translateY: "-0.5rem", opacity: 0 }}
-              animate={{
-                translateY: 0,
-                opacity: 1,
-                transition: { duration: 0.25 },
-              }}
-              exit={{
-                translateY: "0.5rem",
-                opacity: 0,
-                transition: { duration: 0.25 },
-              }}
-            >
+        <motion.div
+          key={page}
+          initial={{ translateY: "-1rem", opacity: 0 }}
+          animate={{ translateY: 0, opacity: 1 }}
+          exit={{ translateY: "1rem", opacity: 0 }}
+          transition={{ duration: 0.25 }}
+        >
+          {
+            [
+              <AccountSection />,
               <FamilySection
                 family={familyForm}
                 onFamilyChange={setFamilyForm}
-              />
-            </motion.div>,
-            <motion.div
-              key="activities"
-              initial={{ translateY: "-0.5rem", opacity: 0 }}
-              animate={{
-                translateY: 0,
-                opacity: 1,
-                transition: { duration: 0.25 },
-              }}
-              exit={{
-                translateY: "0.5rem",
-                opacity: 0,
-                transition: { duration: 0.25 },
-              }}
-            >
+              />,
               <ActivitiesSection
                 user={familyForm.registrant.user}
                 onUserChange={(user: user) =>
@@ -127,17 +90,16 @@ const RegisterLoginPage = () => {
                     registrant: { ...familyForm.registrant, user: user },
                   })
                 }
-              />
-            </motion.div>,
-          ][page]
-        }
+              />,
+            ][page]
+          }
+        </motion.div>
       </AnimatePresence>
 
       {/* DEV!!! */}
       <div
-        className="fixed bottom-2 left-1/2 flex w-[calc(100vw-1rem)] max-w-xs
-          -translate-x-1/2 flex-col gap-1 rounded-lg border border-black/20
-          bg-yellow-400 p-3 opacity-25 transition-opacity hover:opacity-100"
+        className="flex flex-col gap-1 rounded-lg border border-black/20
+          bg-yellow-400 p-3 transition-opacity"
       >
         <div className="flex justify-between">
           <p className="text-sm font-bold">Development Controls</p>

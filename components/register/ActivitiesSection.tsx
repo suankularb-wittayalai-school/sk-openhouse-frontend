@@ -27,7 +27,7 @@ const ActivitiesSection: StylableFC<{
             <Button
               icon={user.is_attending_seminar ? "check_small" : undefined}
               variant={user.is_attending_seminar ? "primary" : "primarySurface"}
-              className="flex-grow-1"
+              className="grow"
               onClick={() =>
                 onUserChange({ ...user, is_attending_seminar: true })
               }
@@ -39,7 +39,7 @@ const ActivitiesSection: StylableFC<{
               variant={
                 !user.is_attending_seminar ? "primary" : "primarySurface"
               }
-              className="flex-grow-1"
+              className="grow"
               onClick={() =>
                 onUserChange({ ...user, is_attending_seminar: false })
               }

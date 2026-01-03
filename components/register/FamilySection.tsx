@@ -53,7 +53,7 @@ const FamilySection: StylableFC<{
         {(family.adult.length !== 0 || family.child.length !== 0) && (
           <Text type="body">{t("title.otherMembers")}</Text>
         )}
-        <div className="flex flex-col gap-[0.25rem]">
+        <div className="flex flex-col gap-1">
           {family.adult.map((member, count) => (
             <AdultRegistrationForm
               type="member"
@@ -96,7 +96,7 @@ const FamilySection: StylableFC<{
           <Button
             variant="primarySurface"
             icon="child_hat"
-            className="flex-grow-1"
+            className="grow"
             onClick={() =>
               onFamilyChange({
                 ...family,
@@ -127,7 +127,7 @@ const FamilySection: StylableFC<{
           <Button
             variant="primarySurface"
             icon="face"
-            className="flex-grow-1"
+            className="grow"
             onClick={() =>
               onFamilyChange({
                 ...family,

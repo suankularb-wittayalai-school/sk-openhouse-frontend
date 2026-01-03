@@ -22,7 +22,7 @@ const Dialog: StylableFC<{
   return (
     <motion.div
       className="h-vh w-vh bg-on-surface-variant fixed top-0 right-0 bottom-0
-        left-0 flex flex-col items-center justify-center"
+        left-0 flex flex-col items-center justify-center z-100"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, pointerEvents: "none" }}
@@ -49,13 +49,12 @@ const Dialog: StylableFC<{
           // Prevent click inside from passing up to the parent.
           e.stopPropagation();
         }}
-        className="w-full p-3"
+        className="w-full max-w-sm z-100"
       >
         <Card
           style={style}
           className={cn(
-            `m-auto flex w-full max-w-92.5 flex-col gap-4 rounded-[1.75rem]!
-            p-6`,
+            "m-auto mx-3 flex flex-col gap-4 rounded-[1.75rem]! p-6",
             className,
           )}
         >

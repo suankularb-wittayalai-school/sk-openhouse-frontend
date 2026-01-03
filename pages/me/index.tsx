@@ -41,6 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
     "me",
     "person",
     "register",
+    "passport",
   );
 
   const family = {

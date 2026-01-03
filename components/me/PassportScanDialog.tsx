@@ -80,7 +80,7 @@ const PassportScanDialog: StylableFC<{
       >
         <div
           className="border-primary-border bg-primary-surface relative
-            aspect-square h-64 w-64 overflow-hidden rounded-2xl border"
+            aspect-square max-w-64 overflow-hidden rounded-2xl border"
         >
           <div
             className="absolute top-1/2 left-1/2 flex w-full -translate-1/2
@@ -88,7 +88,10 @@ const PassportScanDialog: StylableFC<{
           >
             <Text type="body">{t("scanner.permissionRequest")}</Text>
           </div>
-          <video className="aspect-video h-64! object-cover" ref={videoRef} />
+          <video
+            className="aspect-square w-full max-w-64! object-cover"
+            ref={videoRef}
+          />
         </div>
       </div>
       <Button

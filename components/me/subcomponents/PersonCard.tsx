@@ -27,17 +27,16 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
     <div
       style={style}
       className={cn(
-        `border-primary-border text-primary flex items-center border-t p-2
+        `border-primary-border text-primary flex gap-2 items-center border-t p-2
         first:border-t-0`,
         className,
       )}
     >
       {count && (
-        <Text type="body" className="opacity-100!">
+        <Text type="body" className="opacity-100! text-right w-4">
           {count + ". "}
         </Text>
       )}
-
       <MaterialIcon
         icon={
           person.is_child
@@ -47,18 +46,21 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
               : "face"
         }
       />
-      <div className="ml-2 flex flex-col">
+      <div className={cn("flex grow", !count ? "flex-col" : "items-center justify-between")}>
         <Text type="title">
           {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
         </Text>
+
         <Text type="body">
           {(person.is_child
             ? t("isChild")
             : t(`relationshipToChild.${person.relationship_to_child}`)) +
-            " • " +
-            differenceInYears(new Date(), person.birthdate) +
-            " " +
-            t("year")}
+            (!count
+              ? " • " +
+                differenceInYears(new Date(), person.birthdate) +
+                " " +
+                t("year")
+              : "")}
         </Text>
       </div>
     </div>

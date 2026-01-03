@@ -12,7 +12,7 @@ const TextField: StylableFC<{
 }> = ({ name, label, value, disabled = false, setValue }) => {
   return (
     <div className="flex flex-1 flex-col items-start gap-0.5">
-      <Text type="body" className={value.length > 0 ? "visible" : "invisible"}>
+      <Text type="body">
         {label}
       </Text>
       <input

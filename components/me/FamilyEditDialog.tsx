@@ -42,9 +42,12 @@ const FamilyEditDialog: StylableFC<{
 }) => {
   const t = useTranslations("register.family");
   return (
-    <Dialog className="max-h-[calc(100vh-4rem)] !w-fit overflow-scroll">
+    <Dialog
+      onClickOutside={onClose}
+      className="max-h-[calc(100vh-4rem)] overflow-scroll p-3!"
+    >
       <div className="flex flex-col gap-3">
-        <Text type="headline">{t("title.edit")}</Text>
+        <Text type="headline" className="text-xl! mt-3">{t("title.edit")}</Text>
         <div className="flex flex-col gap-1">
           <Text type="body">{t("title.you")}</Text>
           <AdultRegistrationForm

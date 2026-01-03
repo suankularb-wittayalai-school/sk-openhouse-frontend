@@ -27,7 +27,6 @@ const PersonCardContainer: StylableFC<{
 
   const [registrationCardOpen, setRegistrationCardOpen] =
     useState<boolean>(false);
-;
   const [editingFamily, setEditingFamily] = useState(family);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deletingPerson, setDeletingPerson] = useState<string[]>([]);
@@ -35,67 +34,88 @@ const PersonCardContainer: StylableFC<{
     <div className="flex flex-col gap-2">
       <Text type="body">{t("section.aboutFamily")}</Text>
       <Card className="flex flex-col gap-0! p-0!">
-        {persons.map((person, i) => (
-          <PersonCard person={person} key={i} />
-        ))}
+        {[...[family.registrant.person], ...family.adult, ...family.child].map(
+          (person, i) => (
+            <PersonCard person={person} key={i} />
+          ),
+        )}
       </Card>
       <div className="flex gap-2">
-        <Button variant="outline" icon="edit" className="w-10 *:p-0 shrink-0"/>
-        <Button variant="primarySurface" className="w-full">{t("action.registrationCard")}</Button>
-      </div>
-      {editDialogOpen && (
-        <FamilyEditDialog
-          family={editingFamily}
-          onFamilyChange={setEditingFamily}
-          onClose={() => {
-            setEditingFamily(family);
-            setEditDialogOpen(false);
-          }}
-          onSubmit={(family: {
-            registrant: { user: user; person: person };
-            adult: person[];
-            child: person[];
-          }) => {
-            // Fetch API here
-            console.log(family, "final fetched family");
-            onFamilyChange(family);
-            setEditDialogOpen(false);
-          }}
-          onDeleteAdult={(index: number) => {
-            if (editingFamily.adult[index].id) {
-              setDeletingPerson([
-                ...deletingPerson,
-                editingFamily.adult[index].id,
-              ]);
-            }
-            setEditingFamily({
-              ...editingFamily,
-              adult: editingFamily.adult.toSpliced(index, 1),
-            });
-          }}
-          onDeleteChild={(index: number) => {
-            if (editingFamily.child[index].id) {
-              setDeletingPerson([
-                ...deletingPerson,
-                editingFamily.child[index].id,
-              ]);
-            }
-            setEditingFamily({
-              ...editingFamily,
-              child: editingFamily.child.toSpliced(index, 1),
-            });
+        <Button
+          variant="outline"
+          icon="edit"
+          className="w-10 shrink-0 *:p-0"
+          onClick={() => {
+            setEditDialogOpen(true);
           }}
         />
-      )}
+        <Button
+          variant="primarySurface"
+          className="w-full"
+          onClick={() => {
+            setRegistrationCardOpen(true);
+          }}
+        >
+          {t("action.registrationCard")}
+        </Button>
+      </div>
       <AnimatePresence>
+        {editDialogOpen && (
+          <FamilyEditDialog
+            family={editingFamily}
+            onFamilyChange={setEditingFamily}
+            onClose={() => {
+              setEditingFamily(family);
+              setEditDialogOpen(false);
+            }}
+            onSubmit={(family: {
+              registrant: { user: user; person: person };
+              adult: person[];
+              child: person[];
+            }) => {
+              // Fetch API here
+              console.log(family, "final fetched family");
+              onFamilyChange(family);
+              setEditDialogOpen(false);
+            }}
+            onDeleteAdult={(index: number) => {
+              if (editingFamily.adult[index].id) {
+                setDeletingPerson([
+                  ...deletingPerson,
+                  editingFamily.adult[index].id,
+                ]);
+              }
+              setEditingFamily({
+                ...editingFamily,
+                adult: editingFamily.adult.toSpliced(index, 1),
+              });
+            }}
+            onDeleteChild={(index: number) => {
+              if (editingFamily.child[index].id) {
+                setDeletingPerson([
+                  ...deletingPerson,
+                  editingFamily.child[index].id,
+                ]);
+              }
+              setEditingFamily({
+                ...editingFamily,
+                child: editingFamily.child.toSpliced(index, 1),
+              });
+            }}
+          />
+        )}
         {registrationCardOpen && (
           <RegistrationCard
-            persons={persons}
+            persons={[
+              ...[family.registrant.person],
+              ...family.adult,
+              ...family.child,
+            ]}
             onClose={() => setRegistrationCardOpen(false)}
           />
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 

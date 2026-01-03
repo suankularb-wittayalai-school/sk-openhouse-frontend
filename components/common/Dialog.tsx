@@ -22,7 +22,7 @@ const Dialog: StylableFC<{
   return (
     <motion.div
       className="h-vh w-vh bg-on-surface-variant fixed top-0 right-0 bottom-0
-        left-0 flex flex-col items-center justify-center"
+        left-0 z-1000 flex flex-col items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, pointerEvents: "none" }}

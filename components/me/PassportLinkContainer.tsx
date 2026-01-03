@@ -1,8 +1,8 @@
-import { StylableFC } from "@/utils/types/common";
-import { person } from "@/utils/types/person";
-import PassportLinkCard from "@/components/me/subcomponents/PassportLinkCard";
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
+import PassportLinkCard from "@/components/me/subcomponents/PassportLinkCard";
+import { StylableFC } from "@/utils/types/common";
+import { person } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 
 const PassportLinkContainer: StylableFC<{

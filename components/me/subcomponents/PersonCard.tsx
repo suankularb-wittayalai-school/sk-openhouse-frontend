@@ -27,13 +27,13 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
     <div
       style={style}
       className={cn(
-        `border-primary-border text-primary flex gap-2 items-center border-t p-2
+        `border-primary-border text-primary flex items-center gap-2 border-t p-2
         first:border-t-0`,
         className,
       )}
     >
       {count && (
-        <Text type="body" className="opacity-100! text-right w-4">
+        <Text type="body" className="w-4 text-right opacity-100!">
           {count + ". "}
         </Text>
       )}
@@ -46,7 +46,12 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
               : "face"
         }
       />
-      <div className={cn("flex grow", !count ? "flex-col" : "items-center justify-between")}>
+      <div
+        className={cn(
+          "flex grow",
+          !count ? "flex-col" : "items-center justify-between",
+        )}
+      >
         <Text type="title">
           {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
         </Text>

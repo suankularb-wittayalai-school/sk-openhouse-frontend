@@ -19,7 +19,7 @@ const PassportLinkConfirmDialog: StylableFC<{
   const [isBusy, setIsBusy] = useState<boolean>(false);
 
   const handleLinkPassport = () => {
-    setIsBusy(true)
+    setIsBusy(true);
     // TODO: API IMPLEMENTATION FUNCTIONALITY
     setTimeout(() => {
       onClose();

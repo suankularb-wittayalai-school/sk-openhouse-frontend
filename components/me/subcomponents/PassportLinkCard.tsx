@@ -18,7 +18,7 @@ import { useState } from "react";
  * @param person The person (child) to show.
  */
 const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
-  const t = useTranslations("passport")
+  const t = useTranslations("passport");
 
   const isLinked = !!person.child.passport_id;
 
@@ -42,7 +42,9 @@ const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
             isLinked ? "border-primary-border border" : null,
           )}
           variant={isLinked ? "transparent" : "primary"}
-          onClick={() => {setScanDialogOpen(true)}}
+          onClick={() => {
+            setScanDialogOpen(true);
+          }}
           disabled={isLinked}
         >
           {isLinked ? t("linkCard.connected") : t("linkCard.connect")}

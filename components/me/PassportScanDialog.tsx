@@ -53,7 +53,7 @@ const PassportScanDialog: StylableFC<{
           maxScansPerSecond: 5,
         },
       );
-      
+
       // This is a bit finicky on dev, on build it's "fine".
       qrScanner.start();
       return () => {

@@ -49,11 +49,13 @@ const Dialog: StylableFC<{
           // Prevent click inside from passing up to the parent.
           e.stopPropagation();
         }}
+        className="w-full p-3"
       >
         <Card
           style={style}
           className={cn(
-            "flex w-92.5 flex-col gap-4 rounded-[1.75rem]! p-6",
+            `m-auto flex w-full max-w-92.5 flex-col gap-4 rounded-[1.75rem]!
+            p-6`,
             className,
           )}
         >

@@ -6,12 +6,14 @@ import Select from "@/components/common/Select";
 import DatePicker from "@/components/common/DatePicker";
 import { gender, person, prefix } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
+import MaterialIcon from "@/components/common/MaterialIcon";
 
 const ChildRegistrationForm: StylableFC<{
   person: person;
   count: number;
   handlePersonChange: (person: person) => void;
-}> = ({ person, count, handlePersonChange }) => {
+  handleDeletePerson: () => void;
+}> = ({ person, count, handlePersonChange, handleDeletePerson }) => {
   const t = useTranslations("person");
   const tx = useTranslations("register.family.label");
   const GRADUATION_YEAR = [
@@ -19,10 +21,18 @@ const ChildRegistrationForm: StylableFC<{
   ];
   return (
     <Card className="flex-col">
-      <div className="flex flex-row gap-1">
+      <div className="grid grid-cols-2 gap-1">
         <Chip variant="surface" apperance="rounded">
           {t("child") + " " + count}
         </Chip>
+        <div
+          className="grid place-items-center justify-self-end rounded-full"
+          onClick={() => {
+            handleDeletePerson();
+          }}
+        >
+          <MaterialIcon icon="close" className="!text-[24px]" />
+        </div>
       </div>
       <div className="grid grid-cols-3 gap-[0.38rem]">
         <Select

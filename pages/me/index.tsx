@@ -14,7 +14,7 @@ import SchoolMap from "@/components/me/SchoolMap";
 const MyRegistrationPage: FC<{ persons: person[] }> = ({ persons }) => {
   return (
     <div className="flex flex-col gap-6 p-3 pt-0">
-      <SchoolMap/>
+      <SchoolMap />
       <PersonCardContainer persons={persons} />
       <PassportLinkContainer persons={persons} />
     </div>
@@ -22,7 +22,12 @@ const MyRegistrationPage: FC<{ persons: person[] }> = ({ persons }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const messages = await getStaticTranslations("common", "me", "person");
+  const messages = await getStaticTranslations(
+    "common",
+    "me",
+    "person",
+    "passport",
+  );
 
   
   {/* Tempoary !!!*/}

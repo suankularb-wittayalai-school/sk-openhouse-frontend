@@ -1,5 +1,5 @@
 export type user = {
-  id: string;
+  id?: string;
   email: string;
   is_onboarded: boolean;
   event_expectations: string;

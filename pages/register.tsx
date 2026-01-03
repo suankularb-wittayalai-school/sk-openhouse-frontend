@@ -5,9 +5,16 @@ import AccountSection from "@/components/register/AccountSection";
 import ActivitiesSection from "@/components/register/ActivitiesSection";
 import FamilySection from "@/components/register/FamilySection";
 import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
+import {
+  person,
+  gender,
+  prefix,
+  relationshipToChild,
+} from "@/utils/types/person";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { user } from "@/utils/types/user";
 
 const RegisterLoginPage = () => {
   const tx = useTranslations("register");
@@ -20,6 +27,38 @@ const RegisterLoginPage = () => {
   const [page, setPage] = useState<number>(0);
 
   const [expStageIndicator, setExpStageIndicator] = useState<boolean>(false);
+  const [familyForm, setFamilyForm] = useState<{
+    registrant: { user: user; person: person };
+    adult: person[];
+    child: person[];
+  }>({
+    registrant: {
+      user: {
+        email: "",
+        is_onboarded: false,
+        event_expectations: "",
+        is_attending_seminar: false,
+      },
+      person: {
+        firstname: "",
+        lastname: "",
+        gender: gender.male,
+        relationship_to_child: relationshipToChild.father,
+        tel: "",
+        prefix: prefix.master,
+        is_child: false,
+        birthdate: "",
+        child: {
+          nickname: undefined,
+          expected_graduation_year: undefined,
+          school: undefined,
+          passport_id: undefined,
+        },
+      },
+    },
+    adult: [],
+    child: [],
+  });
 
   return (
     <div className="flex flex-col gap-6 p-3">
@@ -61,7 +100,10 @@ const RegisterLoginPage = () => {
                 transition: { duration: 0.25 },
               }}
             >
-              <FamilySection />
+              <FamilySection
+                family={familyForm}
+                onFamilyChange={setFamilyForm}
+              />
             </motion.div>,
             <motion.div
               key="activities"
@@ -141,7 +183,7 @@ const RegisterLoginPage = () => {
 };
 
 export async function getStaticProps() {
-  const messages = await getStaticTranslations("common", "register");
+  const messages = await getStaticTranslations("common", "register", "person");
 
   return {
     props: { messages },

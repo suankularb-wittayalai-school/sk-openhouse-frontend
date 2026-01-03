@@ -88,7 +88,7 @@ const ChildRegistrationForm: StylableFC<{
           }}
         />
       </div>
-      <div className="grid grid-cols-2 gap-[3.8rem]">
+      <div className="grid grid-cols-2 gap-[0.38rem]">
         <TextField
           name="nickname"
           label={tx("nickname")}

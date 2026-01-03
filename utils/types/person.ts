@@ -29,7 +29,7 @@ export enum relationshipToChild {
 }
 
 export type person = {
-  id: string;
+  id?: string;
   prefix: prefix;
   firstname: string;
   lastname: string;
@@ -37,7 +37,7 @@ export type person = {
   gender: gender;
   tel: string;
   is_child: boolean;
-  relationship_to_child: relationshipToChild;
+  relationship_to_child: relationshipToChild | undefined;
   child: {
     nickname: string | undefined;
     school: string | undefined;

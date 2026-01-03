@@ -11,8 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^7.3.6",
-    "@mui/material": "^7.3.6",
+    "@types/google-one-tap": "^1.2.7",
     "date-fns": "^4.1.0",
     "material-symbols": "^0.40.2",
     "motion": "^12.23.26",

@@ -12,6 +12,8 @@ import {
 } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 import { user } from "@/utils/types/user";
+import Button from "@/components/common/Button";
+import MaterialIcon from "@/components/common/MaterialIcon";
 
 const AdultRegistrationForm: StylableFC<{
   type: "registrant" | "member";
@@ -20,19 +22,40 @@ const AdultRegistrationForm: StylableFC<{
   count: number;
   handlePersonChange: (person: person) => void;
   handleUserChange?: (user: user) => void;
-}> = ({ type, person, user, count, handlePersonChange, handleUserChange }) => {
+  handleDeletePerson?: () => void;
+}> = ({
+  type,
+  person,
+  user,
+  count,
+  handlePersonChange,
+  handleUserChange,
+  handleDeletePerson,
+}) => {
   const t = useTranslations("person");
   const tx = useTranslations("register.family.label");
   return (
     <Card className="flex-col">
-      <div className="flex flex-row gap-1">
-        <Chip variant="surface" apperance="rounded">
-          {t("adult") + " " + count}
-        </Chip>
-        {type == "registrant" && (
-          <Chip variant="outline" apperance="rounded">
-            {t("registrant")}
+      <div className="grid grid-cols-2">
+        <div className="flex flex-row gap-1">
+          <Chip variant="surface" apperance="rounded">
+            {t("adult") + " " + count}
           </Chip>
+          {type == "registrant" && (
+            <Chip variant="outline" apperance="rounded">
+              {t("registrant")}
+            </Chip>
+          )}
+        </div>
+        {!user && handleDeletePerson && (
+          <div
+            className="grid place-items-center justify-self-end rounded-full"
+            onClick={() => {
+              handleDeletePerson();
+            }}
+          >
+            <MaterialIcon icon="close" className="!text-[24px]" />
+          </div>
         )}
       </div>
       <div className="grid grid-cols-3 gap-[0.38rem]">

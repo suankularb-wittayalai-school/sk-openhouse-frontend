@@ -64,6 +64,13 @@ const FamilySection: StylableFC<{
                 newAdult[count] = person;
                 onFamilyChange({ ...family, adult: newAdult });
               }}
+              handleDeletePerson={() => {
+                const adult = [...family.adult];
+                onFamilyChange({
+                  ...family,
+                  adult: adult.toSpliced(count, 1),
+                });
+              }}
             />
           ))}
           {family.child.map((member, count) => (
@@ -74,6 +81,13 @@ const FamilySection: StylableFC<{
                 const newChild = [...family.child];
                 newChild[count] = person;
                 onFamilyChange({ ...family, child: newChild });
+              }}
+              handleDeletePerson={() => {
+                const child = [...family.child];
+                onFamilyChange({
+                  ...family,
+                  child: child.toSpliced(count, 1),
+                });
               }}
             />
           ))}

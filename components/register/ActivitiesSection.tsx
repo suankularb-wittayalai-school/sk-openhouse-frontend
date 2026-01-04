@@ -6,12 +6,22 @@ import { user } from "@/utils/types/user";
 import { useTranslations } from "next-intl";
 import Text from "@/components/common/Text";
 import Chip from "@/components/common/Chip";
+import fetchAPI from "@/utils/helpers/fetchAPI";
+import {
+  person,
+  gender,
+  prefix,
+  relationshipToChild,
+} from "@/utils/types/person";
+import { useRouter } from "next/router";
 
 const ActivitiesSection: StylableFC<{
   user: user;
+  person: person;
   onUserChange: (user: user) => void;
-}> = ({ user, onUserChange }) => {
+}> = ({ user, person, onUserChange }) => {
   const t = useTranslations("register.activity");
+  const router = useRouter();
   return (
     <div className="flex flex-col gap-6">
       <Text type="headline">{t("title")}</Text>
@@ -49,6 +59,31 @@ const ActivitiesSection: StylableFC<{
           </SegmentedButton>
         </Card>
       </div>
+      <Button
+        variant="primary"
+        onClick={() => {
+          const { child, ...formattedPerson } = person;
+          const registeredEvent = user.is_attending_seminar
+            ? ["6bd53ff6-019e-44f4-9e78-e0153b8eed7a"]
+            : [];
+          console.log(formattedPerson);
+          const test = {
+            ...formattedPerson,
+            event_expectations: user.event_expectations,
+            registered_events: registeredEvent,
+          };
+
+          fetchAPI("/v1/user/onboard", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(test),
+          }).then((res) => {
+            if (res.ok) router.push("/me");
+          });
+        }}
+      >
+        Confirm
+      </Button>
     </div>
   );
 };

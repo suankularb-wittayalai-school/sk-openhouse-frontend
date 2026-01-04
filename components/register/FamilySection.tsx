@@ -25,7 +25,8 @@ const FamilySection: StylableFC<{
     adult: person[];
     child: person[];
   }) => void;
-}> = ({ family, onFamilyChange }) => {
+  onRedirect: () => void;
+}> = ({ family, onFamilyChange, onRedirect }) => {
   const t = useTranslations("register.family");
   return (
     <div className="flex flex-col gap-3">
@@ -157,7 +158,7 @@ const FamilySection: StylableFC<{
       <Button
         variant="primary"
         onClick={async () => {
-          const adults = [family.registrant.person, ...family.adult];
+          const adults = [...family.adult];
           const formattedAdults = [];
           const children = [...family.child];
           for (const child of children) {
@@ -183,6 +184,7 @@ const FamilySection: StylableFC<{
               body: JSON.stringify(child),
             });
           });
+          onRedirect();
         }}
       >
         Continue

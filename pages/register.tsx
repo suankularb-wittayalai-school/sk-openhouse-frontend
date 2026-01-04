@@ -46,7 +46,6 @@ const RegisterLoginPage = () => {
         relationship_to_child: relationshipToChild.father,
         tel: "",
         prefix: prefix.master,
-        is_child: false,
         birthdate: "",
         child: {
           nickname: undefined,
@@ -77,13 +76,15 @@ const RegisterLoginPage = () => {
         >
           {
             [
-              <AccountSection />,
+              <AccountSection onRedirect={() => setPage(1)} />,
               <FamilySection
                 family={familyForm}
                 onFamilyChange={setFamilyForm}
+                onRedirect={() => setPage(2)}
               />,
               <ActivitiesSection
                 user={familyForm.registrant.user}
+                person={familyForm.registrant.person}
                 onUserChange={(user: user) =>
                   setFamilyForm({
                     ...familyForm,

@@ -5,9 +5,7 @@ import { useRouter } from "next/router";
 import Header from "@/components/common/Header";
 import localFont from "next/font/local";
 import cn from "@/utils/helpers/cn";
-import { useState } from "react";
-import { user } from "@/utils/types/user";
-import UserContext from "@/contexts/UserContext";
+import { UserProvider } from "@/contexts/UserContext";
 
 const lineSeed = localFont({
   src: [
@@ -27,9 +25,8 @@ const lineSeed = localFont({
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const [user, setUser] = useState<user | null>(null);
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserProvider>
       <NextIntlClientProvider
         locale={router.locale}
         timeZone="Asia/Bangkok"
@@ -48,7 +45,7 @@ function App({ Component, pageProps }: AppProps) {
           </div>
         </div>
       </NextIntlClientProvider>
-    </UserContext.Provider>
+    </UserProvider>
   );
 }
 

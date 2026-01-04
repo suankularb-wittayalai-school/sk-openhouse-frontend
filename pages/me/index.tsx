@@ -6,24 +6,23 @@ import { FC, useEffect, useState } from "react";
 import PersonCardContainer from "@/components/me/PersonCardContainer";
 import SchoolMap from "@/components/me/SchoolMap";
 import fetchAPI from "@/utils/helpers/fetchAPI";
+import { useUser } from "@/contexts/UserContext";
 
 const MyRegistrationPage: FC<{}> = ({}) => {
+  const { user } = useUser();
   const [familyForm, setFamilyForm] = useState<Family>();
 
   useEffect(() => {
+    if (!user) return;
     const getFamilyData = async () => {
       const { data: rawFamily } = await fetchAPI("/v1/user/family", {
         method: "GET",
       }).then((res) => res.json());
-      const { data: user } = await fetchAPI("/v1/user", {
-        method: "GET",
-      }).then((res) => res.json());
+
       const family: Family = {
         registrant: {
-          user: {
-            ...user,
-          },
-          person: rawFamily.registrant,
+          user: user,
+          person: { ...rawFamily.registrant, isChild: false },
         },
         adult:
           rawFamily.family_members.filter(
@@ -36,11 +35,10 @@ const MyRegistrationPage: FC<{}> = ({}) => {
       };
 
       setFamilyForm(family);
-      console.log(family);
     };
 
     getFamilyData();
-  }, []);
+  }, [user]);
 
   if (!familyForm) return;
 

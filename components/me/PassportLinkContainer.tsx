@@ -2,22 +2,30 @@ import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
 import PassportLinkCard from "@/components/me/subcomponents/PassportLinkCard";
 import { StylableFC } from "@/utils/types/common";
-import { person } from "@/utils/types/person";
+import { Family, person } from "@/utils/types/person";
+import { user } from "@/utils/types/user";
 import { useTranslations } from "next-intl";
 
 const PassportLinkContainer: StylableFC<{
-  people: person[];
-}> = ({ people }) => {
+  family: Family;
+}> = ({ family }) => {
   const t = useTranslations("me");
+
+  const children =
+    [
+      family.registrant.person,
+      ...(family.adult || []),
+      ...(family.child || []),
+    ]?.filter((person) => person.is_child) || [];
+  if (children.length === 0) return;
+
   return (
     <div className="flex flex-col gap-2">
       <Text type="body">{t("section.passport")}</Text>
       <Card className="flex flex-col gap-0! p-0!">
-        {people
-          .filter((person) => person.is_child)
-          .map((person, i) => (
-            <PassportLinkCard person={person} key={i} />
-          ))}
+        {children.map((person, i) => (
+          <PassportLinkCard person={person} key={i} />
+        ))}
       </Card>
     </div>
   );

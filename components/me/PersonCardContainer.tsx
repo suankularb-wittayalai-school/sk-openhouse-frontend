@@ -4,7 +4,7 @@ import Text from "@/components/common/Text";
 import RegistrationCard from "@/components/me/RegistrationCard";
 import PersonCard from "@/components/me/subcomponents/PersonCard";
 import { StylableFC } from "@/utils/types/common";
-import { person } from "@/utils/types/person";
+import { Family, person } from "@/utils/types/person";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import { user } from "@/utils/types/user";
@@ -12,11 +12,7 @@ import { useState } from "react";
 import FamilyEditDialog from "@/components/me/FamilyEditDialog";
 
 const PersonCardContainer: StylableFC<{
-  family: {
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
-  };
+  family: Family;
   onFamilyChange: (family: {
     registrant: { user: user; person: person };
     adult: person[];
@@ -34,11 +30,13 @@ const PersonCardContainer: StylableFC<{
     <div className="flex flex-col gap-2">
       <Text type="body">{t("section.aboutFamily")}</Text>
       <Card className="flex flex-col gap-0! p-0!">
-        {[...[family.registrant.person], ...family.adult, ...family.child].map(
-          (person, i) => (
-            <PersonCard person={person} key={i} />
-          ),
-        )}
+        {[
+          family.registrant.person,
+          ...(family.adult || []),
+          ...(family.child || []),
+        ].map((person, i) => (
+          <PersonCard person={person} key={i} />
+        ))}
       </Card>
       <div className="flex gap-2">
         <Button

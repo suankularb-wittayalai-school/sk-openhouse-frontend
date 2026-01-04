@@ -1,8 +1,9 @@
 import { GSIStatus } from "@/components/register/AccountSection";
+import UserContext from "@/contexts/UserContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { GsiButtonConfiguration, IdConfiguration } from "google-one-tap";
 import { useLocale } from "next-intl";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 export default function useGoogleIdentityServices(
   options: Partial<{
@@ -13,14 +14,24 @@ export default function useGoogleIdentityServices(
   const { parentButtonID, onStateChange } = options;
 
   const locale = useLocale();
+  const { setUser } = useContext(UserContext);
 
   async function logInWithGoogle(credential: string) {
     onStateChange?.(GSIStatus.processing);
-
     fetchAPI("/v1/user/oauth/code", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id_token: credential }),
+    }).then((res) => {
+      if (res.ok) {
+        fetchAPI("/v1/user", { method: "GET" })
+          .then((res) => res.json())
+          .then(({ data }) => {
+            // Check for error here
+            setUser(data);
+          });
+        onStateChange?.(GSIStatus.redirecting);
+      }
     });
   }
 

@@ -39,7 +39,7 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
       )}
       <MaterialIcon
         icon={
-          person.is_child
+          person.child !== undefined
             ? "face_5"
             : person.gender == gender.female
               ? "face_4"
@@ -57,7 +57,7 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
         </Text>
 
         <Text type="body">
-          {(person.is_child
+          {(person.child !== undefined
             ? t("isChild")
             : t(`relationshipToChild.${person.relationship_to_child}`)) +
             (!count

@@ -74,7 +74,6 @@ const PersonCardContainer: StylableFC<{
               child: person[];
             }) => {
               // Fetch API here
-              console.log(family, "final fetched family");
               onFamilyChange(family);
               setEditDialogOpen(false);
             }}

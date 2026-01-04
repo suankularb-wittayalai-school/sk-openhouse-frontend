@@ -35,13 +35,13 @@ export type person = {
   lastname: string;
   birthdate: string;
   gender: gender;
-  tel: string;
-  is_child: boolean;
-  relationship_to_child: relationshipToChild | undefined;
+  tel?: string;
+  is_child?: boolean;
+  relationship_to_child?: relationshipToChild;
   child: {
     nickname: string | undefined;
     school: string | undefined;
     expected_graduation_year: number | undefined;
-    passport_id: string | null | undefined;
+    passport_id?: string | undefined;
   };
 };

@@ -16,9 +16,9 @@ const ScheduleCard: StylableFC<{ scheduleItem: scheduleItem }> = ({
       <div className="flex flex-col">
         <Text type="title">{scheduleItem.name}</Text>
         <Text type="body">
-          {scheduleItem.start_time +
+          {scheduleItem.start_time.slice(0, 5) +
             " - " +
-            scheduleItem.end_time +
+            scheduleItem.end_time.slice(0, 5) +
             " น." +
             " • " +
             scheduleItem.description}

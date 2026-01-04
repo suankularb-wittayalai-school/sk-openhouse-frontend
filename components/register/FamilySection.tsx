@@ -11,6 +11,8 @@ import { user } from "@/utils/types/user";
 import AdultRegistrationForm from "@/components/register/subcomponents/AdultRegistrationForm";
 import ChildRegistrationForm from "@/components/register/subcomponents/ChildRegistrationForm";
 import { useTranslations } from "next-intl";
+import { parallel } from "radash";
+import fetchAPI from "@/utils/helpers/fetchAPI";
 
 const FamilySection: StylableFC<{
   family: {
@@ -106,16 +108,12 @@ const FamilySection: StylableFC<{
                     firstname: "",
                     lastname: "",
                     gender: gender.male,
-                    relationship_to_child: undefined,
-                    tel: "",
                     prefix: prefix.master,
-                    is_child: true,
                     birthdate: "",
                     child: {
                       nickname: "",
                       expected_graduation_year: 2569,
                       school: "",
-                      passport_id: "",
                     },
                   },
                 ],
@@ -140,7 +138,6 @@ const FamilySection: StylableFC<{
                     relationship_to_child: relationshipToChild.father,
                     tel: "",
                     prefix: prefix.master,
-                    is_child: false,
                     birthdate: "",
                     child: {
                       nickname: undefined,
@@ -157,7 +154,39 @@ const FamilySection: StylableFC<{
           </Button>
         </div>
       </div>
-      <Button variant="primary">Continue</Button>
+      <Button
+        variant="primary"
+        onClick={async () => {
+          const adults = [family.registrant.person, ...family.adult];
+          const formattedAdults = [];
+          const children = [...family.child];
+          for (const child of children) {
+            child.child.expected_graduation_year = Number(
+              child.child.expected_graduation_year,
+            );
+          }
+          for (const adult of adults) {
+            const { child, ...formattedAdult } = adult;
+            formattedAdults.push(formattedAdult);
+          }
+          parallel(formattedAdults.length, formattedAdults, (adult) => {
+            return fetchAPI("/v1/user/family", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(adult),
+            });
+          });
+          parallel(children.length, children, (child) => {
+            return fetchAPI("/v1/user/family", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(child),
+            });
+          });
+        }}
+      >
+        Continue
+      </Button>
     </div>
   );
 };

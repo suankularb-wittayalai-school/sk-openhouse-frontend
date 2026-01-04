@@ -15,6 +15,7 @@ import Text from "@/components/common/Text";
 import ScheduleCard from "@/components/landing/subcomponents/ScheduleCard";
 import CardContainer from "@/components/common/CardContainer";
 import { scheduleItem } from "@/utils/types/schedule";
+import fetchAPI from "@/utils/helpers/fetchAPI";
 
 const LandingPage: FC<{
   activities: ActivitiesList[];
@@ -117,23 +118,9 @@ export const getStaticProps: GetStaticProps = async () => {
     ],
   };
 
-  /* Tempoary !!!  */
-  const scheduleItems: scheduleItem[] = [
-    {
-      id: "a",
-      name: "บรรยายแผนการเรียนการสอน",
-      description: "หอประชุมสวนกุหลาบรำลึก",
-      start_time: "09:30",
-      end_time: "12:00",
-    },
-    {
-      id: "b",
-      name: "ซุ้มกิจกรรมแผนการเรียน",
-      description: "ใต้หอประชุม 123 ปีฯ",
-      start_time: "09:30",
-      end_time: "16:00",
-    },
-  ];
+  const { data: scheduleItems } = await fetchAPI("/v1/schedule", {
+    method: "GET",
+  }).then((res) => res.json());
 
   return {
     props: { messages, activities, faqs, busRoute, scheduleItems },

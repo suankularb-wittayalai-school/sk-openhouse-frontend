@@ -115,7 +115,7 @@ const AdultRegistrationForm: StylableFC<{
         <TextField
           name="tel"
           label={tx("tel")}
-          value={person.tel}
+          value={person.tel || ""}
           setValue={(tel) => {
             handlePersonChange({ ...person, tel: tel });
           }}

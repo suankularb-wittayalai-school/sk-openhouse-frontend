@@ -86,7 +86,7 @@ const ChildRegistrationForm: StylableFC<{
           }}
         />
       </div>
-      <div className="grid grid-cols-1">
+      {/* <div className="grid grid-cols-1">
         <TextField
           name="tel"
           label={tx("tel")}
@@ -95,7 +95,7 @@ const ChildRegistrationForm: StylableFC<{
             handlePersonChange({ ...person, tel: tel });
           }}
         />
-      </div>
+      </div> */}
       <div className="grid grid-cols-2 gap-[0.38rem]">
         <TextField
           name="nickname"

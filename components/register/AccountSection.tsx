@@ -6,7 +6,7 @@ import TextField from "@/components/common/TextField";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
-import { useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 export enum GSIStatus {
   initial = "initial",
@@ -15,10 +15,16 @@ export enum GSIStatus {
   redirecting = "redirecting",
 }
 
-const AccountSection = () => {
+const AccountSection: FC<{ onRedirect: () => void }> = ({ onRedirect }) => {
   const [state, setState] = useState<GSIStatus>(GSIStatus.initial);
   const [token, setToken] = useState<string>("");
   const [testResponse, setTestResponse] = useState<string>("");
+
+  useEffect(() => {
+    if (state == GSIStatus.redirecting) {
+      onRedirect();
+    }
+  }, [state]);
 
   return (
     <div className="flex flex-col gap-4">

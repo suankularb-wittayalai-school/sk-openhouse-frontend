@@ -66,17 +66,15 @@ const ActivitiesSection: StylableFC<{
           const registeredEvent = user.is_attending_seminar
             ? ["6bd53ff6-019e-44f4-9e78-e0153b8eed7a"]
             : [];
-          console.log(formattedPerson);
-          const test = {
-            ...formattedPerson,
-            event_expectations: user.event_expectations,
-            registered_events: registeredEvent,
-          };
 
           fetchAPI("/v1/user/onboard", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(test),
+            body: JSON.stringify({
+              ...formattedPerson,
+              event_expectations: user.event_expectations,
+              registered_events: registeredEvent,
+            }),
           }).then((res) => {
             if (res.ok) router.push("/me");
           });

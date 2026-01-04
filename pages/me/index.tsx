@@ -1,9 +1,6 @@
 import PassportLinkContainer from "@/components/me/PassportLinkContainer";
 import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
-import {
-  Family,
-  person,
-} from "@/utils/types/person";
+import { Family, person } from "@/utils/types/person";
 import { GetStaticProps } from "next";
 import { FC, useEffect, useState } from "react";
 import PersonCardContainer from "@/components/me/PersonCardContainer";
@@ -21,22 +18,20 @@ const MyRegistrationPage: FC<{}> = ({}) => {
       const { data: user } = await fetchAPI("/v1/user", {
         method: "GET",
       }).then((res) => res.json());
-
       const family: Family = {
         registrant: {
           user: {
             ...user,
-            isChild: false,
           },
           person: rawFamily.registrant,
         },
         adult:
           rawFamily.family_members.filter(
-            (person: person) => !person.is_child,
+            (person: person) => person.child == undefined,
           ) || [],
         child:
           rawFamily.family_members.filter(
-            (person: person) => person.is_child,
+            (person: person) => person.child !== undefined,
           ) || [],
       };
 
@@ -47,7 +42,7 @@ const MyRegistrationPage: FC<{}> = ({}) => {
     getFamilyData();
   }, []);
 
-  if (!familyForm) return
+  if (!familyForm) return;
 
   return (
     <div className="flex flex-col gap-6 p-3 pt-0">
@@ -66,7 +61,6 @@ export const getStaticProps: GetStaticProps = async () => {
     "register",
     "passport",
   );
-
 
   return {
     props: { messages },

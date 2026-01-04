@@ -32,6 +32,7 @@ export enum relationshipToChild {
 
 export type person = {
   id?: string;
+  created_at?: string;
   prefix: prefix;
   firstname: string;
   lastname: string;

@@ -12,7 +12,6 @@ import {
 } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 import { user } from "@/utils/types/user";
-import Button from "@/components/common/Button";
 import MaterialIcon from "@/components/common/MaterialIcon";
 
 const AdultRegistrationForm: StylableFC<{
@@ -23,6 +22,7 @@ const AdultRegistrationForm: StylableFC<{
   handlePersonChange: (person: person) => void;
   handleUserChange?: (user: user) => void;
   handleDeletePerson?: () => void;
+  hideEventExpectations?: boolean;
 }> = ({
   type,
   person,
@@ -31,6 +31,7 @@ const AdultRegistrationForm: StylableFC<{
   handlePersonChange,
   handleUserChange,
   handleDeletePerson,
+  hideEventExpectations = false,
 }) => {
   const t = useTranslations("person");
   const tx = useTranslations("register.family.label");
@@ -156,16 +157,21 @@ const AdultRegistrationForm: StylableFC<{
               disabled={true}
             />
           </div>
-          <div className="grid grid-cols-1">
-            <TextField
-              name="eventExpectations"
-              label={tx("eventExpectations")}
-              value={user.event_expectations}
-              setValue={(expectations) => {
-                handleUserChange({ ...user, event_expectations: expectations });
-              }}
-            />
-          </div>
+          {!hideEventExpectations && (
+            <div className="grid grid-cols-1">
+              <TextField
+                name="eventExpectations"
+                label={tx("eventExpectations")}
+                value={user.event_expectations}
+                setValue={(expectations) => {
+                  handleUserChange({
+                    ...user,
+                    event_expectations: expectations,
+                  });
+                }}
+              />
+            </div>
+          )}
         </>
       )}
     </Card>

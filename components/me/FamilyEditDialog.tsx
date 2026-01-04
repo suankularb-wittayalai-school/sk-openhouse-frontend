@@ -5,6 +5,7 @@ import {
   gender,
   prefix,
   relationshipToChild,
+  Family,
 } from "@/utils/types/person";
 import { user } from "@/utils/types/user";
 import Text from "@/components/common/Text";
@@ -14,22 +15,10 @@ import { useTranslations } from "next-intl";
 import Button from "@/components/common/Button";
 
 const FamilyEditDialog: StylableFC<{
-  family: {
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
-  };
-  onFamilyChange: (family: {
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
-  }) => void;
+  family: Family;
+  onFamilyChange: (family: Family) => void;
   onClose: () => void;
-  onSubmit: (family: {
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
-  }) => void;
+  onSubmit: (family: Family) => void;
   onDeleteAdult: (index: number) => void;
   onDeleteChild: (index: number) => void;
 }> = ({

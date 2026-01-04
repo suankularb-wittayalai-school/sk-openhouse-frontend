@@ -1,3 +1,5 @@
+import { user } from "./user";
+
 /**
  * The prefix of a person.
  */
@@ -44,4 +46,10 @@ export type person = {
     expected_graduation_year: number | undefined;
     passport_id?: string | undefined;
   };
+};
+
+export type Family = {
+  registrant: { user: user; person: person };
+  adult: person[];
+  child: person[];
 };

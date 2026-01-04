@@ -2,16 +2,12 @@ import PassportLinkContainer from "@/components/me/PassportLinkContainer";
 import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
 import {
   Family,
-  gender,
   person,
-  prefix,
-  relationshipToChild,
 } from "@/utils/types/person";
 import { GetStaticProps } from "next";
 import { FC, useEffect, useState } from "react";
 import PersonCardContainer from "@/components/me/PersonCardContainer";
 import SchoolMap from "@/components/me/SchoolMap";
-import { user } from "@/utils/types/user";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 
 const MyRegistrationPage: FC<{}> = ({}) => {
@@ -51,7 +47,7 @@ const MyRegistrationPage: FC<{}> = ({}) => {
     getFamilyData();
   }, []);
 
-  if (!familyForm) return <h1>Loading</h1>;
+  if (!familyForm) return
 
   return (
     <div className="flex flex-col gap-6 p-3 pt-0">

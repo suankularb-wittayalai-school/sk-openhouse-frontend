@@ -41,7 +41,7 @@ const RegisterLoginPage = () => {
         email: "",
         is_onboarded: false,
         event_expectations: "",
-        is_attending_seminar: true,
+        registered_events: [],
       },
       person: {
         firstname: "",
@@ -90,7 +90,7 @@ const RegisterLoginPage = () => {
                       if (!data.data.is_onboarded) {
                         setPage(1);
                       } else {
-                        router.push("/me")
+                        router.push("/me");
                       }
                     });
                 }}
@@ -101,14 +101,9 @@ const RegisterLoginPage = () => {
                 onRedirect={() => setPage(2)}
               />,
               <ActivitiesSection
-                user={familyForm.registrant.user}
-                person={familyForm.registrant.person}
-                onUserChange={(user: user) =>
-                  setFamilyForm({
-                    ...familyForm,
-                    registrant: { ...familyForm.registrant, user: user },
-                  })
-                }
+                family={familyForm}
+                onFamilyChange={setFamilyForm}
+                onBack={() => setPage(1)}
               />,
             ][page]
           }

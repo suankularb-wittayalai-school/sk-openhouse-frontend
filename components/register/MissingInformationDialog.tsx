@@ -8,7 +8,8 @@ const MissingInformationDialog: FC<{ onClose: () => void }> = ({ onClose }) => {
   const t = useTranslations("register.family");
   return (
     <Dialog>
-      <Text type="headline">{t("title.missingInformation")}</Text>
+      <Text type="headline" className="text-xl!">{t("title.missingInformation")}</Text>
+      <Text type="body" className="text-tertiary!">{t("title.checkAgain")}</Text>
       <Button variant="primary" onClick={() => onClose()}>
         {t("action.close")}
       </Button>

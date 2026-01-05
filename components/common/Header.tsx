@@ -86,6 +86,7 @@ const Header: FC = () => {
                     localStorage.removeItem("loginStatus")
                   }
                   setIsLoggedIn(false)
+                  setUserMenuOpen(false)
                   router.push("/")
                 }
               })

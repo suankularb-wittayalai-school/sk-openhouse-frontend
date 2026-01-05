@@ -9,13 +9,13 @@ const EventTitle: FC = () => {
       <div className="flex w-full flex-col items-center justify-center">
         <Text
           type="headline"
-          className="m-1 text-center text-[32px] tracking-[-0.03em]"
+          className="m-1 text-center tracking-[-0.03em] text-3xl! md:text-4xl!"
         >
           <span>{t("title.first")}</span>
         </Text>
         <Text
           type="body"
-          className="m-1 text-center text-[24px] tracking-[-0.03em]"
+          className="m-1 text-center tracking-[-0.03em] text-xl! md:text-2xl!"
         >
           <span>{t("title.second")}</span>
         </Text>

@@ -6,12 +6,12 @@ const LoginPage = () => {
   const router = useRouter();
 
   return (
-    <>
+    <div className="p-3 pt-0">
       <AccountSection
         type="signIn"
         onRedirect={() => router.push("/me")}
       />
-    </>
+    </div>
   );
 };
 

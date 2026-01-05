@@ -11,10 +11,12 @@ export async function middleware(req: NextRequest) {
   const locale = req.nextUrl.locale as LangCode;
 
   const cookieHeader = req.cookies.toString();
-  const parts = cookieHeader.split(`;`);
-  let cookieValue = undefined;
-  const filteredPart = parts.filter((part) => part.startsWith("auth_token"));
+  const filteredPart = cookieHeader
+    .split(";")
+    .map((c) => c.trim())
+    .filter((c) => c.startsWith("auth_token"));
 
+  let cookieValue = undefined;
   if (filteredPart.length == 1) {
     cookieValue = filteredPart[0].split("=")[1];
   }
@@ -32,7 +34,7 @@ export async function middleware(req: NextRequest) {
 
   // Decide on destination based on user and page protection type
   const destination = (() => {
-    if (pageRole == "user" && cookieValue == undefined) {
+    if (pageRole == "user" && !req.cookies.toString().includes("auth_token")) {
       return "/";
     }
   })();

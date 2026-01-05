@@ -5,7 +5,6 @@ import Text from "@/components/common/Text";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import { AnimatePresence, motion } from "motion/react";
 import Button from "@/components/common/Button";
-import Markdown from "react-markdown";
 
 /**
  * A card that show question and answer as a drop down
@@ -57,7 +56,6 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
             className="overflow-hidden"
           >
             <div className="border-primary-border border-t p-2">
-              {/* <Markdown>{answer}</Markdown> */}
               <Text type="title" className="text-tertiary! opacity-100!">
                 {answer}
               </Text>

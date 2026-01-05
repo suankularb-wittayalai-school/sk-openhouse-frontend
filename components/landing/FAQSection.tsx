@@ -10,7 +10,7 @@ const questions = [
     answer: (
       <>
         ผู้ปกครองกดปุ่มลงทะเบียนผ่านเว็บไซต์{" "}
-        <Link href="/" className="faq-links">
+        <Link href="/" className="faq-links" target="_blank">
           https://openhouse.mysk.school/
         </Link>{" "}
         ด้วยบัญชี Google (ไม่สามารถใช้บัญชี @sk.ac.th หรือ @student.sk.ac.th
@@ -34,7 +34,8 @@ const questions = [
     question: "งานจัดที่ไหน และเมื่อใด",
     answer: (
       <>
-        จัดขึ้นที่โรงเรียนสวนกุหลาบวิทยาลัย ถนนตรีเพชร เขตพระนคร กรุงเทพฯ​<br />
+        จัดขึ้นที่โรงเรียนสวนกุหลาบวิทยาลัย ถนนตรีเพชร เขตพระนคร กรุงเทพฯ​
+        <br />
         วันที่ 11 มกราคม 2569 เริ่มงานเวลา 08:00 น. เป็นต้นไปครับ
       </>
     ),
@@ -79,6 +80,7 @@ const questions = [
         <Link
           href="https://www.facebook.com/PRsuankularb"
           className="faq-links"
+          target="_blank"
         >
           Facebook
         </Link>{" "}

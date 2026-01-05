@@ -43,6 +43,14 @@ function App({ Component, pageProps }: AppProps) {
           <div className="m-auto max-w-3xl">
             <Component {...pageProps} />
           </div>
+          <Image
+            src={"/longbuilding.svg"}
+            alt="Suankularb Building (Long Building)"
+            width={1920}
+            height={396.35}
+            className="fixed bottom-12 left-0 -z-1000 min-h-60 w-screen
+              object-cover"
+          />
         </div>
       </NextIntlClientProvider>
     </LoginProvider>

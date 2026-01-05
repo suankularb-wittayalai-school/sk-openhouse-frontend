@@ -87,6 +87,9 @@ const PersonCardContainer: StylableFC<{
                   return;
                 }
                 const { child, created_at, ...formattedAdult } = adult;
+                if (formattedAdult.tel?.length == 0) {
+                  formattedAdult.tel = undefined;
+                }
                 formattedAdults.push(formattedAdult);
               }
               for (let child of children) {

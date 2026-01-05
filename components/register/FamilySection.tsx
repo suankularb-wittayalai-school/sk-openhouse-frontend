@@ -190,6 +190,9 @@ const FamilySection: StylableFC<{
               return;
             }
             const { child, ...formattedAdult } = adult;
+            if (formattedAdult.tel?.length == 0) {
+              formattedAdult.tel = undefined;
+            }
             formattedAdults.push(formattedAdult);
           }
           parallel(formattedAdults.length, formattedAdults, (adult) => {

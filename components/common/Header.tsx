@@ -4,11 +4,12 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
+import { useLogin } from "@/contexts/LoginContext";
 
 const Header: FC = () => {
   const t = useTranslations("common");
 
-  const isLogin = false; // change later when auth is ready
+  const { isLoggedIn } = useLogin();
 
   return (
     <div
@@ -25,7 +26,7 @@ const Header: FC = () => {
       </Link>
 
       <div className="flex items-center gap-1">
-        {isLogin ? (
+        {isLoggedIn ? (
           <>
             <Link href="/">
               <Button variant="transparent" className="text-nowrap">

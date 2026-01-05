@@ -14,10 +14,13 @@ async function fetchAPI(url: string, options: RequestInit) {
 
   options.headers = headers;
 
-  return await fetch(
-    `${process.env.NEXT_PUBLIC_OPENHOUSE_API_URL}${url}`,
-    options,
-  );
+  if (typeof window !== "undefined") {
+    return await fetch(`/api/openhouse-api-proxy?path=${url}`, options);
+  } else
+    return await fetch(
+      `${process.env.NEXT_PUBLIC_OPENHOUSE_API_URL}${url}`,
+      options,
+    );
 }
 
 export default fetchAPI;

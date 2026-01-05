@@ -9,17 +9,8 @@ export async function middleware(req: NextRequest) {
   // Get original destination
   const route = req.nextUrl.pathname;
   const locale = req.nextUrl.locale as LangCode;
+  const authTokenExists = typeof req.cookies.get("auth_token") !== "undefined";
 
-  const cookieHeader = req.cookies.toString();
-  const filteredPart = cookieHeader
-    .split(";")
-    .map((c) => c.trim())
-    .filter((c) => c.startsWith("auth_token"));
-
-  let cookieValue = undefined;
-  if (filteredPart.length == 1) {
-    cookieValue = filteredPart[0].split("=")[1];
-  }
   // Log middleware start
   if (process.env.NODE_ENV === "development")
     console.log(
@@ -34,7 +25,7 @@ export async function middleware(req: NextRequest) {
 
   // Decide on destination based on user and page protection type
   const destination = (() => {
-    if (pageRole == "user" && !req.cookies.toString().includes("auth_token")) {
+    if (pageRole == "user" && !authTokenExists) {
       return "/";
     }
   })();

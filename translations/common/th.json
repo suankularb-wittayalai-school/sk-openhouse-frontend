@@ -1,0 +1,9 @@
+{
+  "header": {
+    "login": "เข้าสู่ระบบ",
+    "register": "ลงทะเบียน",
+    "details": "รายละเอียดงาน",
+    "myregistration": "การลงทะเบียนของฉัน"
+  },
+  "action": { "close": "ปิด" }
+}

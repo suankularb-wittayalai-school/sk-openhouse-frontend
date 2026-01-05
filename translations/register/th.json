@@ -1,0 +1,61 @@
+{
+  "stage": {
+    "account": "บัญชี",
+    "family": "ครอบครัว",
+    "activity": "กิจกรรม"
+  },
+  "account": {
+    "header": {
+      "register": "ลงทะเบียน",
+      "signIn": "เข้าสู่ระบบ"
+    },
+    "google": {
+      "continueInNew": "ดำเนินการต่อในหน้าต่างใหม่ที่เพิ่งเปิด",
+      "processing": "กำลังประมวลผล...",
+      "redirecting": "กำลังดำเนินการต่อ...",
+      "action": {
+        "cancel": "ยกเลิก"
+      }
+    }
+  },
+  "family": {
+    "label": {
+      "prefix": "คำนำหน้า",
+      "firstname": "ชื่อจริง",
+      "lastname": "นามสกุล",
+      "gender": "เพศ",
+      "birthdate": "วันเกิด",
+      "tel": "เบอร์โทรศัพท์ (ไม่จำเป็น)",
+      "relationshipToChild": "ความสัมพันธ์ของคุณกับเด็ก",
+      "email": "อีเมล",
+      "eventExpectations": "คุณคาดหวังอะไรจากงานนี้",
+      "nickname": "ชื่อเล่น",
+      "expectedGraduationYear": "จะจบระดับชั้น ป.6 ในปีการศึกษา",
+      "school": "โรงเรียนที่ศึกษาอยู่ในปัจจุบัน"
+    },
+    "title": {
+      "family": "ครอบครัวของคุณ",
+      "you": "คุณ",
+      "otherChildMembers": "ผู้เข้าร่วมเด็กอื่น ๆ",
+      "noOtherChildMembers": "ยังไม่มีผู้เข้าร่วมเด็กเพิ่มเติม",
+      "childRegistrationRequired": "คุณต้องเพิ่มนักเรียนที่จะมาด้วย เพื่อเล่นกิจกรรม",
+      "otherAdultMembers": "ผู้เข้าร่วมผู้ใหญ่อื่น ๆ",
+      "noOtherAdultMembers": "ยังไม่มีผู้เข้าร่วมผู้ใหญ่เพิ่มเติม",
+      "edit": "แก้ไขข้อมูลครอบครัวของคุณ"
+    },
+    "action": {
+      "addChild": "เพิ่มเด็ก",
+      "addAdult": "เพิ่มผู้ใหญ่",
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "continue": "ต่อไป",
+      "close": "ปิด"
+    }
+  },
+  "activity": {
+    "title": "กิจกรรมที่จะเข้าร่วม",
+    "chip": "กิจกรรม",
+    "activityName": "แนะนำภาพรวมหลักสูตร",
+    "action": { "finish": "เสร็จสิ้น" }
+  }
+}

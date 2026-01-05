@@ -1,67 +1,51 @@
 import "@/styles/globals.css";
-import {
-  Fira_Code,
-  IBM_Plex_Sans_Thai,
-  Inter,
-  Sarabun,
-  Space_Grotesk,
-} from "next/font/google";
 import type { AppProps } from "next/app";
 import { NextIntlClientProvider } from "next-intl";
 import { useRouter } from "next/router";
+import Header from "@/components/common/Header";
 import localFont from "next/font/local";
+import cn from "@/utils/helpers/cn";
+import { LoginProvider } from "@/contexts/LoginContext";
 
-// English fonts
-const bodyFontEN = Inter({ subsets: ["latin"] });
-const displayFontEN = Space_Grotesk({ subsets: ["latin"] });
-
-// Thai fonts
-const bodyFontTH = Sarabun({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["thai"],
-});
-const displayFontTH = IBM_Plex_Sans_Thai({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["thai"],
-});
-
-// Mono font
-const monoFont = Fira_Code({ subsets: ["latin"] });
-
-// Icon font
-const iconFont = localFont({
-  src: "../public/fonts/material-symbols.woff2",
-  weight: "100 700",
-  style: "normal",
+const lineSeed = localFont({
+  src: [
+    {
+      path: "../public/fonts/LINESeedSansTH_W_Rg.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/LINESeedSansTH_W_Bd.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-line-seed",
 });
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   return (
-    <>
-      {/* Put Next.js generated font families into CSS variables that SKCom and
-        TailwindCSS can use */}
-      <style jsx global>{`
-        :root {
-          --font-body:
-            ${bodyFontEN.style.fontFamily}, ${bodyFontTH.style.fontFamily};
-          --font-display:
-            ${displayFontEN.style.fontFamily}, ${displayFontTH.style.fontFamily};
-          --font-print: ${bodyFontTH.style.fontFamily}, Sarabun;
-          --font-mono:
-            ui-monospace, SFMono-Regular, SF Mono, ${monoFont.style.fontFamily},
-            ${bodyFontTH.style.fontFamily};
-          --font-icon: ${iconFont.style.fontFamily};
-        }
-      `}</style>
+    <LoginProvider>
       <NextIntlClientProvider
         locale={router.locale}
         timeZone="Asia/Bangkok"
         messages={pageProps.messages}
       >
-        <Component {...pageProps} />
+        <div
+          className={cn(
+            lineSeed.variable,
+            "font-line-seed",
+            "max-w-content-max mx-auto",
+          )}
+        >
+          <Header />
+          <div className="m-auto max-w-3xl">
+            <Component {...pageProps} />
+          </div>
+        </div>
       </NextIntlClientProvider>
-    </>
+    </LoginProvider>
   );
 }
 

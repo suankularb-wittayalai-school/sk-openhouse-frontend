@@ -10,20 +10,31 @@ export async function middleware(req: NextRequest) {
   const route = req.nextUrl.pathname;
   const locale = req.nextUrl.locale as LangCode;
 
+  const cookieHeader = req.cookies.toString();
+  const parts = cookieHeader.split(`;`);
+  let cookieValue = undefined;
+  const filteredPart = parts.filter((part) => part.startsWith("auth_token"));
+
+  if (filteredPart.length == 1) {
+    cookieValue = filteredPart[0].split("=")[1];
+  }
   // Log middleware start
   if (process.env.NODE_ENV === "development")
     console.log(
-      `\u001b[1m\x1b[35m →\u001b[0m Running middleware on ${route} …`
+      `\u001b[1m\x1b[35m →\u001b[0m Running middleware on ${route} …`,
     );
 
   // Get current page protection type
   const pageRole = (() => {
-    return "user";
+    if (route === "/me") return "user";
+    else return "public";
   })();
 
   // Decide on destination based on user and page protection type
   const destination = (() => {
-    return null;
+    if (pageRole == "user" && cookieValue == undefined) {
+      return "/";
+    }
   })();
 
   // Log middleware end
@@ -31,13 +42,13 @@ export async function middleware(req: NextRequest) {
     console.log(
       `\u001b[1m\x1b[35m →\x1b[0m\u001b[0m ${
         destination ? `Redirected to ${destination}` : "Continued"
-      }`
+      }`,
     );
 
   // Redirect if decided so, continue if not
   if (destination)
     return NextResponse.redirect(
-      new URL(getLocalePath(destination, locale), req.url)
+      new URL(getLocalePath(destination, locale), req.url),
     );
   return NextResponse.next();
 }

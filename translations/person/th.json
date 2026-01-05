@@ -1,0 +1,25 @@
+{
+  "adult": "ผู้ใหญ่",
+  "child": "เด็ก",
+  "registrant": "ผู้เข้าสู่ระบบ",
+  "year": "ปี",
+  "prefix": {
+    "master": "ด.ช.",
+    "mr": "นาย",
+    "miss": "ด.ญ.",
+    "ms": "น.ส.",
+    "mrs": "นาง"
+  },
+  "gender": {
+    "male": "ชาย",
+    "female": "หญิง",
+    "other": "อื่น ๆ"
+  },
+  "relationshipToChild": {
+    "father": "บิดา",
+    "mother": "มารดา",
+    "legalGuardian": "ผู้ปกครองตามกฎหมาย",
+    "other": "อื่น ๆ"
+  },
+  "isChild": "บุตร"
+}

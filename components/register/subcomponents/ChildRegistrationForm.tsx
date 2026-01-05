@@ -7,6 +7,7 @@ import DatePicker from "@/components/common/DatePicker";
 import { gender, person, prefix } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 import MaterialIcon from "@/components/common/MaterialIcon";
+import getDateEighteenYearsAgo from "@/utils/helpers/register/getDateEighteenYearsAgo";
 
 const ChildRegistrationForm: StylableFC<{
   person: person;
@@ -84,6 +85,7 @@ const ChildRegistrationForm: StylableFC<{
           setDate={(birthdate) => {
             handlePersonChange({ ...person, birthdate: birthdate });
           }}
+          min={getDateEighteenYearsAgo()}
         />
       </div>
       {/* <div className="grid grid-cols-1">

@@ -13,8 +13,7 @@ import TransitGuideBusSection from "@/components/landing/TransitGuideBusSection"
 import MapsSchoolLocation from "@/components/landing/subcomponents/MapsSchoolLocation";
 import Text from "@/components/common/Text";
 import ScheduleCard from "@/components/landing/subcomponents/ScheduleCard";
-import CardContainer from "@/components/common/CardContainer";
-import { scheduleItem } from "@/utils/types/schedule";
+import SchoolMap from "@/components/me/SchoolMap";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 
 const LandingPage: FC<{
@@ -38,6 +37,8 @@ const LandingPage: FC<{
           ))}
         </CardContainer>
       </div>
+
+      <SchoolMap />
 
       {/* FAQs  */}
       <FAQsContainer faqs={faqs} />

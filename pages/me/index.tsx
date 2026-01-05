@@ -4,7 +4,6 @@ import { Family, person } from "@/utils/types/person";
 import { GetStaticProps } from "next";
 import { FC, useEffect, useState } from "react";
 import PersonCardContainer from "@/components/me/PersonCardContainer";
-import SchoolMap from "@/components/me/SchoolMap";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { useLogin } from "@/contexts/LoginContext";
 
@@ -45,7 +44,6 @@ const MyRegistrationPage: FC<{}> = ({}) => {
 
   return (
     <div className="flex flex-col gap-6 p-3 pt-0">
-      <SchoolMap />
       <PersonCardContainer family={familyForm} onFamilyChange={setFamilyForm} />
       <PassportLinkContainer family={familyForm} />
     </div>

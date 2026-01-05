@@ -6,20 +6,16 @@ import Image from "next/image";
 import map from "@/public/Map.svg";
 
 const SchoolMap: StylableFC<{}> = ({}) => {
-  const t = useTranslations("me");
+  const t = useTranslations("landing");
   return (
     <div className="flex flex-col gap-2">
       <Text type="body">{t("section.map")}</Text>
 
       <Image
         src={map}
-        alt="event map"
+        alt="Event Map Diagram"
         className="border-primary-border self-center rounded-lg border"
       />
-
-      {/* <Button variant="primarySurface" className="w-full">
-        {t("action.exploreMap")}
-      </Button> */}
     </div>
   );
 };

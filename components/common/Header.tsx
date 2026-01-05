@@ -62,7 +62,7 @@ const Header: FC = () => {
                 cursor-pointer items-center justify-center rounded-full border"
               onClick={() => setUserMenuOpen(true)}
             >
-              {user.data.profile_url ? (
+              {user.data.profile_url !== undefined ? (
                 <Image
                   src={user.data.profile_url}
                   width={40}
@@ -97,7 +97,7 @@ const Header: FC = () => {
             <Text type="headline" className="text-xl!">
               บัญชีของคุณ
             </Text>
-            {user.data && (
+            {user.data.profile_url !== "undefined" && (
               <div
                 className="border-primary-border flex items-center gap-2
                   rounded-lg border p-2"
@@ -126,7 +126,7 @@ const Header: FC = () => {
                   method: "POST",
                 }).then((res) => {
                   if (res.ok) {
-                    if (typeof window !== "undefined") {
+                    if (typeof window !== undefined) {
                       localStorage.removeItem("loginStatus");
                     }
                     setIsLoggedIn(false);

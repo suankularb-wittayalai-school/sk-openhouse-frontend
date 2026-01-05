@@ -120,7 +120,7 @@ const Header: FC = () => {
               </div>
             )} */}
             <Button
-              variant="primary"
+              variant="primarySurface"
               onClick={() => {
                 fetchAPI("/v1/user/signout", {
                   method: "POST",
@@ -137,6 +137,9 @@ const Header: FC = () => {
               }}
             >
               ออกจากระบบ
+            </Button>
+            <Button variant="primary" onClick={() => setUserMenuOpen(false)}>
+              ปิด
             </Button>
           </Dialog>
         )}

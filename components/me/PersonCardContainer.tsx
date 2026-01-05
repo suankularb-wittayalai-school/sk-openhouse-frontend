@@ -80,6 +80,17 @@ const PersonCardContainer: StylableFC<{
               const adults = [...family.adult, family.registrant.person];
               const children = [...family.child];
               const formattedAdults = [];
+              fetchAPI("/v1/user", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  event_expectations:
+                    family.registrant.user.event_expectations.length == 0
+                      ? undefined
+                      : family.registrant.user.event_expectations,
+                  registered_events: family.registrant.user,
+                }),
+              });
 
               for (let adult of adults) {
                 if (isMissingRequiredTextField("adult", adult)) {

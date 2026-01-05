@@ -11,12 +11,7 @@ const PassportLinkContainer: StylableFC<{
 }> = ({ family }) => {
   const t = useTranslations("me");
 
-  const children =
-    [
-      family.registrant.person,
-      ...(family.adult || []),
-      ...(family.child || []),
-    ]?.filter((person) => person.is_child) || [];
+  const children = family.child;
   if (children.length === 0) return;
 
   return (

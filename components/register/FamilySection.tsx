@@ -34,11 +34,7 @@ const FamilySection: StylableFC<{
         variant="primary"
         onClick={async () => {
           if (
-            isMissingRequiredTextField(
-              "registrant",
-              family.registrant.person,
-              family.registrant.user,
-            )
+            isMissingRequiredTextField("registrant", family.registrant.person)
           ) {
             setOpenMissingInfoDialog(true);
             return;

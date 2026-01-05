@@ -35,24 +35,35 @@ const ActivitiesSection: StylableFC<{
           </div>
           <SegmentedButton className="self-strech">
             <Button
-              icon={user.is_attending_seminar ? "check_small" : undefined}
-              variant={user.is_attending_seminar ? "primary" : "primarySurface"}
+              icon={
+                user.registered_events.length == 1 ? "check_small" : undefined
+              }
+              variant={
+                user.registered_events.length == 1
+                  ? "primary"
+                  : "primarySurface"
+              }
               className="grow"
               onClick={() =>
-                onUserChange({ ...user, is_attending_seminar: true })
+                onUserChange({
+                  ...user,
+                  registered_events: ["6bd53ff6-019e-44f4-9e78-e0153b8eed7a"],
+                })
               }
             >
               เข้าร่วม
             </Button>
             <Button
-              icon={!user.is_attending_seminar ? "check_small" : undefined}
+              icon={
+                user.registered_events.length !== 1 ? "check_small" : undefined
+              }
               variant={
-                !user.is_attending_seminar ? "primary" : "primarySurface"
+                user.registered_events.length !== 1
+                  ? "primary"
+                  : "primarySurface"
               }
               className="grow"
-              onClick={() =>
-                onUserChange({ ...user, is_attending_seminar: false })
-              }
+              onClick={() => onUserChange({ ...user, registered_events: [] })}
             >
               ไม่เข้าร่วม
             </Button>
@@ -63,17 +74,17 @@ const ActivitiesSection: StylableFC<{
         variant="primary"
         onClick={() => {
           const { child, ...formattedPerson } = person;
-          const registeredEvent = user.is_attending_seminar
-            ? ["6bd53ff6-019e-44f4-9e78-e0153b8eed7a"]
-            : [];
 
           fetchAPI("/v1/user/onboard", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               ...formattedPerson,
-              event_expectations: user.event_expectations,
-              registered_events: registeredEvent,
+              event_expectations:
+                user.event_expectations.length == 0
+                  ? undefined
+                  : user.event_expectations,
+              registered_events: user.registered_events,
             }),
           }).then((res) => {
             if (res.ok) router.push("/me");

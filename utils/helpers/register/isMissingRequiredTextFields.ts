@@ -1,10 +1,8 @@
 import { person } from "@/utils/types/person";
-import { user } from "@/utils/types/user";
 
 export default function isMissingRequiredTextField(
   type: "registrant" | "adult" | "child",
   person: person,
-  user?: user,
 ): boolean {
   // Required for everyone
   const REQUIRED_PERSON_FIELDS: (keyof person)[] = [
@@ -16,8 +14,7 @@ export default function isMissingRequiredTextField(
     "nickname",
     "school",
   ];
-  // Only registrants have users
-  const REQUIRED_USER_FIELDS: (keyof user)[] = ["event_expectations"];
+
   for (let field of REQUIRED_PERSON_FIELDS) {
     if (!person[field]) return true;
   }
@@ -26,10 +23,6 @@ export default function isMissingRequiredTextField(
       if (!person.child[field]) return true;
     }
   }
-  if (type == "registrant" && user) {
-    for (let field of REQUIRED_USER_FIELDS) {
-      if (!user[field]) return true;
-    }
-  }
+
   return false;
 }

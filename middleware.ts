@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { LangCode } from "@/utils/types/common";
 import getLocalePath from "@/utils/helpers/getLocalePaths";
+import fetchAPI from "./utils/helpers/fetchAPI";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -10,14 +11,16 @@ export async function middleware(req: NextRequest) {
   const route = req.nextUrl.pathname;
   const locale = req.nextUrl.locale as LangCode;
 
-  const cookieHeader = req.cookies.toString();
-  const parts = cookieHeader.split(`;`);
-  let cookieValue = undefined;
-  const filteredPart = parts.filter((part) => part.startsWith("auth_token"));
+  const cookieHeader = req.cookies.toString(); 
+  const { data: user } = await fetchAPI("/v1/user", {
+    method: "GET",
+    headers: {
+      Cookie: cookieHeader, 
+    },
+  }).then((res) => res.json());
 
-  if (filteredPart.length == 1) {
-    cookieValue = filteredPart[0].split("=")[1];
-  }
+  console.log("user:", user);
+
   // Log middleware start
   if (process.env.NODE_ENV === "development")
     console.log(
@@ -26,15 +29,12 @@ export async function middleware(req: NextRequest) {
 
   // Get current page protection type
   const pageRole = (() => {
-    if (route === "/me") return "user";
-    else return "public";
+    return "user";
   })();
 
   // Decide on destination based on user and page protection type
   const destination = (() => {
-    if (pageRole == "user" && cookieValue == undefined) {
-      return "/";
-    }
+    return null;
   })();
 
   // Log middleware end

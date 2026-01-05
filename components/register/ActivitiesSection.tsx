@@ -7,19 +7,23 @@ import { useTranslations } from "next-intl";
 import Text from "@/components/common/Text";
 import Chip from "@/components/common/Chip";
 import fetchAPI from "@/utils/helpers/fetchAPI";
-import {
-  person,
-  gender,
-  prefix,
-  relationshipToChild,
-} from "@/utils/types/person";
+import { person } from "@/utils/types/person";
 import { useRouter } from "next/router";
+import { parallel } from "radash";
 
 const ActivitiesSection: StylableFC<{
-  user: user;
-  person: person;
-  onUserChange: (user: user) => void;
-}> = ({ user, person, onUserChange }) => {
+  family: {
+    registrant: { user: user; person: person };
+    adult: person[];
+    child: person[];
+  };
+  onFamilyChange: (family: {
+    registrant: { user: user; person: person };
+    adult: person[];
+    child: person[];
+  }) => void;
+  onBack: () => void;
+}> = ({ family, onFamilyChange, onBack }) => {
   const t = useTranslations("register.activity");
   const router = useRouter();
   return (
@@ -36,18 +40,28 @@ const ActivitiesSection: StylableFC<{
           <SegmentedButton className="self-strech">
             <Button
               icon={
-                user.registered_events.length == 1 ? "check_small" : undefined
+                family.registrant.user.registered_events.length == 1
+                  ? "check_small"
+                  : undefined
               }
               variant={
-                user.registered_events.length == 1
+                family.registrant.user.registered_events.length == 1
                   ? "primary"
                   : "primarySurface"
               }
               className="grow"
               onClick={() =>
-                onUserChange({
-                  ...user,
-                  registered_events: ["6bd53ff6-019e-44f4-9e78-e0153b8eed7a"],
+                onFamilyChange({
+                  ...family,
+                  registrant: {
+                    person: family.registrant.person,
+                    user: {
+                      ...family.registrant.user,
+                      registered_events: [
+                        "6bd53ff6-019e-44f4-9e78-e0153b8eed7a",
+                      ],
+                    },
+                  },
                 })
               }
             >
@@ -55,44 +69,91 @@ const ActivitiesSection: StylableFC<{
             </Button>
             <Button
               icon={
-                user.registered_events.length !== 1 ? "check_small" : undefined
+                family.registrant.user.registered_events.length !== 1
+                  ? "check_small"
+                  : undefined
               }
               variant={
-                user.registered_events.length !== 1
+                family.registrant.user.registered_events.length !== 1
                   ? "primary"
                   : "primarySurface"
               }
               className="grow"
-              onClick={() => onUserChange({ ...user, registered_events: [] })}
+              onClick={() =>
+                onFamilyChange({
+                  ...family,
+                  registrant: {
+                    person: family.registrant.person,
+                    user: { ...family.registrant.user, registered_events: [] },
+                  },
+                })
+              }
             >
               ไม่เข้าร่วม
             </Button>
           </SegmentedButton>
         </Card>
       </div>
-      <Button
-        variant="primary"
-        onClick={() => {
-          const { child, ...formattedPerson } = person;
-
-          fetchAPI("/v1/user/onboard", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              ...formattedPerson,
-              event_expectations:
-                user.event_expectations.length == 0
-                  ? undefined
-                  : user.event_expectations,
-              registered_events: user.registered_events,
-            }),
-          }).then((res) => {
-            if (res.ok) router.push("/me");
-          });
-        }}
-      >
-        Confirm
-      </Button>
+      <div className="flex gap-2">
+        <Button
+          icon="chevron_left"
+          variant="outline"
+          onClick={() => onBack()}
+          className="w-10 shrink-0 *:p-0"
+        />
+        <Button
+          variant="primary"
+          className="w-full"
+          onClick={() => {
+            const { child, ...formattedPerson } = family.registrant.person;
+            const adults = [...family.adult];
+            const formattedAdults = [];
+            const children = [...family.child];
+            for (const child of children) {
+              child.child.expected_graduation_year = Number(
+                child.child.expected_graduation_year,
+              );
+            }
+            for (const adult of adults) {
+              const { child, ...formattedAdult } = adult;
+              if (formattedAdult.tel?.length == 0) {
+                formattedAdult.tel = undefined;
+              }
+              formattedAdults.push(formattedAdult);
+            }
+            parallel(formattedAdults.length, formattedAdults, (adult) => {
+              return fetchAPI("/v1/user/family", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(adult),
+              });
+            });
+            parallel(children.length, children, (child) => {
+              return fetchAPI("/v1/user/family", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(child),
+              });
+            });
+            fetchAPI("/v1/user/onboard", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ...formattedPerson,
+                event_expectations:
+                  family.registrant.user.event_expectations.length == 0
+                    ? undefined
+                    : family.registrant.user.event_expectations,
+                registered_events: family.registrant.user.registered_events,
+              }),
+            }).then((res) => {
+              if (res.ok) router.push("/me");
+            });
+          }}
+        >
+          Confirm
+        </Button>
+      </div>
     </div>
   );
 };

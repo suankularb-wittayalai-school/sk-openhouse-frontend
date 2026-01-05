@@ -4,8 +4,6 @@ import Text from "@/components/common/Text";
 import { person } from "@/utils/types/person";
 import { user } from "@/utils/types/user";
 import { useTranslations } from "next-intl";
-import { parallel } from "radash";
-import fetchAPI from "@/utils/helpers/fetchAPI";
 import isMissingRequiredTextField from "@/utils/helpers/register/isMissingRequiredTextFields";
 import { useState } from "react";
 import MissingInformationDialog from "@/components/register/MissingInformationDialog";
@@ -39,43 +37,19 @@ const FamilySection: StylableFC<{
             setOpenMissingInfoDialog(true);
             return;
           }
-          const adults = [...family.adult];
-          const formattedAdults = [];
-          const children = [...family.child];
-          for (const child of children) {
+          for (const child of family.child) {
             if (isMissingRequiredTextField("child", child)) {
               setOpenMissingInfoDialog(true);
               return;
             }
-            child.child.expected_graduation_year = Number(
-              child.child.expected_graduation_year,
-            );
           }
-          for (const adult of adults) {
+          for (const adult of family.adult) {
             if (isMissingRequiredTextField("adult", adult)) {
               setOpenMissingInfoDialog(true);
               return;
             }
-            const { child, ...formattedAdult } = adult;
-            if (formattedAdult.tel?.length == 0) {
-              formattedAdult.tel = undefined;
-            }
-            formattedAdults.push(formattedAdult);
           }
-          parallel(formattedAdults.length, formattedAdults, (adult) => {
-            return fetchAPI("/v1/user/family", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(adult),
-            });
-          });
-          parallel(children.length, children, (child) => {
-            return fetchAPI("/v1/user/family", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(child),
-            });
-          });
+
           onRedirect();
         }}
       >

@@ -101,14 +101,9 @@ const RegisterLoginPage = () => {
                 onRedirect={() => setPage(2)}
               />,
               <ActivitiesSection
-                user={familyForm.registrant.user}
-                person={familyForm.registrant.person}
-                onUserChange={(user: user) =>
-                  setFamilyForm({
-                    ...familyForm,
-                    registrant: { ...familyForm.registrant, user: user },
-                  })
-                }
+                family={familyForm}
+                onFamilyChange={setFamilyForm}
+                onBack={() => setPage(1)}
               />,
             ][page]
           }

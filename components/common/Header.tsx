@@ -1,15 +1,22 @@
 import Button from "@/components/common/Button";
+import Dialog from "@/components/common/Dialog";
 import MaterialIcon from "@/components/common/MaterialIcon";
+import Text from "@/components/common/Text";
+import { useLogin } from "@/contexts/LoginContext";
+import fetchAPI from "@/utils/helpers/fetchAPI";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { FC } from "react";
-import { useLogin } from "@/contexts/LoginContext";
+import { useRouter } from "next/router";
+import { FC, useState } from "react";
 
 const Header: FC = () => {
   const t = useTranslations("common");
+  const router = useRouter()
 
   const { isLoggedIn } = useLogin();
+
+  const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
 
   return (
     <div
@@ -40,7 +47,8 @@ const Header: FC = () => {
             </Link>
             <div
               className="bg-primary-surface border-primary-border flex h-10 w-10
-                items-center justify-center rounded-full border"
+                cursor-pointer items-center justify-center rounded-full border"
+              onClick={() => setUserMenuOpen(true)}
             >
               <MaterialIcon icon="face" size={24} className="text-primary" />
             </div>
@@ -60,6 +68,32 @@ const Header: FC = () => {
           </>
         )}
       </div>
+
+      {userMenuOpen && (
+        <Dialog onClickOutside={() => setUserMenuOpen(false)}>
+          <Text type="headline" className="text-xl!">
+            บัญชีของคุณ
+          </Text>
+          <Button
+            variant="primary"
+            onClick={() => {
+              fetchAPI("/v1/user/signout", {
+                method: "POST",
+              })
+              .then((res) => {
+                if (res.ok) {
+                  if (typeof window !== "undefined") {
+                    localStorage.removeItem("loginStatus")
+                  }
+                  router.push("/")
+                }
+              })
+            }}
+          >
+            ออกจากระบบ
+          </Button>
+        </Dialog>
+      )}
     </div>
   );
 };

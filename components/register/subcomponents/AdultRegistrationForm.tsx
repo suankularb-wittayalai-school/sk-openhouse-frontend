@@ -13,6 +13,7 @@ import {
 import { useTranslations } from "next-intl";
 import { user } from "@/utils/types/user";
 import MaterialIcon from "@/components/common/MaterialIcon";
+import getDateEighteenYearsAgo from "@/utils/helpers/register/getDateEighteenYearsAgo";
 
 const AdultRegistrationForm: StylableFC<{
   type: "registrant" | "member";
@@ -110,6 +111,7 @@ const AdultRegistrationForm: StylableFC<{
           setDate={(birthdate) => {
             handlePersonChange({ ...person, birthdate: birthdate });
           }}
+          max={getDateEighteenYearsAgo()}
         />
       </div>
       <div className="grid grid-cols-2 gap-2">

@@ -31,7 +31,7 @@ const PersonCardContainer: StylableFC<{
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deletingPerson, setDeletingPerson] = useState<string[]>([]);
   const [openMissingInfoDialog, setOpenMissingInfoDialog] = useState(false);
-  console.log(family, "initial");
+
   return (
     <div className="flex flex-col gap-2">
       <Text type="body">{t("section.aboutFamily")}</Text>
@@ -110,7 +110,6 @@ const PersonCardContainer: StylableFC<{
                 ...formattedAdults.filter((adult) => adult.id?.length !== 0),
                 ...children.filter((child) => child.id?.length !== 0),
               ];
-              console.log(orginPerson, "orfperson");
               for (let id of deletingPerson) {
                 fetchAPI(`/v1/user/family/${id}`, { method: "DELETE" });
               }

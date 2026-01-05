@@ -11,47 +11,26 @@ const MapsMRTStationLocation: StylableFC<{ mrtLocation: MrtLocation }> = ({
   mrtLocation,
 }) => {
   const [open, setOpen] = useState<boolean>(true);
-  const handleOpen = () => setOpen(!open);
   return (
     <div
       className="border-primary-border h-max w-full overflow-hidden rounded-md
         border"
     >
       <div
-        className="flex cursor-pointer items-center justify-between p-2 pl-3"
-        onClick={handleOpen}
+        className="flex items-center justify-between p-2 pl-3"
       >
         <Text type="title" className="text-primary! opacity-100!">
           <span className="font-bold">{mrtLocation.station}</span>{" "}
           <span>{mrtLocation.exit}</span>
         </Text>
-        {/* <Button variant="transparent" className="h-6! w-6! *:p-0! hover:bg-transparent!">
-          <motion.div
-            animate={{ rotate: open ? 0 : 180 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="flex items-center justify-center"
-          >
-            <MaterialIcon icon="arrow_drop_down" />
-          </motion.div>
-        </Button> */}
       </div>
-      <AnimatePresence initial={false}>
-        <motion.div
-          initial={false}
-          animate={{
-            height: open ? "auto" : 0,
-            opacity: open ? 1 : 0,
-          }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
-          className="border-primary-border overflow-hidden border-t"
-        >
-          <iframe
-            src={`https://www.google.com/maps/embed/v1/directions?key=${process.env.NEXT_PUBLIC_MAPS_EMBED_API_KEY}&origin=${mrtLocation.mapLocation},Bangkok&destination=Suankularb+Wittayalai+School,Bangkok&mode=walking&zoom=15`}
-            className="w-full h-full max-h-100 border-none"
-            loading="lazy"
-          />
-        </motion.div>
-      </AnimatePresence>
+      <div className="border-primary-border overflow-hidden border-t">
+        <iframe
+          src={`https://www.google.com/maps/embed/v1/directions?key=${process.env.NEXT_PUBLIC_MAPS_EMBED_API_KEY}&origin=${mrtLocation.mapLocation},Bangkok&destination=Suankularb+Wittayalai+School,Bangkok&mode=walking&zoom=15`}
+          className="h-full max-h-100 w-full border-none"
+          loading="lazy"
+        />
+      </div>
     </div>
   );
 };

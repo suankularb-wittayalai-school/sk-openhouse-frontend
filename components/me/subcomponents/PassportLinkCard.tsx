@@ -32,7 +32,7 @@ const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
           border-t p-2 first:border-t-0`,
         )}
       >
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <MaterialIcon icon="face_5" />
           <Text type="title">
             {constructName(pick(person, ["prefix", "firstname", "lastname"]))}

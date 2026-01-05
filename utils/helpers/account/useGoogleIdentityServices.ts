@@ -1,5 +1,5 @@
 import { GSIStatus } from "@/components/register/AccountSection";
-import UserContext from "@/contexts/UserContext";
+import UserContext, { useLogin } from "@/contexts/LoginContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { GsiButtonConfiguration, IdConfiguration } from "google-one-tap";
 import { useLocale } from "next-intl";
@@ -14,7 +14,7 @@ export default function useGoogleIdentityServices(
   const { parentButtonID, onStateChange } = options;
 
   const locale = useLocale();
-  const { setUser } = useContext(UserContext);
+  const { setIsLoggedIn } = useLogin();
 
   async function logInWithGoogle(credential: string) {
     onStateChange?.(GSIStatus.processing);
@@ -24,12 +24,11 @@ export default function useGoogleIdentityServices(
       body: JSON.stringify({ id_token: credential }),
     }).then((res) => {
       if (res.ok) {
-        fetchAPI("/v1/user", { method: "GET" })
-          .then((res) => res.json())
-          .then(({ data }) => {
-            // Check for error here
-            setUser(data);
-          });
+        fetchAPI("/v1/user", { method: "GET" }).then((res) => {
+          if (res.status == 200) {
+            setIsLoggedIn(true);
+          }
+        });
         onStateChange?.(GSIStatus.redirecting);
       }
     });

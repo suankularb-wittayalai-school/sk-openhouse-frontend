@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Header from "@/components/common/Header";
 import localFont from "next/font/local";
 import cn from "@/utils/helpers/cn";
-import { UserProvider } from "@/contexts/UserContext";
+import { LoginProvider } from "@/contexts/LoginContext";
 
 const lineSeed = localFont({
   src: [
@@ -26,7 +26,7 @@ const lineSeed = localFont({
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   return (
-    <UserProvider>
+    <LoginProvider>
       <NextIntlClientProvider
         locale={router.locale}
         timeZone="Asia/Bangkok"
@@ -45,7 +45,7 @@ function App({ Component, pageProps }: AppProps) {
           </div>
         </div>
       </NextIntlClientProvider>
-    </UserProvider>
+    </LoginProvider>
   );
 }
 

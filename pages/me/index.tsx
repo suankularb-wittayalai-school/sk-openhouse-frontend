@@ -6,19 +6,20 @@ import { FC, useEffect, useState } from "react";
 import PersonCardContainer from "@/components/me/PersonCardContainer";
 import SchoolMap from "@/components/me/SchoolMap";
 import fetchAPI from "@/utils/helpers/fetchAPI";
-import { useUser } from "@/contexts/UserContext";
+import { useLogin } from "@/contexts/LoginContext";
 
 const MyRegistrationPage: FC<{}> = ({}) => {
-  const { user } = useUser();
+  const { isLoggedIn } = useLogin();
   const [familyForm, setFamilyForm] = useState<Family>();
-
   useEffect(() => {
-    if (!user) return;
+    if (!isLoggedIn) return;
     const getFamilyData = async () => {
+      const { data: user } = await fetchAPI("/v1/user", { method: "GET" }).then(
+        (res) => res.json(),
+      );
       const { data: rawFamily } = await fetchAPI("/v1/user/family", {
         method: "GET",
       }).then((res) => res.json());
-
       const family: Family = {
         registrant: {
           user: user,
@@ -38,7 +39,7 @@ const MyRegistrationPage: FC<{}> = ({}) => {
     };
 
     getFamilyData();
-  }, [user]);
+  }, [isLoggedIn]);
 
   if (!familyForm) return;
 

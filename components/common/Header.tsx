@@ -4,6 +4,7 @@ import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import { useLogin } from "@/contexts/LoginContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
+import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,7 @@ import { FC, useState } from "react";
 
 const Header: FC = () => {
   const t = useTranslations("common");
-  const router = useRouter()
+  const router = useRouter();
 
   const { isLoggedIn, setIsLoggedIn } = useLogin();
 
@@ -69,33 +70,34 @@ const Header: FC = () => {
         )}
       </div>
 
-      {userMenuOpen && (
-        <Dialog onClickOutside={() => setUserMenuOpen(false)}>
-          <Text type="headline" className="text-xl!">
-            บัญชีของคุณ
-          </Text>
-          <Button
-            variant="primary"
-            onClick={() => {
-              fetchAPI("/v1/user/signout", {
-                method: "POST",
-              })
-              .then((res) => {
-                if (res.ok) {
-                  if (typeof window !== "undefined") {
-                    localStorage.removeItem("loginStatus")
+      <AnimatePresence>
+        {userMenuOpen && (
+          <Dialog onClickOutside={() => setUserMenuOpen(false)}>
+            <Text type="headline" className="text-xl!">
+              บัญชีของคุณ
+            </Text>
+            <Button
+              variant="primary"
+              onClick={() => {
+                fetchAPI("/v1/user/signout", {
+                  method: "POST",
+                }).then((res) => {
+                  if (res.ok) {
+                    if (typeof window !== "undefined") {
+                      localStorage.removeItem("loginStatus");
+                    }
+                    setIsLoggedIn(false);
+                    setUserMenuOpen(false);
+                    router.push("/");
                   }
-                  setIsLoggedIn(false)
-                  setUserMenuOpen(false)
-                  router.push("/")
-                }
-              })
-            }}
-          >
-            ออกจากระบบ
-          </Button>
-        </Dialog>
-      )}
+                });
+              }}
+            >
+              ออกจากระบบ
+            </Button>
+          </Dialog>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

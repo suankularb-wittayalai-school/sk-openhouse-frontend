@@ -1,13 +1,14 @@
 {
   "title": {
-    "first": "Suankularb",
-    "second": "Open House 2026",
-    "description": "11 มกราคม พ.ศ. 2568 • 08:30 – 12:00 น."
+    "first": "SK Open House 2026",
+    "second": "Suan New Gen: New Curriculum and New Performance",
+    "description": "11 มกราคม พ.ศ. 2568 • 08:00 – 15:00 น."
   },
   "register": "ลงทะเบียนเข้าร่วมงาน",
   "section": {
     "activity": "กิจกรรม",
-    "schedule": "ตารางงาน",
+    "schedule": "กำหนดการ",
+    "map": "ผังงาน",
     "faq": "คำถามที่พบบ่อย",
     "transit": "การเดินทาง"
   },

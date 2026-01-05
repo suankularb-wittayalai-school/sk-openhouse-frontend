@@ -5,7 +5,7 @@ export type ActivitiesList = {
 
 export type Faqs = {
   question: string;
-  answer: string;
+  answer: React.ReactNode;
 };
 
 export type BusRoute = {

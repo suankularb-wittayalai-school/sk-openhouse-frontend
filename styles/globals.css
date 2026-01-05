@@ -46,3 +46,11 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+a.faq-links {
+  @apply text-primary underline;
+}
+
+ol {
+  @apply ml-6 list-decimal;
+}

@@ -12,12 +12,10 @@ import Button from "@/components/common/Button";
  * @param answer The answer to show under dropdown.
  */
 
-const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
-  style,
-  className,
-  question,
-  answer,
-}) => {
+const FAQDropdown: StylableFC<{
+  question: string;
+  children: React.ReactNode;
+}> = ({ style, className, question, children }) => {
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(!open);
   return (
@@ -55,10 +53,11 @@ const FAQDropdown: StylableFC<{ question: string; answer: string }> = ({
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="border-primary-border border-t p-2">
-              <Text type="title" className="text-tertiary! opacity-100!">
-                {answer}
-              </Text>
+            <div
+              className="border-primary-border text-tertiary! border-t p-2
+                text-sm! opacity-100!"
+            >
+              {children}
             </div>
           </motion.div>
         )}

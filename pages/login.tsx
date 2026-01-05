@@ -9,7 +9,6 @@ const LoginPage = () => {
     <>
       <AccountSection
         type="signIn"
-        onSignInSuccess={() => router.push("/me")}
         onRedirect={() => router.push("/me")}
       />
     </>

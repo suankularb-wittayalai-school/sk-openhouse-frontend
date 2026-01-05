@@ -41,7 +41,7 @@ export default async function handler(
           req.method === "GET" || req.method === "HEAD"
             ? undefined
             : JSON.stringify(req.body),
-      }
+      },
     );
 
     const setCookieHeader = response.headers.get("set-cookie");
@@ -70,7 +70,6 @@ export default async function handler(
 
     const text = await response.text();
     res.status(response.status).send(text);
-
   } catch (error) {
     console.error("Proxy Error:", error);
     res.status(500).json({ error: "Internal Server Error" });

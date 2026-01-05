@@ -29,16 +29,6 @@ const LandingPage: FC<{
       {/* Title */}
       <EventTitle />
 
-      {/* Activities List */}
-      {/* <div className="flex flex-col gap-2">
-        <ActivitesCardContainer activities={activities} />
-        <Link href={"/register"}>
-          <Button variant="primarySurface" className="w-full">
-            {t("register")}
-          </Button>
-        </Link>
-      </div> */}
-
       {/* Schedule */}
       <div className="flex flex-col gap-2">
         <Text type="body">{t("section.schedule")}</Text>

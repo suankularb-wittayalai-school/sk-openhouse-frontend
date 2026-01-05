@@ -34,7 +34,7 @@ export async function middleware(req: NextRequest) {
 
   // Decide on destination based on user and page protection type
   const destination = (() => {
-    if (pageRole == "user" && cookieValue == undefined) {
+    if (pageRole == "user" && !req.cookies.toString().includes("auth_token")) {
       return "/";
     }
   })();

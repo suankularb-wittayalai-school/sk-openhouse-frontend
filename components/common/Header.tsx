@@ -87,7 +87,7 @@ const Header: FC = () => {
               บัญชีของคุณ
             </Text>
             <div>
-              {String(user)}
+              {JSON.stringify(user)}
             </div>
             <Button
               variant="primary"

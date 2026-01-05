@@ -30,14 +30,14 @@ const LandingPage: FC<{
       <EventTitle />
 
       {/* Activities List */}
-      <div className="flex flex-col gap-2">
+      {/* <div className="flex flex-col gap-2">
         <ActivitesCardContainer activities={activities} />
         <Link href={"/register"}>
           <Button variant="primarySurface" className="w-full">
             {t("register")}
           </Button>
         </Link>
-      </div>
+      </div> */}
 
       {/* Schedule */}
       <div className="flex flex-col gap-2">
@@ -86,22 +86,6 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   ];
 
-  /* Tempoary !!!  */
-  const activities: ActivitiesList[] = [
-    {
-      name: "แนะนำภาพรวมหลักสูตร",
-      location: "หอประชุมสวนกุหลาบรำลึก",
-    },
-    {
-      name: "นิทรรศการ SK Open House 2026",
-      location: "ใต้อาคารหอประชุม อาคาร 123 ปีฯ",
-    },
-    {
-      name: "School Tour",
-      location: "รอบโรงเรียน",
-    },
-  ];
-
   const busRoute: BusRoute = {
     infront: ["6 / 4-1", "43 / 4-11"],
     opposite: [
@@ -123,7 +107,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }).then((res) => res.json());
 
   return {
-    props: { messages, activities, faqs, busRoute, scheduleItems },
+    props: { messages, faqs, busRoute, scheduleItems },
   };
 };
 

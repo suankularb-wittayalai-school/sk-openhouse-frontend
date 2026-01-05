@@ -6,19 +6,19 @@ import TextField from "@/components/common/TextField";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
+import { GSIStatus } from "@/components/common/GSIButton";
+import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 
-export enum GSIStatus {
-  initial = "initial",
-  chooserShown = "chooserShown",
-  processing = "processing",
-  redirecting = "redirecting",
-}
-
-const AccountSection: FC<{ onRedirect: () => void }> = ({ onRedirect }) => {
+const AccountSection: FC<{
+  type?: "register" | "signIn";
+  onRedirect: () => void;
+}> = ({ type = "register", onRedirect }) => {
   const [state, setState] = useState<GSIStatus>(GSIStatus.initial);
   const [token, setToken] = useState<string>("");
   const [testResponse, setTestResponse] = useState<string>("");
+  const t = useTranslations("register");
 
   useEffect(() => {
     if (state == GSIStatus.redirecting) {
@@ -28,7 +28,11 @@ const AccountSection: FC<{ onRedirect: () => void }> = ({ onRedirect }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-primary text-2xl font-bold">ลงทะเบียน</h1>
+      <h1 className="text-primary text-2xl font-bold">
+        {type == "register"
+          ? t("account.header.register")
+          : t("account.header.signIn")}
+      </h1>
       <div>
         <AnimatePresence mode="wait">
           <motion.div
@@ -40,25 +44,29 @@ const AccountSection: FC<{ onRedirect: () => void }> = ({ onRedirect }) => {
           >
             {
               {
-                [GSIStatus.initial]: <GSIButton onStateChange={setState} />,
+                [GSIStatus.initial]: (
+                  <GSIButton
+                    onStateChange={setState}
+                  />
+                ),
                 [GSIStatus.chooserShown]: (
                   <>
                     <Text type="title">
-                      ดำเนินการต่อในหน้าต่างใหม่ที่เพิ่งเปิด
+                      {t("account.google.continueInNew")}
                     </Text>
                     <Button
                       variant="primarySurface"
                       onClick={() => setState(GSIStatus.initial)}
                     >
-                      ยกเลิก
+                      {t("account.google.action.cancel")}
                     </Button>
                   </>
                 ),
                 [GSIStatus.processing]: (
-                  <Text type="title">กำลังดำเนินการ</Text>
+                  <Text type="title"> {t("account.google.processing")}</Text>
                 ),
                 [GSIStatus.redirecting]: (
-                  <Text type="title">กำลังเปลี่ยนเส้นทาง</Text>
+                  <Text type="title"> {t("account.google.redirecting")}</Text>
                 ),
               }[state]
             }

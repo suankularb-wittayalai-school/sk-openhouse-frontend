@@ -1,8 +1,14 @@
-import { GSIStatus } from "@/components/register/AccountSection";
 import useGoogleIdentityServices from "@/utils/helpers/account/useGoogleIdentityServices";
 import cn from "@/utils/helpers/cn";
 import { StylableFC } from "@/utils/types/common";
 import { useRef } from "react";
+
+export enum GSIStatus {
+  initial = "initial",
+  chooserShown = "chooserShown",
+  processing = "processing",
+  redirecting = "redirecting",
+}
 
 const GSIButton: StylableFC<{
   onStateChange?: (state: GSIStatus) => void;

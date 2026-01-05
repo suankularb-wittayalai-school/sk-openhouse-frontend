@@ -1,4 +1,4 @@
-import { GSIStatus } from "@/components/register/AccountSection";
+import { GSIStatus } from "@/components/common/GSIButton";
 import UserContext from "@/contexts/UserContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { GsiButtonConfiguration, IdConfiguration } from "google-one-tap";

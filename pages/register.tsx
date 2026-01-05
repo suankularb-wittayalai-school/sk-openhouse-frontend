@@ -4,20 +4,24 @@ import StageIndicatorCard from "@/components/common/StageIndicatorCard";
 import AccountSection from "@/components/register/AccountSection";
 import ActivitiesSection from "@/components/register/ActivitiesSection";
 import FamilySection from "@/components/register/FamilySection";
+import fetchAPI from "@/utils/helpers/fetchAPI";
 import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
 import {
-  person,
   gender,
+  person,
   prefix,
   relationshipToChild,
 } from "@/utils/types/person";
+import { user } from "@/utils/types/user";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import { user } from "@/utils/types/user";
 
 const RegisterLoginPage = () => {
   const tx = useTranslations("register");
+
+  const router = useRouter();
 
   const stages = [
     tx("stage.account"),
@@ -76,7 +80,21 @@ const RegisterLoginPage = () => {
         >
           {
             [
-              <AccountSection onRedirect={() => setPage(1)} />,
+              <AccountSection
+                onRedirect={() => {
+                  fetchAPI("/v1/user", {
+                    method: "GET",
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      if (!data.data.is_onboarded) {
+                        setPage(1);
+                      } else {
+                        router.push("/me")
+                      }
+                    });
+                }}
+              />,
               <FamilySection
                 family={familyForm}
                 onFamilyChange={setFamilyForm}

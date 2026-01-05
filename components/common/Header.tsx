@@ -14,7 +14,7 @@ const Header: FC = () => {
   const t = useTranslations("common");
   const router = useRouter()
 
-  const { isLoggedIn } = useLogin();
+  const { isLoggedIn, setIsLoggedIn } = useLogin();
 
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
 
@@ -85,6 +85,7 @@ const Header: FC = () => {
                   if (typeof window !== "undefined") {
                     localStorage.removeItem("loginStatus")
                   }
+                  setIsLoggedIn(false)
                   router.push("/")
                 }
               })

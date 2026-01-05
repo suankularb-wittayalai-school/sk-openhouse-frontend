@@ -133,7 +133,7 @@ const FamilyForm: StylableFC<{
           {family.adult.length === 0 && (
             <div
               className="text-primary border-primary-border rounded-lg border
-                px-3 py-16 text-center text-xs"
+                px-3 py-16 text-center text-xs bg-white"
             >
               {t("title.noOtherAdultMembers")}
             </div>
@@ -163,7 +163,7 @@ const FamilyForm: StylableFC<{
         {family.child.length === 0 && (
           <div
             className="text-primary border-primary-border rounded-lg border px-3
-              py-16 text-center text-xs"
+              py-16 text-center text-xs bg-white"
           >
             <p>{t("title.noOtherChildMembers")}</p>
             <p>{t("title.childRegistrationRequired")}</p>

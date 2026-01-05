@@ -9,7 +9,7 @@ const MissingInformationDialog: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <Dialog>
       <Text type="headline" className="text-xl!">{t("title.missingInformation")}</Text>
-      <Text type="body" className="text-tertiary!">{t("title.checkAgain")}</Text>
+      <Text type="title" className="text-tertiary!">{t("title.checkAgain")}</Text>
       <Button variant="primary" onClick={() => onClose()}>
         {t("action.close")}
       </Button>

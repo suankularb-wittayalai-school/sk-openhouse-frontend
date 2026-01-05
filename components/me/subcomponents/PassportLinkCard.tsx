@@ -28,15 +28,17 @@ const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
     <>
       <div
         className={cn(
-          `border-primary-border text-primary flex items-center border-t p-2
-          first:border-t-0`,
+          `border-primary-border text-primary flex items-center justify-between
+          border-t p-2 first:border-t-0`,
         )}
       >
-        <MaterialIcon icon="face_5" />
-        <Text type="title" className="ml-2">
-          {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
-        </Text>
-        <Text type="body" className="opacity-50! text-tertiary!">
+        <div className="flex gap-2">
+          <MaterialIcon icon="face_5" />
+          <Text type="title">
+            {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
+          </Text>
+        </div>
+        <Text type="body" className="text-tertiary! opacity-50!">
           {t("linkCard.notAvailable")}
         </Text>
         {/* <Button

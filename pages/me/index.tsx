@@ -6,19 +6,14 @@ import { FC, useEffect, useState } from "react";
 import PersonCardContainer from "@/components/me/PersonCardContainer";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { useLogin } from "@/contexts/LoginContext";
-import { useRouter } from "next/router";
 
 const MyRegistrationPage: FC<{}> = ({}) => {
   const { isLoggedIn } = useLogin();
-  const router = useRouter();
 
   const [familyForm, setFamilyForm] = useState<Family>();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      router.push("/register");
-      return;
-    }
+    if (!isLoggedIn) return;
     const getFamilyData = async () => {
       const { data: user } = await fetchAPI("/v1/user", { method: "GET" }).then(
         (res) => res.json(),
@@ -47,7 +42,7 @@ const MyRegistrationPage: FC<{}> = ({}) => {
     getFamilyData();
   }, [isLoggedIn]);
 
-  if (!familyForm) return router.push("/register");
+  if (!familyForm) return;
 
   return (
     <div className="flex flex-col gap-6 p-3 pt-0">

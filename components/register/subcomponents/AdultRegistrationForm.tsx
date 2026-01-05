@@ -14,7 +14,6 @@ import { useTranslations } from "next-intl";
 import { user } from "@/utils/types/user";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import getDateEighteenYearsAgo from "@/utils/helpers/register/getDateEighteenYearsAgo";
-import fetchAPI from "@/utils/helpers/fetchAPI";
 
 const AdultRegistrationForm: StylableFC<{
   type: "registrant" | "member";
@@ -151,7 +150,7 @@ const AdultRegistrationForm: StylableFC<{
       </div>
       {type == "registrant" && user && handleUserChange && (
         <>
-          {/* <div className="grid grid-cols-1">
+          <div className="grid grid-cols-1">
             <TextField
               name="email"
               label={tx("email")}
@@ -159,7 +158,7 @@ const AdultRegistrationForm: StylableFC<{
               setValue={() => {}}
               disabled={true}
             />
-          </div> */}
+          </div>
           {!hideEventExpectations && (
             <div className="grid grid-cols-1">
               <TextField

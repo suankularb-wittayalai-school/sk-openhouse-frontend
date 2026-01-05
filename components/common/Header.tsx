@@ -4,12 +4,13 @@ import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import { useLogin } from "@/contexts/LoginContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
+import { user } from "@/utils/types/user";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 const Header: FC = () => {
   const t = useTranslations("common");
@@ -18,6 +19,15 @@ const Header: FC = () => {
   const { isLoggedIn, setIsLoggedIn } = useLogin();
 
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
+  const [user, setUser] = useState<user>();
+
+  useEffect(() => {
+    fetchAPI("/v1/user", { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data);
+      });
+  }, [isLoggedIn]);
 
   return (
     <div
@@ -71,11 +81,14 @@ const Header: FC = () => {
       </div>
 
       <AnimatePresence>
-        {userMenuOpen && (
+        {userMenuOpen && isLoggedIn && (
           <Dialog onClickOutside={() => setUserMenuOpen(false)}>
             <Text type="headline" className="text-xl!">
               บัญชีของคุณ
             </Text>
+            <div>
+              {String(user)}
+            </div>
             <Button
               variant="primary"
               onClick={() => {

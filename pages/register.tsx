@@ -28,8 +28,8 @@ const RegisterLoginPage = () => {
     tx("stage.family"),
     tx("stage.activity"),
   ];
-  const [page, setPage] = useState<number>(0);
 
+  const [page, setPage] = useState<number>(0);
   const [expStageIndicator, setExpStageIndicator] = useState<boolean>(false);
   const [familyForm, setFamilyForm] = useState<{
     registrant: { user: user; person: person };

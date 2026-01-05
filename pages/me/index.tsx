@@ -9,7 +9,9 @@ import { useLogin } from "@/contexts/LoginContext";
 
 const MyRegistrationPage: FC<{}> = ({}) => {
   const { isLoggedIn } = useLogin();
+
   const [familyForm, setFamilyForm] = useState<Family>();
+
   useEffect(() => {
     if (!isLoggedIn) return;
     const getFamilyData = async () => {

@@ -23,9 +23,9 @@ const ScheduleCard: StylableFC<{ scheduleItem: scheduleItem }> = ({
                   ? ""
                   : scheduleItem.description.split(" ณ ")[0]}
           </Text>
-          <div className="flex gap-1">
+          <div className="flex gap-1 flex-wrap">
             <div
-              className="border-primary-border w-full max-w-max rounded-full
+              className="border-primary-border h-max w-max rounded-full
                 border px-2 py-0.5"
             >
               <Text type="title" className="text-tertiary!">
@@ -36,7 +36,7 @@ const ScheduleCard: StylableFC<{ scheduleItem: scheduleItem }> = ({
               </Text>
             </div>
             <div
-              className="border-primary-border w-full max-w-max rounded-full
+              className="border-primary-border h-max w-max rounded-full
                 border px-2 py-0.5"
             >
               <Text type="title" className="text-tertiary!">

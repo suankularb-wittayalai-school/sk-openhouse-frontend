@@ -3,7 +3,8 @@
     "login": "เข้าสู่ระบบ",
     "register": "ลงทะเบียน",
     "details": "รายละเอียดงาน",
-    "myregistration": "การลงทะเบียนของฉัน"
+    "myregistration": "การลงทะเบียนของฉัน",
+    "loggedAccount": "บัญชีที่เข้าสู่ระบบอยู่"
   },
   "action": { "close": "ปิด" }
 }

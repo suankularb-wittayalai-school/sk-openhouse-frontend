@@ -114,7 +114,6 @@ const FamilyEditDialog: StylableFC<{
                   lastname: "",
                   gender: gender.male,
                   relationship_to_child: undefined,
-                  tel: "",
                   prefix: prefix.master,
                   is_child: true,
                   birthdate: "",

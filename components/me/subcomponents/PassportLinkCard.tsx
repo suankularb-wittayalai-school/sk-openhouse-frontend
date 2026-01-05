@@ -36,7 +36,10 @@ const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
         <Text type="title" className="ml-2">
           {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
         </Text>
-        <Button
+        <Text type="body" className="opacity-50! text-tertiary!">
+          {t("linkCard.notAvailable")}
+        </Text>
+        {/* <Button
           className={cn(
             "ml-auto h-8! rounded-lg!",
             isLinked ? "border-primary-border border" : null,
@@ -48,7 +51,7 @@ const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
           disabled={isLinked}
         >
           {isLinked ? t("linkCard.connected") : t("linkCard.connect")}
-        </Button>
+        </Button> */}
       </div>
       <AnimatePresence>
         {scanDialogOpen && (

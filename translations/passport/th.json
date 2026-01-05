@@ -7,7 +7,8 @@
   },
   "linkCard": {
     "connect": "เชื่อม",
-    "connected": "เชื่อมแล้ว"
+    "connected": "เชื่อมแล้ว",
+    "notAvailable": "ยังไม่เปิดให้บริการ"
   },
   "scanner": {
     "title": "เชื่อมพาสปอร์ต Open House กับ",

@@ -1,9 +1,9 @@
-import { GSIStatus } from "@/components/register/AccountSection";
-import UserContext, { useLogin } from "@/contexts/LoginContext";
+import { GSIStatus } from "@/components/common/GSIButton";
+import { useLogin } from "@/contexts/LoginContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { GsiButtonConfiguration, IdConfiguration } from "google-one-tap";
 import { useLocale } from "next-intl";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function useGoogleIdentityServices(
   options: Partial<{

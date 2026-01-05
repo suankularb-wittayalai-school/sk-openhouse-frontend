@@ -4,6 +4,20 @@
     "family": "ครอบครัว",
     "activity": "กิจกรรม"
   },
+  "account": {
+    "header": {
+      "register": "ลงทะเบียน",
+      "signIn": "เข้าสู่ระบบ"
+    },
+    "google": {
+      "continueInNew": "ดำเนินการต่อในหน้าต่างใหม่ที่เพิ่งเปิด",
+      "processing": "กำลังประมวลผล...",
+      "redirecting": "กำลังดำเนินการต่อ...",
+      "action": {
+        "cancel": "ยกเลิก"
+      }
+    }
+  },
   "family": {
     "label": {
       "prefix": "คำนำหน้า",
@@ -22,9 +36,12 @@
     "title": {
       "family": "ครอบครัวของคุณ",
       "you": "คุณ",
-      "otherMembers": "ผู้เข้าร่วมอื่น ๆ",
-      "edit": "แก้ไขข้อมูลครอบครัวของคุณ",
-      "missingInformation": "ข้อมูลไม่ครบถ้วน"
+      "otherChildMembers": "ผู้เข้าร่วมเด็กอื่น ๆ",
+      "noOtherChildMembers": "ยังไม่มีผู้เข้าร่วมเด็กเพิ่มเติม",
+      "childRegistrationRequired": "คุณต้องเพิ่มนักเรียนที่จะมาด้วย เพื่อเล่นกิจกรรม",
+      "otherAdultMembers": "ผู้เข้าร่วมผู้ใหญ่อื่น ๆ",
+      "noOtherAdultMembers": "ยังไม่มีผู้เข้าร่วมผู้ใหญ่เพิ่มเติม",
+      "edit": "แก้ไขข้อมูลครอบครัวของคุณ"
     },
     "action": {
       "addChild": "เพิ่มเด็ก",

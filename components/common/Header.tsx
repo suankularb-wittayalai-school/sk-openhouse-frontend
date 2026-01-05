@@ -62,7 +62,7 @@ const Header: FC = () => {
                 cursor-pointer items-center justify-center rounded-full border"
               onClick={() => setUserMenuOpen(true)}
             >
-              {user.data.profile_url !== undefined ? (
+              {/* {user.data.profile_url !== undefined ? (
                 <Image
                   src={user.data.profile_url}
                   width={40}
@@ -70,9 +70,9 @@ const Header: FC = () => {
                   alt="User Avatar"
                   className="block aspect-square h-10 w-10 rounded-lg"
                 />
-              ) : (
+              ) : ( */}
                 <MaterialIcon icon="face" size={24} className="text-primary" />
-              )}
+              {/* )} */}
             </div>
           </>
         ) : (
@@ -97,7 +97,7 @@ const Header: FC = () => {
             <Text type="headline" className="text-xl!">
               บัญชีของคุณ
             </Text>
-            {user.data.profile_url !== "undefined" && (
+            {/* {user.data.profile_url !== "undefined" && (
               <div
                 className="border-primary-border flex items-center gap-2
                   rounded-lg border p-2"
@@ -118,7 +118,7 @@ const Header: FC = () => {
                   </Text>
                 </div>
               </div>
-            )}
+            )} */}
             <Button
               variant="primary"
               onClick={() => {

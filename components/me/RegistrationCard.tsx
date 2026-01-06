@@ -17,18 +17,13 @@ const RegistrationCard: StylableFC<{
           print:h-dvh print:w-dvw print:bg-white"
       >
         <div className="flex flex-col">
-          <Text type="body">
-            บัตรการลงทะเบียน<span className="print:hidden">ดิจิทัล</span>
-          </Text>
+          <Text type="body">ตั๋วเข้าหอประชุม</Text>
           <Text type="headline" className="text-xl!">
-            SK Open House 2026
+            การบรรยายและนำเสนอหลักสูตร
           </Text>
+          <Text type="title">SK Open House 2026 • 11 มกราคม 2569</Text>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-1">
-            <Text type="body">วันที่</Text>
-            <Text type="title">11 มกราคม พ.ศ. 2569</Text>
-          </div>
           <div className="flex flex-col gap-1">
             <Text type="body">ผู้เข้าร่วม</Text>
             <Card className="flex flex-col gap-0! p-0!">
@@ -36,6 +31,19 @@ const RegistrationCard: StylableFC<{
                 <PersonCard person={person} key={i} count={i + 1} />
               ))}
             </Card>
+          </div>
+          <div className="text-primary! flex flex-col gap-1 text-sm!">
+            <Text type="body">หมายเหตุ</Text>
+            <ol>
+              <li>
+                โปรดถ่ายภาพหน้าจอ หรือพิมพ์ตั๋วใบนี้ให้กับผู้เข้าร่วม คนอื่น ๆ
+                ของคุณ ในกรณีที่ไม่ได้เข้าหอประชุมพร้อมกัน
+              </li>
+              <li>
+                ที่นั่งในหอประชุมมีจำนวนจำกัด ผู้ที่มาถึงหอประชุมก่อน
+                มีสิทธิ์ได้ที่นั่งก่อน
+              </li>
+            </ol>
           </div>
         </div>
         <p className="hidden text-center text-xs opacity-50 print:block">

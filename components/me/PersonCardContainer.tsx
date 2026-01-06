@@ -114,15 +114,31 @@ const PersonCardContainer: StylableFC<{
               }
               const newPerson = [
                 ...formattedAdults.filter(
-                  (adult) => adult.id?.length == 0 || adult.id == null,
+                  (adult) =>
+                    !adult.id ||
+                    typeof adult.id !== "string" ||
+                    adult.id.length === 0,
                 ),
                 ...children.filter(
-                  (child) => child.id?.length == 0 || child.id == null,
+                  (child) =>
+                    !child.id ||
+                    typeof child.id !== "string" ||
+                    child.id.length === 0,
                 ),
               ].map(({ id, ...person }) => person);
               const orginPerson = [
-                ...formattedAdults.filter((adult) => adult.id?.length !== 0),
-                ...children.filter((child) => child.id?.length !== 0),
+                ...formattedAdults.filter(
+                  (adult) =>
+                    adult.id &&
+                    typeof adult.id === "string" &&
+                    adult.id.length !== 0,
+                ),
+                ...children.filter(
+                  (child) =>
+                    child.id &&
+                    typeof child.id === "string" &&
+                    child.id.length !== 0,
+                ),
               ];
               for (let id of deletingPerson) {
                 fetchAPI(`/v1/user/family/${id}`, { method: "DELETE" });

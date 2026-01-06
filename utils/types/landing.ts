@@ -1,14 +1,4 @@
-export type ActivitiesList = {
-  name: string;
-  location: string;
-};
-
-export type Faqs = {
-  question: string;
-  answer: React.ReactNode;
-};
-
-export type BusRoute = {
+export type BusRoutes = {
   infront: string[];
   opposite: string[];
 };

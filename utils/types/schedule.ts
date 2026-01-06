@@ -1,4 +1,4 @@
-export type scheduleItem = {
+export type ScheduleItem = {
   id: string;
   name: string;
   description: string;

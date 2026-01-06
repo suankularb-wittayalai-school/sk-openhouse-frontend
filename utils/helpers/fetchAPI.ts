@@ -1,4 +1,5 @@
 async function fetchAPI(url: string, options: RequestInit) {
+  console.warn("`fetchAPI` is DEPRECATED!!!! Please phase out to `fetchAPI2`.");
   const headers = new Headers(options.headers);
 
   let token: string = "";

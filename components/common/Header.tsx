@@ -62,17 +62,17 @@ const Header: FC = () => {
                 cursor-pointer items-center justify-center rounded-full border"
               onClick={() => setUserMenuOpen(true)}
             >
-              {/* {user.data.profile_url !== undefined ? (
+              {user && user.data && user.data.profile_url ? (
                 <Image
                   src={user.data.profile_url}
                   width={40}
                   height={40}
                   alt="User Avatar"
-                  className="block aspect-square h-10 w-10 rounded-lg"
+                  className="block aspect-square h-10 w-10 rounded-full"
                 />
-              ) : ( */}
-              <MaterialIcon icon="face" size={24} className="text-primary" />
-              {/* )} */}
+              ) : (
+                <MaterialIcon icon="face" size={24} className="text-primary" />
+              )}
             </div>
           </>
         ) : (
@@ -97,7 +97,7 @@ const Header: FC = () => {
             <Text type="headline" className="text-xl!">
               บัญชีของคุณ
             </Text>
-            {/* {user.data.profile_url !== "undefined" && (
+            {user && user.data && user.data.profile_url && user.data.email && (
               <div
                 className="border-primary-border flex items-center gap-2
                   rounded-lg border p-2"
@@ -107,7 +107,7 @@ const Header: FC = () => {
                   width={40}
                   height={40}
                   alt="User Avatar"
-                  className="block aspect-square h-10 w-10 rounded-lg"
+                  className="block aspect-square h-10 w-10 rounded-full"
                 />
                 <div className="flex flex-col">
                   <Text type="body" className="text-tertiary">
@@ -118,7 +118,7 @@ const Header: FC = () => {
                   </Text>
                 </div>
               </div>
-            )} */}
+            )}
             <Button
               variant="primarySurface"
               onClick={() => {

@@ -29,14 +29,10 @@ const ScheduleCard: StylableFC<{ scheduleItem: scheduleItem }> = ({
                 border px-2 py-0.5"
             >
               <Text type="title" className="text-tertiary!">
-                {
-                  scheduleItem.start_time.slice(0, 5) + 
-                  (
-                    scheduleItem.description.split(" ณ ").length == 1 
-                      ? " น. เป็นต้นไป" 
-                      : (" - " + scheduleItem.end_time.slice(0, 5) + " น.")
-                    )
-                  }
+                {scheduleItem.start_time.slice(0, 5) +
+                  " - " +
+                  scheduleItem.end_time.slice(0, 5) +
+                  " น."}
               </Text>
             </div>
             <div

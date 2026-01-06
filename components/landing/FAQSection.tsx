@@ -129,6 +129,23 @@ const questions = [
       </>
     ),
   },
+  {
+    question: "หากที่นั่งบนหอประชุมเต็มแล้ว สามารถรับชมการบรรยายได้ที่ใด",
+    answer: (
+      <>
+        โรงเรียนได้จัดสรรพื้นที่สำหรับรับชมถ่ายทอดสดการบรรยายไว้ ณ ห้องนวัตกรรม
+        ตึกดำรงราชานุภาพ โรงเรียนสวนกุหลาบวิทยาลัย และการถ่ายทอดสดผ่านทาง{" "}
+        <Link
+          href="https://www.facebook.com/PRsuankularb"
+          className="faq-links"
+          target="_blank"
+        >
+          Facebook
+        </Link>{" "}
+        ไว้สำหรับผู้ที่ไม่สะดวกรับชมภายในงานครับ
+      </>
+    ),
+  },
 ];
 
 const FAQsContainer: StylableFC = ({ className, style }) => {

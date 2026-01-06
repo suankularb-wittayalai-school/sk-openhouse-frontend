@@ -77,9 +77,9 @@ const PersonCardContainer: StylableFC<{
               adult: person[];
               child: person[];
             }) => {
-              // TODO: Rewrite this, this is clearly UNREADABLE [80-172]!!!
+              // TODO: Rewrite this.
               const fetchAndUpdate = async () => {
-                // Fetch current data from API
+                // Get family details -> Head / Adult / Child
                 const res = await fetchAPI("/v1/user/family", {
                   method: "GET",
                 });
@@ -88,29 +88,37 @@ const PersonCardContainer: StylableFC<{
                   currentData = await res.json();
                 }
 
+                // Seperate the type of person main `family` super-fat variable.
                 const adults = [...family.adult, family.registrant.person];
                 const children = [...family.child];
                 const formattedAdults = [];
 
+                // ENG: For all adults
                 for (let adult of adults) {
+                  // Checks for missing fields in adults
                   if (isMissingRequiredTextField("adult", adult)) {
                     setOpenMissingInfoDialog(true);
                     return;
                   }
+                  // Creates a adult item, add into `formattedAdult`
                   const { child, created_at, ...formattedAdult } = adult;
                   if (!formattedAdult.tel) {
-                    formattedAdult.tel = undefined;
+                    formattedAdult.tel = undefined; // For non-provided phones.
                   }
                   formattedAdults.push(formattedAdult);
                 }
+                // ENG: For all childs
                 for (let child of children) {
+                  // Checks for missing fields in childs
                   if (isMissingRequiredTextField("child", child)) {
                     setOpenMissingInfoDialog(true);
                     return;
                   }
+                  // Set this child's grad-year
                   child.child.expected_graduation_year = Number(
                     child.child.expected_graduation_year,
                   );
+                  // Set child's next_grade from current if not present.
                   if (!child.child.next_grade) {
                     if (child.id && Array.isArray(currentData)) {
                       const found = currentData.find((c) => c.id === child.id);
@@ -120,6 +128,8 @@ const PersonCardContainer: StylableFC<{
                     }
                   }
                 }
+
+                // List of all `person` to **create** using API.
                 const newPerson = [
                   ...formattedAdults.filter(
                     (adult) =>
@@ -134,6 +144,8 @@ const PersonCardContainer: StylableFC<{
                       child.id.length === 0,
                   ),
                 ].map(({ id, ...person }) => person);
+
+                // List of all `person` to **modify** using API.
                 const orginPerson = [
                   ...formattedAdults.filter(
                     (adult) =>
@@ -148,10 +160,15 @@ const PersonCardContainer: StylableFC<{
                       child.id.length !== 0,
                   ),
                 ];
+
+                // Delete person using ID, per call
                 for (let id of deletingPerson) {
                   fetchAPI(`/v1/user/family/${id}`, { method: "DELETE" });
                 }
+
                 // Always send the new data, regardless of changes
+
+                // Send create person
                 await parallel(newPerson.length, newPerson, (person) => {
                   return fetchAPI("/v1/user/family", {
                     method: "POST",
@@ -159,6 +176,8 @@ const PersonCardContainer: StylableFC<{
                     body: JSON.stringify(person),
                   });
                 });
+
+                // Send change existing person detail
                 await parallel(orginPerson.length, orginPerson, (person) => {
                   const { id, ...formattedPerson } = person;
                   return fetchAPI(`/v1/user/family/${person.id}`, {
@@ -167,7 +186,11 @@ const PersonCardContainer: StylableFC<{
                     body: JSON.stringify(formattedPerson),
                   });
                 });
+
+                // When any family data changes, set it as that.
                 onFamilyChange(family);
+                // Close dialog, not waiting for fetch to finish but 
+                // let it runs in background.
                 setEditDialogOpen(false);
 
                 // TODO: [TEMP: KEY NOT LINKING TO EACH PERSON BUT 'i']

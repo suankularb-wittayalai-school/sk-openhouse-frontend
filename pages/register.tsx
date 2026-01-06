@@ -49,7 +49,7 @@ const RegisterLoginPage = () => {
         gender: gender.male,
         relationship_to_child: relationshipToChild.father,
         tel: "",
-        prefix: prefix.master,
+        prefix: prefix.mr,
         birthdate: "",
         child: {
           nickname: undefined,

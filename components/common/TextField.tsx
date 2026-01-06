@@ -9,12 +9,10 @@ const TextField: StylableFC<{
   value: string;
   disabled?: boolean;
   setValue: (value: string) => void;
-}> = ({ name, label, value, disabled = false, setValue }) => {
+}> = ({ name, label, value, disabled = false, setValue, className }) => {
   return (
-    <div className="flex flex-1 flex-col items-start gap-0.5">
-      <Text type="body">
-        {label}
-      </Text>
+    <div className={cn("flex flex-1 flex-col items-start gap-0.5", className)}>
+      <Text type="body">{label}</Text>
       <input
         name={name}
         value={value}

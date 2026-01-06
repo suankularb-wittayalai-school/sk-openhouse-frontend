@@ -54,6 +54,7 @@ const RegisterLoginPage = () => {
         child: {
           nickname: undefined,
           expected_graduation_year: undefined,
+          next_grade: "m1",
           school: undefined,
           passport_id: undefined,
         },

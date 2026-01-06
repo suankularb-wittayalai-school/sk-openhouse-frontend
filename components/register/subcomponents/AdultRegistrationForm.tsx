@@ -61,7 +61,7 @@ const AdultRegistrationForm: StylableFC<{
           </div>
         )}
       </div>
-      <div className="grid grid-cols-3 gap-[0.38rem]">
+      <div className="grid grid-cols-3 gap-1.5">
         <Select
           name="prefix"
           value={person.prefix}
@@ -91,7 +91,7 @@ const AdultRegistrationForm: StylableFC<{
           }}
         />
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-1.5">
         <Select
           name="gender"
           value={person.gender}
@@ -114,7 +114,7 @@ const AdultRegistrationForm: StylableFC<{
           max={getDateEighteenYearsAgo()}
         />
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-1.5">
         <TextField
           name="tel"
           label={tx("tel")}

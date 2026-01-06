@@ -141,9 +141,10 @@ const ActivitiesSection: StylableFC<{
               body: JSON.stringify({
                 ...formattedPerson,
                 event_expectations:
+                  family.registrant.user.event_expectations ? 
                   family.registrant.user.event_expectations.length == 0
                     ? undefined
-                    : family.registrant.user.event_expectations,
+                    : family.registrant.user.event_expectations : undefined,
                 registered_events: family.registrant.user.registered_events,
               }),
             }).then((res) => {

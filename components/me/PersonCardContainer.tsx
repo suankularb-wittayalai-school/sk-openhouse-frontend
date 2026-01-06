@@ -45,14 +45,14 @@ const PersonCardContainer: StylableFC<{
         ))}
       </Card>
       <div className="flex gap-2">
-        {/* <Button
+        <Button
           variant="outline"
           icon="edit"
           className="w-10 shrink-0 *:p-0"
           onClick={() => {
             setEditDialogOpen(true);
           }}
-        /> */}
+        />
         <Button
           variant="primarySurface"
           className="w-full"
@@ -84,10 +84,11 @@ const PersonCardContainer: StylableFC<{
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                  event_expectations:
-                    family.registrant.user.event_expectations.length == 0
+                  event_expectations: family.registrant.user.event_expectations
+                    ? family.registrant.user.event_expectations.length == 0
                       ? undefined
-                      : family.registrant.user.event_expectations,
+                      : family.registrant.user.event_expectations
+                    : undefined,
                   registered_events: family.registrant.user,
                 }),
               });

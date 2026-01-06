@@ -1,10 +1,9 @@
-// Imports
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
 import cn from "@/utils/helpers/cn";
 import constructName from "@/utils/helpers/constructName";
 import { StylableFC } from "@/utils/types/common";
-import { gender, Person } from "@/utils/types/person";
+import { Gender, Person } from "@/utils/types/person";
 import { differenceInYears } from "date-fns";
 import { useTranslations } from "next-intl";
 import { pick } from "radash";
@@ -41,7 +40,7 @@ const PersonCard: StylableFC<{ person: Person; count?: number }> = ({
         icon={
           person.child !== undefined
             ? "face_5"
-            : person.gender == gender.female
+            : person.gender == Gender.Female
               ? "face_4"
               : "face"
         }

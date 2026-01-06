@@ -1,9 +1,9 @@
-import { Person } from "@/utils/types/person";
+import type { Person } from "@/utils/types/person";
 
-export default function isMissingRequiredTextField(
+const isMissingRequiredTextField = (
   type: "registrant" | "adult" | "child",
   person: Person,
-): boolean {
+): boolean => {
   // Required for everyone
   const REQUIRED_PERSON_FIELDS: (keyof Person)[] = [
     "firstname",
@@ -15,14 +15,16 @@ export default function isMissingRequiredTextField(
     "school",
   ];
 
-  for (let field of REQUIRED_PERSON_FIELDS) {
+  for (const field of REQUIRED_PERSON_FIELDS) {
     if (!person[field]) return true;
   }
   if (type == "child") {
-    for (let field of REQUIRED_CHILD_FIELDS) {
+    for (const field of REQUIRED_CHILD_FIELDS) {
       if (!person.child[field]) return true;
     }
   }
 
   return false;
-}
+};
+
+export default isMissingRequiredTextField;

@@ -1,6 +1,7 @@
 import AccountSection from "@/components/register/AccountSection";
 import { useUser } from "@/contexts/UserContext";
-import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
+import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
+import type { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -28,8 +29,6 @@ const LoginPage = () => {
       <AccountSection
         type="login"
         onRedirect={() => {
-          console.log("User: ", user);
-
           if (typeof user?.onboarded_at === "string") router.push("/me");
           else router.push("/register");
         }}
@@ -38,12 +37,12 @@ const LoginPage = () => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const messages = await getStaticTranslations("common", "register");
 
   return {
     props: { messages },
   };
-}
+};
 
 export default LoginPage;

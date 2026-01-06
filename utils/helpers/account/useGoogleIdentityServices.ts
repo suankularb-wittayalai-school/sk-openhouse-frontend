@@ -3,16 +3,14 @@ import { useUser } from "@/contexts/UserContext";
 import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
 import type { User } from "@/utils/types/user";
 import type { GsiButtonConfiguration, IdConfiguration } from "google-one-tap";
-import { useLocale } from "next-intl";
 import { useEffect } from "react";
 
-export default function useGoogleIdentityServices(options: {
+const useGoogleIdentityServices = (options: {
   parentButtonID: string;
   onStateChange: (state: GSIStatus) => void;
-}) {
+}) => {
   const { parentButtonID, onStateChange } = options;
 
-  const locale = useLocale();
   const { setUser } = useUser();
 
   const logInWithGoogle = async (credential: string) => {
@@ -63,7 +61,7 @@ export default function useGoogleIdentityServices(options: {
       text: "signin_with",
       width: 256, // 256px, Google fixes width when <iframe> is loaded
       shape: "pill",
-      locale,
+      locale: "th",
       click_listener: () => onStateChange(GSIStatus.chooserShown),
     } satisfies GsiButtonConfiguration);
   };
@@ -88,4 +86,6 @@ export default function useGoogleIdentityServices(options: {
     },
     [], // eslint-disable-line react-hooks/exhaustive-deps
   );
-}
+};
+
+export default useGoogleIdentityServices;

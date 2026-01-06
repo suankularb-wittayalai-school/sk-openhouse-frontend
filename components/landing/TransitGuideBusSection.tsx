@@ -1,7 +1,6 @@
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
-import type { StylableFC } from "@/utils/types/common";
-import type { BusRoutes } from "@/utils/types/landing";
+import type { StylableFC, BusRoutes } from "@/utils/types/common";
 import { useTranslations } from "next-intl";
 import MaterialIcon from "../common/MaterialIcon";
 import BusRouteContainer from "./subcomponents/BusRouteContainer";

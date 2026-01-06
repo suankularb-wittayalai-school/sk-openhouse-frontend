@@ -4,7 +4,7 @@ import Chip from "@/components/common/Chip";
 import TextField from "@/components/common/TextField";
 import Select from "@/components/common/Select";
 import DatePicker from "@/components/common/DatePicker";
-import { gender, Person, prefix } from "@/utils/types/person";
+import { Gender, Person, Prefix, SchoolGrade } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import getDateEighteenYearsAgo from "@/utils/helpers/register/getDateEighteenYearsAgo";
@@ -17,7 +17,6 @@ const ChildRegistrationForm: StylableFC<{
 }> = ({ person, count, handlePersonChange, handleDeletePerson }) => {
   const t = useTranslations("person");
   const tx = useTranslations("register.family.label");
-  const NEXT_GRADE = ["m1", "m4"];
   const GRADUATION_YEAR = Array.from({ length: 12 }, (_, i) => 2569 + i);
   return (
     <Card className="flex-col">
@@ -44,8 +43,8 @@ const ChildRegistrationForm: StylableFC<{
             handlePersonChange({ ...person, prefix: prefix });
           }}
         >
-          <option value={prefix.master}>{t("prefix.master")}</option>
-          <option value={prefix.miss}>{t("prefix.miss")}</option>
+          <option value={Prefix.Master}>{t("prefix.master")}</option>
+          <option value={Prefix.Miss}>{t("prefix.miss")}</option>
         </Select>
         <TextField
           name="firstname"
@@ -73,9 +72,9 @@ const ChildRegistrationForm: StylableFC<{
             handlePersonChange({ ...person, gender: gender });
           }}
         >
-          <option value={gender.male}>{t("gender.male")}</option>
-          <option value={gender.female}>{t("gender.female")}</option>
-          <option value={gender.other}>{t("gender.other")}</option>
+          <option value={Gender.Male}>{t("gender.male")}</option>
+          <option value={Gender.Female}>{t("gender.female")}</option>
+          <option value={Gender.Other}>{t("gender.other")}</option>
         </Select>
         <DatePicker
           name="birthdate"
@@ -102,7 +101,7 @@ const ChildRegistrationForm: StylableFC<{
         />
         <Select
           name="expectedGraduationYear"
-          value={person.child.next_grade || NEXT_GRADE[0]}
+          value={person.child.next_grade || SchoolGrade.M1}
           label={"ศึกษาต่อชั้น..."}
           setValue={(year) => {
             handlePersonChange({
@@ -126,7 +125,9 @@ const ChildRegistrationForm: StylableFC<{
           }}
         >
           {GRADUATION_YEAR.map((year) => (
-            <option value={year}>{year}</option>
+            <option value={year} key={year}>
+              {year}
+            </option>
           ))}
         </Select>
       </div>

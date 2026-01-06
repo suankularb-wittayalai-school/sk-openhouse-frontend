@@ -1,4 +1,3 @@
-// Imports
 import Button from "@/components/common/Button";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";

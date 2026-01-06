@@ -1,19 +1,22 @@
-export async function getStaticTranslations(...paths: string[]) {
-  const locale = "th"; // Default locale.
-
+const getStaticTranslations = async (
+  ...paths: string[]
+): Promise<Record<string, string>> => {
+  const messages: Record<string, string> = {};
   const imports = await Promise.all(
     paths.map((path) =>
-      import(`@/translations/${path}/${locale}.json`)
+      import(`@/translations/${path}/th.json`)
         .then((m) => m.default)
-        .catch(() => ({})),
+        .catch(() => {
+          /* Do nothing */
+        }),
     ),
   );
-
-  const messages: Record<string, any> = {};
 
   paths.forEach((path, idx) => {
     messages[path] = imports[idx] ?? {};
   });
 
   return messages;
-}
+};
+
+export default getStaticTranslations;

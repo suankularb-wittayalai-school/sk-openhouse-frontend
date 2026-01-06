@@ -1,12 +1,8 @@
-// Imports
-import { NextRequest, NextResponse } from "next/server";
-import { LangCode } from "@/utils/types/common";
-import getLocalePath from "@/utils/helpers/getLocalePaths";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
   // Get original destination
   const route = req.nextUrl.pathname;
-  const locale = req.nextUrl.locale as LangCode;
   const isDevMode = process.env.NODE_ENV === "development";
   const authTokenExists = typeof req.cookies.get("auth_token") !== "undefined";
 
@@ -38,9 +34,6 @@ export async function middleware(req: NextRequest) {
     );
 
   // Redirect if decided so, continue if not
-  if (destination)
-    return NextResponse.redirect(
-      new URL(getLocalePath(destination, locale), req.url),
-    );
+  if (destination) return NextResponse.redirect(new URL(destination, req.url));
   return NextResponse.next();
 }

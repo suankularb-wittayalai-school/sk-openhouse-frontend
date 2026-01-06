@@ -5,10 +5,11 @@ import ChildRegistrationForm from "@/components/register/subcomponents/ChildRegi
 import Button from "@/components/common/Button";
 import {
   Family,
-  gender,
-  prefix,
-  relationshipToChild,
+  Gender,
+  Prefix,
+  RelationshipToChild,
   Person,
+  SchoolGrade,
 } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 
@@ -78,16 +79,16 @@ const FamilyForm: StylableFC<{
     const newAdult: Person = {
       firstname: "",
       lastname: "",
-      gender: gender.male,
-      relationship_to_child: relationshipToChild.father,
+      gender: Gender.Male,
+      relationship_to_child: RelationshipToChild.Father,
       tel: "",
-      prefix: prefix.mr,
+      prefix: Prefix.Mr,
       is_child: false,
       birthdate: "",
       child: {
         nickname: undefined,
         expected_graduation_year: undefined,
-        next_grade: "m1",
+        next_grade: SchoolGrade.M1,
         school: undefined,
         passport_id: undefined,
       },
@@ -100,13 +101,13 @@ const FamilyForm: StylableFC<{
     const newChild: Person = {
       firstname: "",
       lastname: "",
-      gender: gender.male,
-      prefix: prefix.master,
+      gender: Gender.Male,
+      prefix: Prefix.Master,
       birthdate: "",
       child: {
         nickname: "",
         expected_graduation_year: 2569,
-        next_grade: "m1",
+        next_grade: SchoolGrade.M1,
         school: "",
         passport_id: undefined,
       },

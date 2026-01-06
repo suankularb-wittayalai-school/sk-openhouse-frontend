@@ -3,15 +3,17 @@ import AccountSection from "@/components/register/AccountSection";
 import ActivitiesSection from "@/components/register/ActivitiesSection";
 import FamilySection from "@/components/register/FamilySection";
 import { useUser } from "@/contexts/UserContext";
-import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
+import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
 import {
-  gender,
-  Person,
-  prefix,
-  relationshipToChild,
+  Gender,
+  type Person,
+  Prefix,
+  RelationshipToChild,
+  SchoolGrade,
 } from "@/utils/types/person";
-import { User } from "@/utils/types/user";
+import type { User } from "@/utils/types/user";
 import { AnimatePresence, motion } from "motion/react";
+import type { GetStaticProps } from "next";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
@@ -44,15 +46,15 @@ const RegisterationPage = () => {
       person: {
         firstname: "",
         lastname: "",
-        gender: gender.male,
-        relationship_to_child: relationshipToChild.father,
+        gender: Gender.Male,
+        relationship_to_child: RelationshipToChild.Father,
         tel: "",
-        prefix: prefix.mr,
+        prefix: Prefix.Mr,
         birthdate: "",
         child: {
           nickname: undefined,
           expected_graduation_year: undefined,
-          next_grade: "m1",
+          next_grade: SchoolGrade.M1,
           school: undefined,
           passport_id: undefined,
         },
@@ -123,12 +125,12 @@ const RegisterationPage = () => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const messages = await getStaticTranslations("common", "register", "person");
 
   return {
     props: { messages },
   };
-}
+};
 
 export default RegisterationPage;

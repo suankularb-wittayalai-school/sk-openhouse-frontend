@@ -8,9 +8,8 @@ import MapsSchoolLocation from "@/components/landing/subcomponents/MapsSchoolLoc
 import ScheduleCard from "@/components/landing/subcomponents/ScheduleCard";
 import SchoolMap from "@/components/me/SchoolMap";
 import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
-import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
-import type { BusRoutes } from "@/utils/types/landing";
-import type { ScheduleItem } from "@/utils/types/schedule";
+import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
+import type { BusRoutes, ScheduleItem } from "@/utils/types/common";
 import type { GetServerSideProps } from "next";
 import { useTranslations } from "next-intl";
 import type { FC } from "react";

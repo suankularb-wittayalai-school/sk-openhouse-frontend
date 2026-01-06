@@ -5,6 +5,7 @@ import cn from "@/utils/helpers/cn";
 import { NextIntlClientProvider } from "next-intl";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -36,6 +37,9 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
         timeZone="Asia/Bangkok"
         messages={pageProps.messages}
       >
+        <Head>
+          <title>SK Open House 2026</title>
+        </Head>
         <div
           className={cn(
             lineSeedSans.variable,

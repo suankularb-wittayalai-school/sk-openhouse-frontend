@@ -1,6 +1,4 @@
-// Imports
-import { StylableFC } from "@/utils/types/common";
-import { ScheduleItem } from "@/utils/types/schedule";
+import { ScheduleItem, StylableFC } from "@/utils/types/common";
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
 

@@ -1,8 +1,8 @@
 import PassportLinkContainer from "@/components/me/PassportLinkContainer";
 import PersonCardContainer from "@/components/me/PersonCardContainer";
 import { useUser } from "@/contexts/UserContext";
-import fetchAPI, { fetchAPI2 } from "@/utils/helpers/fetchAPI";
-import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
+import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
+import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
 import type { Family, Person } from "@/utils/types/person";
 import type { GetStaticProps } from "next";
 import { useRouter } from "next/router";

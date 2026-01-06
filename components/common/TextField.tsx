@@ -1,4 +1,3 @@
-// Imports
 import { StylableFC } from "@/utils/types/common";
 import Text from "@/components/common/Text";
 import cn from "@/utils/helpers/cn";

@@ -1,4 +1,7 @@
-async function fetchAPI(url: string, options: RequestInit) {
+const fetchAPI = async (
+  url: string,
+  options: RequestInit,
+): Promise<Response> => {
   console.warn("`fetchAPI` is DEPRECATED!!!! Please phase out to `fetchAPI2`.");
   const headers = new Headers(options.headers);
 
@@ -19,13 +22,24 @@ async function fetchAPI(url: string, options: RequestInit) {
     `${process.env.NEXT_PUBLIC_OPENHOUSE_API_URL}${url}`,
     options,
   );
-}
+};
 
-type APIResponse<T extends object | null = null> = {
-  success: boolean;
+type APIResponse<T extends object | null = null> =
+  | SuccessAPIResponse<T>
+  | ErrorApiResponse;
+
+type SuccessAPIResponse<T extends object | null = null> = {
+  success: true;
   request_id: string;
   timestamp: string;
   data: T;
+};
+
+type ErrorApiResponse = {
+  success: false;
+  request_id: string;
+  timestamp: string;
+  data: { error: string; message: string };
 };
 
 // FIXME: Rename when fully migrated

@@ -5,10 +5,10 @@ import TextField from "@/components/common/TextField";
 import Select from "@/components/common/Select";
 import DatePicker from "@/components/common/DatePicker";
 import {
-  gender,
+  Gender,
   Person,
-  prefix,
-  relationshipToChild,
+  Prefix,
+  RelationshipToChild,
 } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 import { User } from "@/utils/types/user";
@@ -70,9 +70,9 @@ const AdultRegistrationForm: StylableFC<{
             handlePersonChange({ ...person, prefix: prefix });
           }}
         >
-          <option value={prefix.mr}>{t("prefix.mr")}</option>
-          <option value={prefix.ms}>{t("prefix.ms")}</option>
-          <option value={prefix.mrs}>{t("prefix.mrs")}</option>
+          <option value={Prefix.Mr}>{t("prefix.mr")}</option>
+          <option value={Prefix.Ms}>{t("prefix.ms")}</option>
+          <option value={Prefix.Mrs}>{t("prefix.mrs")}</option>
         </Select>
         <TextField
           name="firstname"
@@ -100,9 +100,9 @@ const AdultRegistrationForm: StylableFC<{
             handlePersonChange({ ...person, gender: gender });
           }}
         >
-          <option value={gender.male}>{t("gender.male")}</option>
-          <option value={gender.female}>{t("gender.female")}</option>
-          <option value={gender.other}>{t("gender.other")}</option>
+          <option value={Gender.Male}>{t("gender.male")}</option>
+          <option value={Gender.Female}>{t("gender.female")}</option>
+          <option value={Gender.Other}>{t("gender.other")}</option>
         </Select>
         <DatePicker
           name="birthdate"
@@ -134,16 +134,16 @@ const AdultRegistrationForm: StylableFC<{
             });
           }}
         >
-          <option value={relationshipToChild.father}>
+          <option value={RelationshipToChild.Father}>
             {t("relationshipToChild.father")}
           </option>
-          <option value={relationshipToChild.mother}>
+          <option value={RelationshipToChild.Mother}>
             {t("relationshipToChild.mother")}
           </option>
-          <option value={relationshipToChild.legal_guardian}>
+          <option value={RelationshipToChild.LegalGuardian}>
             {t("relationshipToChild.legal_guardian")}
           </option>
-          <option value={relationshipToChild.other}>
+          <option value={RelationshipToChild.Other}>
             {t("relationshipToChild.other")}
           </option>
         </Select>

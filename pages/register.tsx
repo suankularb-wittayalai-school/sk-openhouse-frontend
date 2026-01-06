@@ -39,7 +39,7 @@ const RegisterLoginPage = () => {
     registrant: {
       user: {
         email: "",
-        is_onboarded: false,
+        onboarded_at: null,
         event_expectations: "",
         registered_events: [],
       },
@@ -87,7 +87,7 @@ const RegisterLoginPage = () => {
                   })
                     .then((res) => res.json())
                     .then((data) => {
-                      if (!data.data.is_onboarded) {
+                      if (typeof data.data.onboarded_at !== "string") {
                         setPage(1);
                       } else {
                         router.push("/me");

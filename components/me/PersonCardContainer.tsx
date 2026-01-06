@@ -45,14 +45,14 @@ const PersonCardContainer: StylableFC<{
         ))}
       </Card>
       <div className="flex gap-2">
-        <Button
+        {/* <Button
           variant="outline"
           icon="edit"
           className="w-10 shrink-0 *:p-0"
           onClick={() => {
             setEditDialogOpen(true);
           }}
-        />
+        /> */}
         <Button
           variant="primarySurface"
           className="w-full"

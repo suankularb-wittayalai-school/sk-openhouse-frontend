@@ -117,7 +117,7 @@ const ActivitiesSection: StylableFC<{
             for (const adult of adults) {
               const { child, ...formattedAdult } = adult;
               if (formattedAdult.tel?.length == 0) {
-                formattedAdult.tel = undefined;
+                formattedAdult.tel = "";
               }
               formattedAdults.push(formattedAdult);
             }

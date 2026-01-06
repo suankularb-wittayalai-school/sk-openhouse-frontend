@@ -21,6 +21,25 @@ export enum gender {
 }
 
 /**
+ * The K12 grade options. To be used alongside expected_graduation_year
+ */
+export enum next_grade {
+  m1 = "m1",
+  m4 = "m4",
+}
+
+export enum track_interest {
+  "ห้องเรียนพิเศษ GATE Program ม.1",
+  "ห้องเรียนพิเศษ EPLUS+ ม.1",
+  "ห้องเรียนวิทยาศาสตร์หุ่นยนต์ (โครงการปกติ) ม.1",
+  "ห้องเรียนปกติ ม.1",
+  "ห้องเรียนพิเศษ GATE Program ม.4",
+  "ห้องเรียนพิเศษ Gifted Science ม.4",
+  "ห้องเรียนพิเศษ EPLUS+ ม.4",
+  "ห้องเรียนปกติ ม.4",
+}
+
+/**
  * The relationship of a person to his / her child(ren).
  */
 export enum relationshipToChild {
@@ -45,6 +64,7 @@ export type person = {
     nickname: string | undefined;
     school: string | undefined;
     expected_graduation_year: number | undefined;
+    next_grade: string | undefined;
     passport_id?: string | undefined;
   };
 };

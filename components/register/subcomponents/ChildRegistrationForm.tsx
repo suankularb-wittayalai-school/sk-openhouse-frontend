@@ -17,6 +17,7 @@ const ChildRegistrationForm: StylableFC<{
 }> = ({ person, count, handlePersonChange, handleDeletePerson }) => {
   const t = useTranslations("person");
   const tx = useTranslations("register.family.label");
+  const NEXT_GRADE = ["m1", "m4"];
   const GRADUATION_YEAR = [
     2569, 2570, 5271, 2572, 2573, 2574, 2575, 2576, 2577, 2578, 2579, 2580,
   ];
@@ -36,7 +37,7 @@ const ChildRegistrationForm: StylableFC<{
           <MaterialIcon icon="close" className="text-2xl!" />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-[0.38rem]">
+      <div className="grid grid-cols-3 gap-1.5">
         <Select
           name="prefix"
           value={person.prefix}
@@ -65,7 +66,7 @@ const ChildRegistrationForm: StylableFC<{
           }}
         />
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-1.5">
         <Select
           name="gender"
           value={person.gender}
@@ -88,17 +89,7 @@ const ChildRegistrationForm: StylableFC<{
           min={getDateEighteenYearsAgo()}
         />
       </div>
-      {/* <div className="grid grid-cols-1">
-        <TextField
-          name="tel"
-          label={tx("tel")}
-          value={person.tel}
-          setValue={(tel) => {
-            handlePersonChange({ ...person, tel: tel });
-          }}
-        />
-      </div> */}
-      <div className="grid grid-cols-2 gap-[0.38rem]">
+      <div className="grid grid-cols-4 gap-1.5">
         <TextField
           name="nickname"
           label={tx("nickname")}
@@ -109,11 +100,26 @@ const ChildRegistrationForm: StylableFC<{
               child: { ...person.child, nickname: nickname },
             });
           }}
+          className="col-span-2!"
         />
         <Select
           name="expectedGraduationYear"
+          value={person.child.next_grade || NEXT_GRADE[0]}
+          label={"ศึกษาต่อชั้น..."}
+          setValue={(year) => {
+            handlePersonChange({
+              ...person,
+              child: { ...person.child, next_grade: year },
+            });
+          }}
+        >
+          <option value={"m1"}>ม.1</option>
+          <option value={"m4"}>ม.4</option>
+        </Select>
+        <Select
+          name="expectedGraduationYear"
           value={person.child.expected_graduation_year || GRADUATION_YEAR[0]}
-          label={tx("expectedGraduationYear")}
+          label={"...ในปีการศึกษา"}
           setValue={(year) => {
             handlePersonChange({
               ...person,

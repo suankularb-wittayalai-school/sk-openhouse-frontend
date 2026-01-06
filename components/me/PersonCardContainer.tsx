@@ -77,73 +77,99 @@ const PersonCardContainer: StylableFC<{
               adult: person[];
               child: person[];
             }) => {
-              const adults = [...family.adult, family.registrant.person];
-              const children = [...family.child];
-              const formattedAdults = [];
-              fetchAPI("/v1/user", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  event_expectations:
-                    family.registrant.user.event_expectations.length == 0
-                      ? undefined
-                      : family.registrant.user.event_expectations,
-                  registered_events: family.registrant.user,
-                }),
-              });
+              const fetchAndUpdate = async () => {
+                // Fetch current data from API
+                const res = await fetchAPI("/v1/user/family", {
+                  method: "GET",
+                });
+                let currentData = [];
+                if (res.ok) {
+                  currentData = await res.json();
+                }
 
-              for (let adult of adults) {
-                if (isMissingRequiredTextField("adult", adult)) {
-                  setOpenMissingInfoDialog(true);
-                  return;
+                const adults = [...family.adult, family.registrant.person];
+                const children = [...family.child];
+                const formattedAdults = [];
+
+                for (let adult of adults) {
+                  if (isMissingRequiredTextField("adult", adult)) {
+                    setOpenMissingInfoDialog(true);
+                    return;
+                  }
+                  const { child, created_at, ...formattedAdult } = adult;
+                  if (!formattedAdult.tel) {
+                    formattedAdult.tel = undefined;
+                  }
+                  formattedAdults.push(formattedAdult);
                 }
-                const { child, created_at, ...formattedAdult } = adult;
-                if (formattedAdult.tel?.length == 0) {
-                  formattedAdult.tel = undefined;
+                for (let child of children) {
+                  if (isMissingRequiredTextField("child", child)) {
+                    setOpenMissingInfoDialog(true);
+                    return;
+                  }
+                  child.child.expected_graduation_year = Number(
+                    child.child.expected_graduation_year,
+                  );
+                  if (!child.child.next_grade) {
+                    if (child.id && Array.isArray(currentData)) {
+                      const found = currentData.find((c) => c.id === child.id);
+                      if (found && found.child && found.child.next_grade) {
+                        child.child.next_grade = found.child.next_grade;
+                      }
+                    }
+                  }
                 }
-                formattedAdults.push(formattedAdult);
-              }
-              for (let child of children) {
-                if (isMissingRequiredTextField("child", child)) {
-                  setOpenMissingInfoDialog(true);
-                  return;
+                const newPerson = [
+                  ...formattedAdults.filter(
+                    (adult) =>
+                      !adult.id ||
+                      typeof adult.id !== "string" ||
+                      adult.id.length === 0,
+                  ),
+                  ...children.filter(
+                    (child) =>
+                      !child.id ||
+                      typeof child.id !== "string" ||
+                      child.id.length === 0,
+                  ),
+                ].map(({ id, ...person }) => person);
+                const orginPerson = [
+                  ...formattedAdults.filter(
+                    (adult) =>
+                      adult.id &&
+                      typeof adult.id === "string" &&
+                      adult.id.length !== 0,
+                  ),
+                  ...children.filter(
+                    (child) =>
+                      child.id &&
+                      typeof child.id === "string" &&
+                      child.id.length !== 0,
+                  ),
+                ];
+                for (let id of deletingPerson) {
+                  fetchAPI(`/v1/user/family/${id}`, { method: "DELETE" });
                 }
-                child.child.expected_graduation_year = Number(
-                  child.child.expected_graduation_year,
-                );
-              }
-              const newPerson = [
-                ...formattedAdults.filter(
-                  (adult) => adult.id?.length == 0 || adult.id == null,
-                ),
-                ...children.filter(
-                  (child) => child.id?.length == 0 || child.id == null,
-                ),
-              ].map(({ id, ...person }) => person);
-              const orginPerson = [
-                ...formattedAdults.filter((adult) => adult.id?.length !== 0),
-                ...children.filter((child) => child.id?.length !== 0),
-              ];
-              for (let id of deletingPerson) {
-                fetchAPI(`/v1/user/family/${id}`, { method: "DELETE" });
-              }
-              parallel(newPerson.length, newPerson, (person) => {
-                return fetchAPI("/v1/user/family", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(person),
+                // Always send the new data, regardless of changes
+                await parallel(newPerson.length, newPerson, (person) => {
+                  return fetchAPI("/v1/user/family", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(person),
+                  });
                 });
-              });
-              parallel(orginPerson.length, orginPerson, (person) => {
-                const { id, ...formattedPerson } = person;
-                return fetchAPI(`/v1/user/family/${person.id}`, {
-                  method: "PUT",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(formattedPerson),
+                await parallel(orginPerson.length, orginPerson, (person) => {
+                  const { id, ...formattedPerson } = person;
+                  return fetchAPI(`/v1/user/family/${person.id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formattedPerson),
+                  });
                 });
-              });
-              onFamilyChange(family);
-              setEditDialogOpen(false);
+                onFamilyChange(family);
+                setEditDialogOpen(false);
+              };
+              fetchAndUpdate();
             }}
             onDeleteAdult={(index: number) => {
               if (editingFamily.adult[index].id) {

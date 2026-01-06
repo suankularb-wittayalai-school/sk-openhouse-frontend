@@ -87,6 +87,7 @@ const FamilyForm: StylableFC<{
       child: {
         nickname: undefined,
         expected_graduation_year: undefined,
+        next_grade: "m1",
         school: undefined,
         passport_id: undefined,
       },
@@ -105,6 +106,7 @@ const FamilyForm: StylableFC<{
       child: {
         nickname: "",
         expected_graduation_year: 2569,
+        next_grade: "m1",
         school: "",
         passport_id: undefined,
       },
@@ -133,7 +135,7 @@ const FamilyForm: StylableFC<{
           {family.adult.length === 0 && (
             <div
               className="text-primary border-primary-border rounded-lg border
-                px-3 py-16 text-center text-xs bg-white"
+                bg-white px-3 py-16 text-center text-xs"
             >
               {t("title.noOtherAdultMembers")}
             </div>
@@ -162,8 +164,8 @@ const FamilyForm: StylableFC<{
         <Text type="body">{t("title.otherChildMembers")}</Text>
         {family.child.length === 0 && (
           <div
-            className="text-primary border-primary-border rounded-lg border px-3
-              py-16 text-center text-xs bg-white"
+            className="text-primary border-primary-border rounded-lg border
+              bg-white px-3 py-16 text-center text-xs"
           >
             <p>{t("title.noOtherChildMembers")}</p>
             <p>{t("title.childRegistrationRequired")}</p>

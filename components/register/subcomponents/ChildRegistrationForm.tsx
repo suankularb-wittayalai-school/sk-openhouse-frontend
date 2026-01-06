@@ -18,9 +18,7 @@ const ChildRegistrationForm: StylableFC<{
   const t = useTranslations("person");
   const tx = useTranslations("register.family.label");
   const NEXT_GRADE = ["m1", "m4"];
-  const GRADUATION_YEAR = [
-    2569, 2570, 5271, 2572, 2573, 2574, 2575, 2576, 2577, 2578, 2579, 2580,
-  ];
+  const GRADUATION_YEAR = Array.from({ length: 12 }, (_, i) => 2569 + i);
   return (
     <Card className="flex-col">
       <div className="grid grid-cols-2 gap-1">

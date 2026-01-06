@@ -9,7 +9,9 @@ export async function middleware(req: NextRequest) {
   // Get original destination
   const route = req.nextUrl.pathname;
   const locale = req.nextUrl.locale as LangCode;
-  const authTokenExists = typeof req.cookies.get("auth_token") !== "undefined";
+  const authTokenExists =
+    typeof req.cookies.get("auth_token") !== "undefined" ||
+    process.env.NODE_ENV == "development";
 
   // Log middleware start
   if (process.env.NODE_ENV === "development")

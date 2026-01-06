@@ -169,6 +169,9 @@ const PersonCardContainer: StylableFC<{
                 });
                 onFamilyChange(family);
                 setEditDialogOpen(false);
+
+                // TODO: [TEMP: KEY NOT LINKING TO EACH PERSON BUT 'i']
+                location.reload()
               };
               fetchAndUpdate();
             }}

@@ -45,17 +45,18 @@ const AccountSection: FC<{
               {
                 [GSIStatus.initial]: <GSIButton onStateChange={setState} />,
                 [GSIStatus.chooserShown]: (
-                  <>
+                  <div className="flex flex-col gap-2">
                     <Text type="title">
                       {t("account.google.continueInNew")}
                     </Text>
                     <Button
                       variant="primarySurface"
                       onClick={() => setState(GSIStatus.initial)}
+                      className="w-full max-w-max"
                     >
                       {t("account.google.action.cancel")}
                     </Button>
-                  </>
+                  </div>
                 ),
                 [GSIStatus.processing]: (
                   <Text type="title"> {t("account.google.processing")}</Text>

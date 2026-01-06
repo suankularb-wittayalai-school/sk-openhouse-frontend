@@ -77,6 +77,7 @@ const PersonCardContainer: StylableFC<{
               adult: person[];
               child: person[];
             }) => {
+              // TODO: Rewrite this, this is clearly UNREADABLE [80-172]!!!
               const fetchAndUpdate = async () => {
                 // Fetch current data from API
                 const res = await fetchAPI("/v1/user/family", {

@@ -8,7 +8,7 @@ import {
   gender,
   prefix,
   relationshipToChild,
-  person,
+  Person,
 } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 
@@ -28,7 +28,7 @@ const FamilyForm: StylableFC<{
 }) => {
   const t = useTranslations("register.family");
 
-  const handleRegistrantChange = (updatedPerson: person) => {
+  const handleRegistrantChange = (updatedPerson: Person) => {
     onFamilyChange({
       ...family,
       registrant: { ...family.registrant, person: updatedPerson },
@@ -44,13 +44,13 @@ const FamilyForm: StylableFC<{
     });
   };
 
-  const handleAdultChange = (updatedPerson: person, index: number) => {
+  const handleAdultChange = (updatedPerson: Person, index: number) => {
     const newAdult = [...family.adult];
     newAdult[index] = updatedPerson;
     onFamilyChange({ ...family, adult: newAdult });
   };
 
-  const handleChildChange = (updatedPerson: person, index: number) => {
+  const handleChildChange = (updatedPerson: Person, index: number) => {
     const newChild = [...family.child];
     newChild[index] = updatedPerson;
     onFamilyChange({ ...family, child: newChild });
@@ -75,7 +75,7 @@ const FamilyForm: StylableFC<{
   };
 
   const addAdult = () => {
-    const newAdult: person = {
+    const newAdult: Person = {
       firstname: "",
       lastname: "",
       gender: gender.male,
@@ -97,7 +97,7 @@ const FamilyForm: StylableFC<{
   };
 
   const addChild = () => {
-    const newChild: person = {
+    const newChild: Person = {
       firstname: "",
       lastname: "",
       gender: gender.male,

@@ -4,15 +4,15 @@ import Chip from "@/components/common/Chip";
 import TextField from "@/components/common/TextField";
 import Select from "@/components/common/Select";
 import DatePicker from "@/components/common/DatePicker";
-import { gender, person, prefix } from "@/utils/types/person";
+import { gender, Person, prefix } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import getDateEighteenYearsAgo from "@/utils/helpers/register/getDateEighteenYearsAgo";
 
 const ChildRegistrationForm: StylableFC<{
-  person: person;
+  person: Person;
   count: number;
-  handlePersonChange: (person: person) => void;
+  handlePersonChange: (person: Person) => void;
   handleDeletePerson: () => void;
 }> = ({ person, count, handlePersonChange, handleDeletePerson }) => {
   const t = useTranslations("person");

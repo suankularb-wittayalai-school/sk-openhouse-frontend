@@ -1,4 +1,4 @@
-import { user } from "./user";
+import { User } from "./user";
 
 /**
  * The prefix of a person.
@@ -49,7 +49,7 @@ export enum relationshipToChild {
   other = "other",
 }
 
-export type person = {
+export type Person = {
   id?: string;
   created_at?: string;
   prefix: prefix;
@@ -70,7 +70,7 @@ export type person = {
 };
 
 export type Family = {
-  registrant: { user: user; person: person };
-  adult: person[];
-  child: person[];
+  registrant: { user: User; person: Person };
+  adult: Person[];
+  child: Person[];
 };

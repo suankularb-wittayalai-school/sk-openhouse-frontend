@@ -4,10 +4,10 @@ import Dialog from "@/components/common/Dialog";
 import Text from "@/components/common/Text";
 import PersonCard from "@/components/me/subcomponents/PersonCard";
 import { StylableFC } from "@/utils/types/common";
-import { person } from "@/utils/types/person";
+import { Person } from "@/utils/types/person";
 
 const RegistrationCard: StylableFC<{
-  persons: person[];
+  persons: Person[];
   onClose: () => void;
 }> = ({ persons, onClose }) => {
   return (

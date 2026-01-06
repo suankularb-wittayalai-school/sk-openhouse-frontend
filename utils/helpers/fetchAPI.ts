@@ -20,4 +20,39 @@ async function fetchAPI(url: string, options: RequestInit) {
   );
 }
 
+type APIResponse<T extends object | null = null> = {
+  success: boolean;
+  request_id: string;
+  timestamp: string;
+  data: T;
+};
+
+// FIXME: Rename when fully migrated
+export const fetchAPI2 = async <T extends object | null = null>(
+  path: string,
+  options: RequestInit = {},
+): Promise<APIResponse<T>> => {
+  const isDevMode = process.env.NODE_ENV === "development";
+  const hasBody = typeof options.body !== "undefined" || options.body !== null;
+
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_OPENHOUSE_API_URL + path,
+    {
+      ...options,
+      credentials: isDevMode ? options.credentials : "include",
+      headers: {
+        ...options.headers,
+        ...(isDevMode
+          ? {
+              Authorization: `Bearer ${localStorage.getItem("skopen26-sessionToken")}`,
+            }
+          : {}),
+        ...(hasBody ? { "Content-Type": "application/json" } : {}),
+      },
+    },
+  );
+
+  return (await response.json()) satisfies APIResponse<T>;
+};
+
 export default fetchAPI;

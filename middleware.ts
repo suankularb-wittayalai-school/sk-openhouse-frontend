@@ -4,17 +4,14 @@ import { LangCode } from "@/utils/types/common";
 import getLocalePath from "@/utils/helpers/getLocalePaths";
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
-
   // Get original destination
   const route = req.nextUrl.pathname;
   const locale = req.nextUrl.locale as LangCode;
-  const authTokenExists =
-    typeof req.cookies.get("auth_token") !== "undefined" ||
-    process.env.NODE_ENV == "development";
+  const isDevMode = process.env.NODE_ENV === "development";
+  const authTokenExists = typeof req.cookies.get("auth_token") !== "undefined";
 
   // Log middleware start
-  if (process.env.NODE_ENV === "development")
+  if (isDevMode)
     console.log(
       `\u001b[1m\x1b[35m →\u001b[0m Running middleware on ${route} …`,
     );
@@ -27,13 +24,13 @@ export async function middleware(req: NextRequest) {
 
   // Decide on destination based on user and page protection type
   const destination = (() => {
-    if (pageRole == "user" && !authTokenExists) {
+    if (pageRole === "user" && !authTokenExists) {
       return "/";
     }
   })();
 
   // Log middleware end
-  if (process.env.NODE_ENV === "development")
+  if (isDevMode)
     console.log(
       `\u001b[1m\x1b[35m →\x1b[0m\u001b[0m ${
         destination ? `Redirected to ${destination}` : "Continued"

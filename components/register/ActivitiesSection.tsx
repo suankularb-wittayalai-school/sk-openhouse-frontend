@@ -2,25 +2,25 @@ import SegmentedButton from "@/components/common/SegmentedButton";
 import Button from "@/components/common/Button";
 import Card from "@/components/common/Card";
 import { StylableFC } from "@/utils/types/common";
-import { user } from "@/utils/types/user";
+import { User } from "@/utils/types/user";
 import { useTranslations } from "next-intl";
 import Text from "@/components/common/Text";
 import Chip from "@/components/common/Chip";
 import fetchAPI from "@/utils/helpers/fetchAPI";
-import { person } from "@/utils/types/person";
+import { Person } from "@/utils/types/person";
 import { useRouter } from "next/router";
 import { parallel } from "radash";
 
 const ActivitiesSection: StylableFC<{
   family: {
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
+    registrant: { user: User; person: Person };
+    adult: Person[];
+    child: Person[];
   };
   onFamilyChange: (family: {
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
+    registrant: { user: User; person: Person };
+    adult: Person[];
+    child: Person[];
   }) => void;
   onBack: () => void;
 }> = ({ family, onFamilyChange, onBack }) => {

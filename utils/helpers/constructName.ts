@@ -1,5 +1,5 @@
 // Imports
-import { person } from "@/utils/types/person";
+import { Person } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 
 /**
@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
  * last name.
  */
 export default function constructName(
-  personName: Pick<person, "prefix" | "firstname" | "lastname">,
+  personName: Pick<Person, "prefix" | "firstname" | "lastname">,
 ) {
   const t = useTranslations("person.prefix");
   return (

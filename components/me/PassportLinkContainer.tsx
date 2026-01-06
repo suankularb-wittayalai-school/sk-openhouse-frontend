@@ -2,8 +2,8 @@ import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
 import PassportLinkCard from "@/components/me/subcomponents/PassportLinkCard";
 import { StylableFC } from "@/utils/types/common";
-import { Family, person } from "@/utils/types/person";
-import { user } from "@/utils/types/user";
+import { Family, Person } from "@/utils/types/person";
+import { User } from "@/utils/types/user";
 import { useTranslations } from "next-intl";
 
 const PassportLinkContainer: StylableFC<{

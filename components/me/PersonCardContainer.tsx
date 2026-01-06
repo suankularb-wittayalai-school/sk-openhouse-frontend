@@ -4,10 +4,10 @@ import Text from "@/components/common/Text";
 import RegistrationCard from "@/components/me/RegistrationCard";
 import PersonCard from "@/components/me/subcomponents/PersonCard";
 import { StylableFC } from "@/utils/types/common";
-import { Family, person } from "@/utils/types/person";
+import { Family, Person } from "@/utils/types/person";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
-import { user } from "@/utils/types/user";
+import { User } from "@/utils/types/user";
 import { useState } from "react";
 import FamilyEditDialog from "@/components/me/FamilyEditDialog";
 import isMissingRequiredTextField from "@/utils/helpers/register/isMissingRequiredTextFields";
@@ -18,9 +18,9 @@ import { parallel } from "radash";
 const PersonCardContainer: StylableFC<{
   family: Family;
   onFamilyChange: (family: {
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
+    registrant: { user: User; person: Person };
+    adult: Person[];
+    child: Person[];
   }) => void;
 }> = ({ family, onFamilyChange }) => {
   const t = useTranslations("me");
@@ -73,9 +73,9 @@ const PersonCardContainer: StylableFC<{
               setEditDialogOpen(false);
             }}
             onSubmit={(family: {
-              registrant: { user: user; person: person };
-              adult: person[];
-              child: person[];
+              registrant: { user: User; person: Person };
+              adult: Person[];
+              child: Person[];
             }) => {
               // TODO: Rewrite this.
               const fetchAndUpdate = async () => {

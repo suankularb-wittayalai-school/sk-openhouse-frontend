@@ -1,27 +1,26 @@
-import Button from "@/components/common/Button";
-import MaterialIcon from "@/components/common/MaterialIcon";
 import StageIndicatorCard from "@/components/common/StageIndicatorCard";
 import AccountSection from "@/components/register/AccountSection";
 import ActivitiesSection from "@/components/register/ActivitiesSection";
 import FamilySection from "@/components/register/FamilySection";
-import fetchAPI from "@/utils/helpers/fetchAPI";
+import { useUser } from "@/contexts/UserContext";
 import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
 import {
   gender,
-  person,
+  Person,
   prefix,
   relationshipToChild,
 } from "@/utils/types/person";
-import { user } from "@/utils/types/user";
+import { User } from "@/utils/types/user";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
-const RegisterLoginPage = () => {
+const RegisterationPage = () => {
   const tx = useTranslations("register");
 
   const router = useRouter();
+  const { user, isLoading: userIsLoading } = useUser();
 
   const stages = [
     tx("stage.account"),
@@ -29,12 +28,11 @@ const RegisterLoginPage = () => {
     tx("stage.activity"),
   ];
 
-  const [page, setPage] = useState<number>(0);
-  const [expStageIndicator, setExpStageIndicator] = useState<boolean>(false);
+  const [registerationStep, setRegisterationStep] = useState(0);
   const [familyForm, setFamilyForm] = useState<{
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
+    registrant: { user: User; person: Person };
+    adult: Person[];
+    child: Person[];
   }>({
     registrant: {
       user: {
@@ -64,16 +62,30 @@ const RegisterLoginPage = () => {
     child: [],
   });
 
+  useEffect(
+    () => {
+      if (userIsLoading) return;
+
+      if (user === null) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        return setRegisterationStep(1);
+      }
+      if (typeof user.onboarded_at === "string") {
+        router.push("/me");
+        return;
+      } else setRegisterationStep(2);
+    },
+    [userIsLoading], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
+  if (userIsLoading) return <span>Loading...</span>;
+
   return (
     <div className="flex flex-col gap-6 p-3">
-      <StageIndicatorCard
-        stages={stages}
-        active={page}
-        experimental={expStageIndicator}
-      />
+      <StageIndicatorCard stages={stages} active={registerationStep} />
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
-          key={page}
+          key={registerationStep}
           initial={{ translateY: "-1rem", opacity: 0 }}
           animate={{ translateY: 0, opacity: 1 }}
           exit={{ translateY: "1rem", opacity: 0 }}
@@ -81,32 +93,29 @@ const RegisterLoginPage = () => {
         >
           {
             [
+              <Fragment key={0}>{/* Empty */}</Fragment>,
               <AccountSection
+                type="register"
                 onRedirect={() => {
-                  fetchAPI("/v1/user", {
-                    method: "GET",
-                  })
-                    .then((res) => res.json())
-                    .then((data) => {
-                      if (typeof data.data.onboarded_at !== "string") {
-                        setPage(1);
-                      } else {
-                        router.push("/me");
-                      }
-                    });
+                  if (typeof user?.onboarded_at !== "string")
+                    setRegisterationStep(2);
+                  else router.push("/me");
                 }}
+                key={1}
               />,
               <FamilySection
                 family={familyForm}
                 onFamilyChange={setFamilyForm}
-                onRedirect={() => setPage(2)}
+                onRedirect={() => setRegisterationStep(3)}
+                key={2}
               />,
               <ActivitiesSection
                 family={familyForm}
                 onFamilyChange={setFamilyForm}
-                onBack={() => setPage(1)}
+                onBack={() => setRegisterationStep(2)}
+                key={3}
               />,
-            ][page]
+            ][registerationStep]
           }
         </motion.div>
       </AnimatePresence>
@@ -122,4 +131,4 @@ export async function getStaticProps() {
   };
 }
 
-export default RegisterLoginPage;
+export default RegisterationPage;

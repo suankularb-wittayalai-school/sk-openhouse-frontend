@@ -5,7 +5,7 @@ import PassportLinkConfirmDialog from "@/components/me/PassportLinkConfirmDialog
 import PassportLinkInvalidDialog from "@/components/me/PassportLinkInvalidDialog";
 import constructName from "@/utils/helpers/constructName";
 import { StylableFC } from "@/utils/types/common";
-import { person } from "@/utils/types/person";
+import { Person } from "@/utils/types/person";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import QrScanner from "qr-scanner";
@@ -13,7 +13,7 @@ import { pick } from "radash";
 import { useEffect, useRef, useState } from "react";
 
 const PassportScanDialog: StylableFC<{
-  person: person;
+  person: Person;
   onClose: () => void;
 }> = ({ person, onClose }) => {
   const t = useTranslations("passport");

@@ -1,8 +1,8 @@
 import { StylableFC } from "@/utils/types/common";
 import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
-import { person } from "@/utils/types/person";
-import { user } from "@/utils/types/user";
+import { Person } from "@/utils/types/person";
+import { User } from "@/utils/types/user";
 import { useTranslations } from "next-intl";
 import isMissingRequiredTextField from "@/utils/helpers/register/isMissingRequiredTextFields";
 import { useState } from "react";
@@ -11,14 +11,14 @@ import FamilyForm from "@/components/register/FamilyForm";
 
 const FamilySection: StylableFC<{
   family: {
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
+    registrant: { user: User; person: Person };
+    adult: Person[];
+    child: Person[];
   };
   onFamilyChange: (family: {
-    registrant: { user: user; person: person };
-    adult: person[];
-    child: person[];
+    registrant: { user: User; person: Person };
+    adult: Person[];
+    child: Person[];
   }) => void;
   onRedirect: () => void;
 }> = ({ family, onFamilyChange, onRedirect }) => {

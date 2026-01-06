@@ -2,33 +2,22 @@ import Button from "@/components/common/Button";
 import Dialog from "@/components/common/Dialog";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
-import { useLogin } from "@/contexts/LoginContext";
+import { useUser } from "@/contexts/UserContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 const Header: FC = () => {
   const t = useTranslations("common");
   const router = useRouter();
-
-  const { isLoggedIn, setIsLoggedIn } = useLogin();
+  const { user, setUser } = useUser();
+  const isLoggedIn = user !== null;
 
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
-  // Frontend User and Backend User is not compatable here!
-  const [user, setUser] = useState<any>();
-
-  useEffect(() => {
-    isLoggedIn &&
-      fetchAPI("/v1/user", { method: "GET" })
-        .then((res) => res.json())
-        .then((data) => {
-          setUser(data);
-        });
-  }, [isLoggedIn]);
 
   return (
     <div
@@ -62,9 +51,9 @@ const Header: FC = () => {
                 cursor-pointer items-center justify-center rounded-full border"
               onClick={() => setUserMenuOpen(true)}
             >
-              {user && user.data && user.data.profile_url ? (
+              {user && user.profile_url ? (
                 <Image
-                  src={user.data.profile_url}
+                  src={user.profile_url}
                   width={40}
                   height={40}
                   alt="User Avatar"
@@ -97,13 +86,13 @@ const Header: FC = () => {
             <Text type="headline" className="text-xl!">
               บัญชีของคุณ
             </Text>
-            {user && user.data && user.data.profile_url && user.data.email && (
+            {user && user.profile_url && (
               <div
                 className="border-primary-border flex items-center gap-2
                   rounded-lg border p-2"
               >
                 <Image
-                  src={user.data.profile_url}
+                  src={user.profile_url}
                   width={40}
                   height={40}
                   alt="User Avatar"
@@ -114,7 +103,7 @@ const Header: FC = () => {
                     {t("header.loggedAccount")}
                   </Text>
                   <Text type="title" className="text-tertiary">
-                    {user.data.email}
+                    {user.email}
                   </Text>
                 </div>
               </div>
@@ -124,13 +113,16 @@ const Header: FC = () => {
               onClick={() => {
                 fetchAPI("/v1/user/signout", {
                   method: "POST",
-                }).then((res) => {
-                  if (res.ok && typeof window !== undefined) {
-                    localStorage.removeItem("loginStatus");
+                }).then(() => {
+                  if (process.env.NODE_ENV === "development") {
+                    localStorage.removeItem("skopen26-sessionToken");
+                    document.cookie = "auth_token";
                   }
-                  setIsLoggedIn(false);
+
+                  setUser(null);
                   setUserMenuOpen(false);
-                  router.push("/");
+
+                  router.push("/").then(() => window.location.reload());
                 });
               }}
             >

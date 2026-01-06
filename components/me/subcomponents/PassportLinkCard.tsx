@@ -6,7 +6,7 @@ import PassportScanDialog from "@/components/me/PassportScanDialog";
 import cn from "@/utils/helpers/cn";
 import constructName from "@/utils/helpers/constructName";
 import { StylableFC } from "@/utils/types/common";
-import { person } from "@/utils/types/person";
+import { Person } from "@/utils/types/person";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import { pick } from "radash";
@@ -17,7 +17,7 @@ import { useState } from "react";
  * user to link his / her child to a passport.
  * @param person The person (child) to show.
  */
-const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
+const PassportLinkCard: StylableFC<{ person: Person }> = ({ person }) => {
   const t = useTranslations("passport");
 
   const isLinked = !!person.child.passport_id;

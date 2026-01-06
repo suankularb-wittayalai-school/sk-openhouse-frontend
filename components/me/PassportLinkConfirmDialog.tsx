@@ -3,13 +3,13 @@ import Dialog from "@/components/common/Dialog";
 import Text from "@/components/common/Text";
 import constructName from "@/utils/helpers/constructName";
 import { StylableFC } from "@/utils/types/common";
-import { person } from "@/utils/types/person";
+import { Person } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 import { pick } from "radash";
 import { useState } from "react";
 
 const PassportLinkConfirmDialog: StylableFC<{
-  person: person;
+  person: Person;
   onClose: () => void;
   onScannerDialogClose: () => void;
   passportID: string;

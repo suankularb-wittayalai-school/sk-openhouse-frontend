@@ -6,22 +6,22 @@ import Select from "@/components/common/Select";
 import DatePicker from "@/components/common/DatePicker";
 import {
   gender,
-  person,
+  Person,
   prefix,
   relationshipToChild,
 } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
-import { user } from "@/utils/types/user";
+import { User } from "@/utils/types/user";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import getDateEighteenYearsAgo from "@/utils/helpers/register/getDateEighteenYearsAgo";
 
 const AdultRegistrationForm: StylableFC<{
   type: "registrant" | "member";
-  person: person;
-  user?: user;
+  person: Person;
+  user?: User;
   count: number;
-  handlePersonChange: (person: person) => void;
-  handleUserChange?: (user: user) => void;
+  handlePersonChange: (person: Person) => void;
+  handleUserChange?: (user: User) => void;
   handleDeletePerson?: () => void;
   hideEventExpectations?: boolean;
 }> = ({

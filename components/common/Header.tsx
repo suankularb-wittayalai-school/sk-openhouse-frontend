@@ -71,7 +71,7 @@ const Header: FC = () => {
                   className="block aspect-square h-10 w-10 rounded-lg"
                 />
               ) : ( */}
-                <MaterialIcon icon="face" size={24} className="text-primary" />
+              <MaterialIcon icon="face" size={24} className="text-primary" />
               {/* )} */}
             </div>
           </>
@@ -125,14 +125,12 @@ const Header: FC = () => {
                 fetchAPI("/v1/user/signout", {
                   method: "POST",
                 }).then((res) => {
-                  if (res.ok) {
-                    if (typeof window !== undefined) {
-                      localStorage.removeItem("loginStatus");
-                    }
-                    setIsLoggedIn(false);
-                    setUserMenuOpen(false);
-                    router.push("/");
+                  if (res.ok && typeof window !== undefined) {
+                    localStorage.removeItem("loginStatus");
                   }
+                  setIsLoggedIn(false);
+                  setUserMenuOpen(false);
+                  router.push("/");
                 });
               }}
             >

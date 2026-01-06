@@ -141,7 +141,7 @@ const AdultRegistrationForm: StylableFC<{
             {t("relationshipToChild.mother")}
           </option>
           <option value={relationshipToChild.legal_guardian}>
-            {t("relationshipToChild.legalGuardian")}
+            {t("relationshipToChild.legal_guardian")}
           </option>
           <option value={relationshipToChild.other}>
             {t("relationshipToChild.other")}

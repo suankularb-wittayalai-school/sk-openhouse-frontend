@@ -6,9 +6,11 @@ import { FC, useEffect, useState } from "react";
 import PersonCardContainer from "@/components/me/PersonCardContainer";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import { useLogin } from "@/contexts/LoginContext";
+import { useRouter } from "next/router";
 
 const MyRegistrationPage: FC<{}> = ({}) => {
   const { isLoggedIn } = useLogin();
+  const router = useRouter();
 
   const [familyForm, setFamilyForm] = useState<Family>();
 
@@ -18,6 +20,9 @@ const MyRegistrationPage: FC<{}> = ({}) => {
       const { data: user } = await fetchAPI("/v1/user", { method: "GET" }).then(
         (res) => res.json(),
       );
+      if (typeof user.onboarded_at !== "string") {
+        router.push("/register");
+      }
       const { data: rawFamily } = await fetchAPI("/v1/user/family", {
         method: "GET",
       }).then((res) => res.json());

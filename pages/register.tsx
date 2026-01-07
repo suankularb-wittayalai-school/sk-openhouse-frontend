@@ -47,7 +47,7 @@ const RegisterationPage = () => {
     [userIsLoading], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  if (userIsLoading) return <span>Loading...</span>;
+  if (userIsLoading) return <></>;
 
   return (
     <div className="flex flex-col gap-6 p-3">

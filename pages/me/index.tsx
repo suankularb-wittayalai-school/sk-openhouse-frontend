@@ -32,7 +32,7 @@ const MyRegistrationPage: FC<{ family: Family }> = ({ family }) => {
     [userIsLoading], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  if (userIsLoading || user === null) return <span>Loading...</span>;
+  if (userIsLoading || user === null) return <></>;
 
   return (
     <div className="flex flex-col gap-6 p-3 pt-0">

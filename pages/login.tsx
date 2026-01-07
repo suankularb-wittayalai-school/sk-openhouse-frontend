@@ -22,7 +22,7 @@ const LoginPage = () => {
     [userIsLoading], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  if (userIsLoading) return <span>Loading...</span>;
+  if (userIsLoading) return <></>;
 
   return (
     <div className="p-3 pt-0">

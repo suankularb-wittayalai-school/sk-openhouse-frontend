@@ -6,7 +6,6 @@ import Text from "@/components/common/Text";
 import Chip from "@/components/common/Chip";
 import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
 import { useRouter } from "next/router";
-import { parallel } from "radash";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { FamilyCreate } from "@/utils/types/person";
 import { OnboardResponse } from "@/utils/types/user";

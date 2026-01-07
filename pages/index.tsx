@@ -56,7 +56,6 @@ const LandingPage: FC<{
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const messages = await getStaticTranslations("common", "landing");
-
   const busRoutes: BusRoutes = {
     infront: ["6 / 4-1", "43 / 4-11"],
     opposite: [
@@ -72,8 +71,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
       "82 / 4-15 ",
     ],
   };
-
-  const { data: scheduleItems } = await fetchAPI2("/v1/schedule", {});
+  const body = await fetchAPI2<ScheduleItem[]>("/v1/schedule");
+  const scheduleItems = body.success ? body.data : [];
 
   return {
     props: { messages, busRoutes, scheduleItems },

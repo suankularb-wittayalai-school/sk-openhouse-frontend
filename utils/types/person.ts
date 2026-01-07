@@ -65,10 +65,21 @@ export type Child = {
   linked_passport_id?: string;
 };
 
-export type Family = {
+export type DeprecatedFamily = {
   registrant: { user: User; person: Person };
   adult: Person[];
   child: Person[];
+};
+
+export type FetchedFamily = {
+  registrant: Person;
+  family_members: Person[];
+};
+
+export type Family = {
+  registrant: AdultPerson;
+  adults: AdultPerson[];
+  children: ChildPerson[];
 };
 
 export type FamilyCreate = {
@@ -78,4 +89,13 @@ export type FamilyCreate = {
   };
   adults: Partial<Omit<AdultPerson, "id" | "created_at">>[];
   children: Partial<Omit<ChildPerson, "id" | "created_at">>[];
+};
+
+export type FamilyUpdate = {
+  registrant: Partial<Omit<AdultPerson, "created_at">> & {
+    id: string;
+    event_expectations?: string;
+  };
+  adults: Partial<Omit<AdultPerson, "created_at">>[];
+  children: Partial<Omit<ChildPerson, "created_at">>[];
 };

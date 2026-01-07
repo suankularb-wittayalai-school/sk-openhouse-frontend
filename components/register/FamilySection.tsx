@@ -1,6 +1,6 @@
 import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
-import FamilyFormN from "@/components/register/FamilyFormN";
+import FamilyForm from "@/components/register/FamilyForm";
 import isMissingRequiredTextField from "@/utils/helpers/register/isMissingRequiredTextFields";
 import type { FamilyCreate } from "@/utils/types/person";
 import type { User } from "@/utils/types/user";
@@ -33,8 +33,6 @@ const FamilySection: FC<FamilySectionProps> = ({
   const onSubmit = (formData: FamilyCreate) => {
     if (areFieldsInvalid(formData)) return setOpenMissingInfoDialog(true);
 
-    console.debug(formData);
-
     setFormData(formData);
     setRegisterationStep(3);
   };
@@ -46,7 +44,7 @@ const FamilySection: FC<FamilySectionProps> = ({
         onSubmit={formMethods.handleSubmit(onSubmit)}
       >
         <Text type="headline">{t("title.family")}</Text>
-        <FamilyFormN user={user} />
+        <FamilyForm user={user} showEventExpectations={true} />
         <Button
           variant="primary"
           busy={formMethods.formState.isSubmitting}

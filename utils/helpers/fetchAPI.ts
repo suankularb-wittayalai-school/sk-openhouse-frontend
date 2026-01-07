@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 
 const fetchAPI = async (
   url: string,
@@ -48,7 +48,7 @@ type ErrorApiResponse = {
 export const fetchAPI2 = async <T extends object | string | null = null>(
   path: string,
   options: RequestInit = {},
-  req?: NextRequest,
+  cookies?: NextApiRequestCookies,
 ): Promise<APIResponse<T>> => {
   const isDevMode = process.env.NODE_ENV === "development";
   const hasBody = typeof options.body !== "undefined" || options.body !== null;
@@ -65,7 +65,7 @@ export const fetchAPI2 = async <T extends object | string | null = null>(
               Authorization:
                 "Bearer " +
                 (typeof window === "undefined"
-                  ? req?.cookies.get("auth_token")?.value
+                  ? cookies?.["auth_token"]
                   : (localStorage.getItem("skopen26-sessionToken") ?? "")),
             }
           : {}),

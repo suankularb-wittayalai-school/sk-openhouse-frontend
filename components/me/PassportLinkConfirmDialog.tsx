@@ -2,18 +2,24 @@ import Button from "@/components/common/Button";
 import Dialog from "@/components/common/Dialog";
 import Text from "@/components/common/Text";
 import constructName from "@/utils/helpers/constructName";
-import { StylableFC } from "@/utils/types/common";
-import { Person } from "@/utils/types/person";
+import type { ChildPerson } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 import { pick } from "radash";
-import { useState } from "react";
+import { type FC, useState } from "react";
 
-const PassportLinkConfirmDialog: StylableFC<{
-  person: Person;
+type PassportLinkConfirmDialogProps = {
+  person: ChildPerson;
   onClose: () => void;
   onScannerDialogClose: () => void;
-  passportID: string;
-}> = ({ person, onClose, onScannerDialogClose, passportID }) => {
+  passportId: string;
+};
+
+const PassportLinkConfirmDialog: FC<PassportLinkConfirmDialogProps> = ({
+  person,
+  onClose,
+  onScannerDialogClose,
+  passportId,
+}) => {
   const t = useTranslations("passport");
 
   const [isBusy, setIsBusy] = useState<boolean>(false);

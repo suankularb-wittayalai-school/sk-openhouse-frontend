@@ -1,18 +1,21 @@
-import PassportLinkContainer from "@/components/me/PassportLinkContainer";
-import PersonCardContainer from "@/components/me/PersonCardContainer";
+import FamilyContainer from "@/components/me/FamilyContainer";
+import PassportsContainer from "@/components/me/PassportsContainer";
 import { useUser } from "@/contexts/UserContext";
 import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
-import type { Family, Person } from "@/utils/types/person";
-import type { GetStaticProps } from "next";
+import type {
+  AdultPerson,
+  ChildPerson,
+  Family,
+  FetchedFamily,
+} from "@/utils/types/person";
+import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { type FC, useEffect, useState } from "react";
+import { type FC, useEffect } from "react";
 
-const MyRegistrationPage: FC = () => {
+const MyRegistrationPage: FC<{ family: Family }> = ({ family }) => {
   const router = useRouter();
   const { user, isLoading: userIsLoading } = useUser();
-
-  const [familyForm, setFamilyForm] = useState<Family>();
 
   useEffect(
     () => {
@@ -25,45 +28,21 @@ const MyRegistrationPage: FC = () => {
         router.push("/register");
         return;
       }
-
-      const getFamilyData = async () => {
-        // FIXME: Type!! Type!!! Type!!! It's in the language's NAME!!!!
-        const { data: rawFamily } = await fetchAPI2<any>("/v1/user/family");
-        const family: Family = {
-          registrant: {
-            user: user,
-            person: { ...rawFamily.registrant, isChild: false },
-          },
-          adult:
-            rawFamily.family_members.filter(
-              (person: Person) => person.child == undefined,
-            ) || [],
-          child:
-            rawFamily.family_members.filter(
-              (person: Person) => person.child !== undefined,
-            ) || [],
-        };
-
-        setFamilyForm(family);
-      };
-
-      getFamilyData();
     },
     [userIsLoading], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  if (userIsLoading || typeof familyForm === "undefined")
-    return <span>Loading...</span>;
+  if (userIsLoading || user === null) return <span>Loading...</span>;
 
   return (
     <div className="flex flex-col gap-6 p-3 pt-0">
-      <PersonCardContainer family={familyForm} onFamilyChange={setFamilyForm} />
-      <PassportLinkContainer family={familyForm} />
+      <FamilyContainer user={user} family={family} />
+      <PassportsContainer family={family} />
     </div>
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const messages = await getStaticTranslations(
     "common",
     "me",
@@ -71,9 +50,32 @@ export const getStaticProps: GetStaticProps = async () => {
     "register",
     "passport",
   );
+  const body = await fetchAPI2<FetchedFamily>(
+    "/v1/user/family",
+    {},
+    req.cookies,
+  );
+  // If the API returns an error, we can probably assume that most of the time,
+  // it's because the client is unauthenticated or unauthorized. We're going to
+  // act on that assumption rather than throw an error.
+  if (!body.success) {
+    res.setHeader("Set-Cookie", "auth_token=");
+    return { redirect: { destination: "/", permanent: false } };
+  }
+  const family = {
+    registrant: body.data.registrant as AdultPerson,
+    adults: body.data.family_members.filter(
+      (person) =>
+        "relationship_to_child" in person &&
+        typeof person.relationship_to_child !== "undefined",
+    ) as AdultPerson[],
+    children: body.data.family_members.filter(
+      (person) => "child" in person && typeof person.child !== "undefined",
+    ) as ChildPerson[],
+  } satisfies Family;
 
   return {
-    props: { messages },
+    props: { messages, family },
   };
 };
 

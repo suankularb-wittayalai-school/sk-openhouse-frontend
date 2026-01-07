@@ -2,7 +2,6 @@ import StageConnectingLines from "@/components/common/subcomponents/StageConnect
 import StageIcon from "@/components/common/subcomponents/StageIcon";
 import cn from "@/utils/helpers/cn";
 import { StylableFC } from "@/utils/types/common";
-import { useTranslations } from "next-intl";
 import { Fragment } from "react";
 
 /**
@@ -14,7 +13,7 @@ import { Fragment } from "react";
  */
 
 const StageIndicatorCard: StylableFC<{
-  stages: string[];
+  stages: readonly string[];
   active: number;
   className?: string;
 }> = ({ stages, active, className }) => (

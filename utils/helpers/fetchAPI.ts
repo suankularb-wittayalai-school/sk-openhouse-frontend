@@ -1,3 +1,5 @@
+import { NextRequest } from "next/server";
+
 const fetchAPI = async (
   url: string,
   options: RequestInit,
@@ -24,11 +26,11 @@ const fetchAPI = async (
   );
 };
 
-type APIResponse<T extends object | null = null> =
+type APIResponse<T extends object | string | null = null> =
   | SuccessAPIResponse<T>
   | ErrorApiResponse;
 
-type SuccessAPIResponse<T extends object | null = null> = {
+type SuccessAPIResponse<T extends object | string | null = null> = {
   success: true;
   request_id: string;
   timestamp: string;
@@ -43,9 +45,10 @@ type ErrorApiResponse = {
 };
 
 // FIXME: Rename when fully migrated
-export const fetchAPI2 = async <T extends object | null = null>(
+export const fetchAPI2 = async <T extends object | string | null = null>(
   path: string,
   options: RequestInit = {},
+  req?: NextRequest,
 ): Promise<APIResponse<T>> => {
   const isDevMode = process.env.NODE_ENV === "development";
   const hasBody = typeof options.body !== "undefined" || options.body !== null;
@@ -59,7 +62,11 @@ export const fetchAPI2 = async <T extends object | null = null>(
         ...options.headers,
         ...(isDevMode
           ? {
-              Authorization: `Bearer ${localStorage.getItem("skopen26-sessionToken")}`,
+              Authorization:
+                "Bearer " +
+                (typeof window === "undefined"
+                  ? req?.cookies.get("auth_token")?.value
+                  : (localStorage.getItem("skopen26-sessionToken") ?? "")),
             }
           : {}),
         ...(hasBody ? { "Content-Type": "application/json" } : {}),

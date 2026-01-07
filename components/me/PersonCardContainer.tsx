@@ -94,7 +94,7 @@ const PersonCardContainer: StylableFC<{
                 const formattedAdults = [];
 
                 // ENG: For all adults
-                for (let adult of adults) {
+                for (const adult of adults) {
                   // Checks for missing fields in adults
                   if (isMissingRequiredTextField("adult", adult)) {
                     setOpenMissingInfoDialog(true);
@@ -102,13 +102,13 @@ const PersonCardContainer: StylableFC<{
                   }
                   // Creates a adult item, add into `formattedAdult`
                   const { child, created_at, ...formattedAdult } = adult;
-                  if (!formattedAdult.tel) {
+                  if (formattedAdult.tel === "") {
                     formattedAdult.tel = undefined; // For non-provided phones.
                   }
                   formattedAdults.push(formattedAdult);
                 }
                 // ENG: For all childs
-                for (let child of children) {
+                for (const child of children) {
                   // Checks for missing fields in childs
                   if (isMissingRequiredTextField("child", child)) {
                     setOpenMissingInfoDialog(true);
@@ -162,7 +162,7 @@ const PersonCardContainer: StylableFC<{
                 ];
 
                 // Delete person using ID, per call
-                for (let id of deletingPerson) {
+                for (const id of deletingPerson) {
                   fetchAPI(`/v1/user/family/${id}`, { method: "DELETE" });
                 }
 

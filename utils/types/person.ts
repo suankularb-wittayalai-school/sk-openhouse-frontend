@@ -38,28 +38,44 @@ export enum RelationshipToChild {
   Other = "other",
 }
 
-export type Person = {
-  id?: string;
-  created_at?: string;
+export type Person = AdultPerson | ChildPerson;
+
+type BasePerson = {
+  id: string;
+  created_at: string;
   prefix: Prefix;
   firstname: string;
   lastname: string;
   birthdate: string;
   gender: Gender;
   tel?: string;
-  is_child?: boolean;
-  relationship_to_child?: RelationshipToChild;
-  child: {
-    nickname: string | undefined;
-    school: string | undefined;
-    expected_graduation_year: number | undefined;
-    next_grade: SchoolGrade | undefined;
-    passport_id: string | undefined;
-  };
+};
+
+export type AdultPerson = {
+  relationship_to_child: RelationshipToChild;
+} & BasePerson;
+
+export type ChildPerson = { child: Child } & BasePerson;
+
+export type Child = {
+  nickname?: string;
+  school: string;
+  expected_graduation_year: number;
+  next_grade: SchoolGrade;
+  linked_passport_id?: string;
 };
 
 export type Family = {
   registrant: { user: User; person: Person };
   adult: Person[];
   child: Person[];
+};
+
+export type FamilyCreate = {
+  registrant: Partial<Omit<AdultPerson, "id" | "created_at">> & {
+    event_expectations?: string;
+    registered_events: string[];
+  };
+  adults: Partial<Omit<AdultPerson, "id" | "created_at">>[];
+  children: Partial<Omit<ChildPerson, "id" | "created_at">>[];
 };

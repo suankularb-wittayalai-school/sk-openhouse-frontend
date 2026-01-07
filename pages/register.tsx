@@ -1,68 +1,35 @@
 import StageIndicatorCard from "@/components/common/StageIndicatorCard";
 import AccountSection from "@/components/register/AccountSection";
-import ActivitiesSection from "@/components/register/ActivitiesSection";
+import EventsSection from "@/components/register/EventsSection";
 import FamilySection from "@/components/register/FamilySection";
 import { useUser } from "@/contexts/UserContext";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
-import {
-  Gender,
-  type Person,
-  Prefix,
-  RelationshipToChild,
-  SchoolGrade,
-} from "@/utils/types/person";
-import type { User } from "@/utils/types/user";
+import type { FamilyCreate } from "@/utils/types/person";
 import { AnimatePresence, motion } from "motion/react";
 import type { GetStaticProps } from "next";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
+import {
+  type Dispatch,
+  Fragment,
+  type SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
 const RegisterationPage = () => {
   const tx = useTranslations("register");
+  const registerationStages = [
+    tx("stage.account"),
+    tx("stage.family"),
+    tx("stage.activity"),
+  ] as const;
 
   const router = useRouter();
   const { user, isLoading: userIsLoading } = useUser();
 
-  const stages = [
-    tx("stage.account"),
-    tx("stage.family"),
-    tx("stage.activity"),
-  ];
-
   const [registerationStep, setRegisterationStep] = useState(0);
-  const [familyForm, setFamilyForm] = useState<{
-    registrant: { user: User; person: Person };
-    adult: Person[];
-    child: Person[];
-  }>({
-    registrant: {
-      user: {
-        email: "",
-        onboarded_at: null,
-        event_expectations: "",
-        registered_events: [],
-      },
-      person: {
-        firstname: "",
-        lastname: "",
-        gender: Gender.Male,
-        relationship_to_child: RelationshipToChild.Father,
-        tel: "",
-        prefix: Prefix.Mr,
-        birthdate: "",
-        child: {
-          nickname: undefined,
-          expected_graduation_year: undefined,
-          next_grade: SchoolGrade.M1,
-          school: undefined,
-          passport_id: undefined,
-        },
-      },
-    },
-    adult: [],
-    child: [],
-  });
+  const [formData, setFormData] = useState<FamilyCreate>();
 
   useEffect(
     () => {
@@ -84,7 +51,10 @@ const RegisterationPage = () => {
 
   return (
     <div className="flex flex-col gap-6 p-3">
-      <StageIndicatorCard stages={stages} active={registerationStep} />
+      <StageIndicatorCard
+        stages={registerationStages}
+        active={registerationStep}
+      />
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={registerationStep}
@@ -95,28 +65,41 @@ const RegisterationPage = () => {
         >
           {
             [
+              // Placeholder step
               <Fragment key={0}>{/* Empty */}</Fragment>,
+
+              // Step 1
               <AccountSection
                 type="register"
-                onRedirect={() => {
-                  if (typeof user?.onboarded_at !== "string")
-                    setRegisterationStep(2);
-                  else router.push("/me");
-                }}
+                onRedirect={() =>
+                  typeof user?.onboarded_at !== "string"
+                    ? setRegisterationStep(2)
+                    : router.push("/me")
+                }
                 key={1}
               />,
-              <FamilySection
-                family={familyForm}
-                onFamilyChange={setFamilyForm}
-                onRedirect={() => setRegisterationStep(3)}
-                key={2}
-              />,
-              <ActivitiesSection
-                family={familyForm}
-                onFamilyChange={setFamilyForm}
-                onBack={() => setRegisterationStep(2)}
-                key={3}
-              />,
+
+              // Step 2
+              user !== null && (
+                <FamilySection
+                  user={user}
+                  setFormData={setFormData}
+                  setRegisterationStep={setRegisterationStep}
+                  key={2}
+                />
+              ),
+
+              // Step 3
+              user !== null && typeof formData !== "undefined" && (
+                <EventsSection
+                  formData={formData}
+                  setFormData={
+                    setFormData as Dispatch<SetStateAction<FamilyCreate>>
+                  }
+                  setRegisterationStep={setRegisterationStep}
+                  key={3}
+                />
+              ),
             ][registerationStep]
           }
         </motion.div>

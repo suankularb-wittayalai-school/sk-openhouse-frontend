@@ -2,7 +2,9 @@ import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
 import type { User } from "@/utils/types/user";
 import {
   createContext,
-  ReactNode,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
   useContext,
   useEffect,
   useState,
@@ -10,9 +12,9 @@ import {
 
 const UserContext = createContext<{
   user: User | null;
-  setUser: (user: User | null) => void;
+  setUser: Dispatch<SetStateAction<User | null>>;
   isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }>({ user: null, setUser: () => {}, isLoading: true, setIsLoading: () => {} });
 
 export function UserProvider({ children }: { children: ReactNode }) {

@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     ],
   };
 
-  const { data: scheduleItems } = await fetchAPI2("/v1/schedule");
+  const { data: scheduleItems } = await fetchAPI2("/v1/schedule", {});
 
   return {
     props: { messages, busRoutes, scheduleItems },

@@ -3,7 +3,7 @@ import Dialog from "@/components/common/Dialog";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import { useUser } from "@/contexts/UserContext";
-import fetchAPI from "@/utils/helpers/fetchAPI";
+import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -113,14 +113,16 @@ const Header: FC = () => {
               onClick={() => {
                 fetchAPI("/v1/user/signout", {
                   method: "POST",
-                }).then(() => {
-                  if (process.env.NODE_ENV === "development") {
-                    localStorage.removeItem("skopen26-sessionToken");
-                    document.cookie = "auth_token";
-                  }
+                }).then((body) => {
+                  if (body.success) {
+                    if (process.env.NODE_ENV === "development") {
+                      localStorage.removeItem("skopen26-sessionToken");
+                      document.cookie = "auth_token";
+                    }
 
-                  setUser(null);
-                  setUserMenuOpen(false);
+                    setUser(null);
+                    setUserMenuOpen(false);
+                  }
 
                   router.push("/").then(() => window.location.reload());
                 });

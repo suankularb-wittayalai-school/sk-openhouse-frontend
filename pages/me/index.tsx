@@ -1,7 +1,7 @@
 import FamilyContainer from "@/components/me/FamilyContainer";
 import PassportsContainer from "@/components/me/PassportsContainer";
 import { useUser } from "@/contexts/UserContext";
-import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
+import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
 import type {
   AdultPerson,
@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     "register",
     "passport",
   );
-  const body = await fetchAPI2<FetchedFamily>(
+  const body = await fetchAPI<FetchedFamily>(
     "/v1/user/family",
     {},
     req.cookies,

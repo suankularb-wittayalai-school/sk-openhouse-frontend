@@ -1,6 +1,6 @@
 import { GSIStatus } from "@/components/common/GSIButton";
 import { useUser } from "@/contexts/UserContext";
-import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
+import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import type { User } from "@/utils/types/user";
 import type { GsiButtonConfiguration, IdConfiguration } from "google-one-tap";
 import { useEffect } from "react";
@@ -15,7 +15,7 @@ const useGoogleIdentityServices = (options: {
 
   const logInWithGoogle = async (credential: string) => {
     onStateChange(GSIStatus.processing);
-    fetchAPI2<{ auth_token: string } | null>("/v1/user/oauth/code", {
+    fetchAPI<{ auth_token: string } | null>("/v1/user/oauth/code", {
       method: "POST",
       body: JSON.stringify({ id_token: credential }),
     }).then((body) => {
@@ -26,7 +26,7 @@ const useGoogleIdentityServices = (options: {
         console.log("[dev] Saved `auth_token` to localStorage");
       }
 
-      fetchAPI2<User>("/v1/user").then((body) => {
+      fetchAPI<User>("/v1/user").then((body) => {
         if (!body.success) throw new Error("Failed to fetch user");
 
         setUser(body.data);

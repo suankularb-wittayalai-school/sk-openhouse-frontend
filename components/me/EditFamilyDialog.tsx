@@ -2,7 +2,7 @@ import Button from "@/components/common/Button";
 import Dialog from "@/components/common/Dialog";
 import Text from "@/components/common/Text";
 import FamilyForm from "@/components/register/FamilyForm";
-import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
+import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import isMissingRequiredTextField from "@/utils/helpers/register/isMissingRequiredTextFields";
 import type { Family, FamilyUpdate } from "@/utils/types/person";
 import type { User } from "@/utils/types/user";
@@ -46,7 +46,7 @@ const EditFamilyDialog: FC<EditFamilyDialogProps> = ({
       if (formData.registrant.event_expectations === user.event_expectations)
         return;
 
-      const body = await fetchAPI2("/v1/user", {
+      const body = await fetchAPI("/v1/user", {
         method: "PUT",
         body: JSON.stringify({
           event_expectations: formData.registrant.event_expectations,
@@ -67,7 +67,7 @@ const EditFamilyDialog: FC<EditFamilyDialogProps> = ({
 
       const personIds = await Promise.all(
         createdPeople.map(async (person) => {
-          const body = await fetchAPI2<string>("/v1/user/family", {
+          const body = await fetchAPI<string>("/v1/user/family", {
             method: "POST",
             body: JSON.stringify(person),
           });
@@ -89,7 +89,7 @@ const EditFamilyDialog: FC<EditFamilyDialogProps> = ({
 
       const personIds = await Promise.all(
         updatedPeople.map(async (person) => {
-          const body = await fetchAPI2(`/v1/user/family/${person.id}`, {
+          const body = await fetchAPI(`/v1/user/family/${person.id}`, {
             method: "PUT",
             body: JSON.stringify(person),
           });
@@ -108,7 +108,7 @@ const EditFamilyDialog: FC<EditFamilyDialogProps> = ({
 
       await Promise.all(
         deletedPersonIds.map(async (personId) => {
-          const body = await fetchAPI2(`/v1/user/family/${personId}`, {
+          const body = await fetchAPI(`/v1/user/family/${personId}`, {
             method: "DELETE",
           });
           if (!body.success) throw new Error("Failed to update person");

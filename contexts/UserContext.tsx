@@ -1,4 +1,4 @@
-import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
+import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import type { User } from "@/utils/types/user";
 import {
   createContext,
@@ -22,7 +22,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchAPI2<User>("/v1/user").then((body) => {
+    fetchAPI<User>("/v1/user").then((body) => {
       if (body.success) setUser(body.data);
       setIsLoading(false);
     });

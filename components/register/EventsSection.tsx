@@ -4,7 +4,7 @@ import Card from "@/components/common/Card";
 import { useTranslations } from "next-intl";
 import Text from "@/components/common/Text";
 import Chip from "@/components/common/Chip";
-import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
+import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import { useRouter } from "next/router";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { FamilyCreate } from "@/utils/types/person";
@@ -39,7 +39,7 @@ const EventsSection: FC<EventsSectionProps> = ({
 
   const submitForm = async () => {
     const onboardUser = async () => {
-      const body = await fetchAPI2<OnboardResponse>("/v1/user/onboard", {
+      const body = await fetchAPI<OnboardResponse>("/v1/user/onboard", {
         method: "POST",
         body: JSON.stringify(formData.registrant),
       });
@@ -73,7 +73,7 @@ const EventsSection: FC<EventsSectionProps> = ({
 
       const personIds = await Promise.all(
         people.map(async (person) => {
-          const body = await fetchAPI2<string>("/v1/user/family", {
+          const body = await fetchAPI<string>("/v1/user/family", {
             method: "POST",
             body: JSON.stringify(person),
           });

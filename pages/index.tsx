@@ -7,7 +7,7 @@ import TransitGuideMRTSection from "@/components/landing/TransitGuideMRTSection"
 import MapsSchoolLocation from "@/components/landing/subcomponents/MapsSchoolLocation";
 import ScheduleCard from "@/components/landing/subcomponents/ScheduleCard";
 import SchoolMap from "@/components/me/SchoolMap";
-import { fetchAPI2 } from "@/utils/helpers/fetchAPI";
+import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
 import type { BusRoutes, ScheduleItem } from "@/utils/types/common";
 import type { GetServerSideProps } from "next";
@@ -71,7 +71,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       "82 / 4-15 ",
     ],
   };
-  const body = await fetchAPI2<ScheduleItem[]>("/v1/schedule");
+  const body = await fetchAPI<ScheduleItem[]>("/v1/schedule");
   const scheduleItems = body.success ? body.data : [];
 
   return {

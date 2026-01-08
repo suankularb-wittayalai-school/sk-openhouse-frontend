@@ -108,31 +108,33 @@ const Header: FC = () => {
                 </div>
               </div>
             )}
-            <Button
-              variant="primarySurface"
-              onClick={() => {
-                fetchAPI("/v1/user/signout", {
-                  method: "POST",
-                }).then((body) => {
-                  if (body.success) {
-                    if (process.env.NODE_ENV === "development") {
-                      localStorage.removeItem("skopen26-sessionToken");
-                      document.cookie = "auth_token";
+            <div className="flex flex-col gap-1">
+              <Button
+                variant="primarySurface"
+                onClick={() => {
+                  fetchAPI("/v1/user/signout", {
+                    method: "POST",
+                  }).then((body) => {
+                    if (body.success) {
+                      if (process.env.NODE_ENV === "development") {
+                        localStorage.removeItem("skopen26-sessionToken");
+                        document.cookie = "auth_token";
+                      }
+
+                      setUser(null);
+                      setUserMenuOpen(false);
                     }
 
-                    setUser(null);
-                    setUserMenuOpen(false);
-                  }
-
-                  router.push("/").then(() => window.location.reload());
-                });
-              }}
-            >
-              ออกจากระบบ
-            </Button>
-            <Button variant="primary" onClick={() => setUserMenuOpen(false)}>
-              ปิด
-            </Button>
+                    router.push("/").then(() => window.location.reload());
+                  });
+                }}
+              >
+                ออกจากระบบ
+              </Button>
+              <Button variant="primary" onClick={() => setUserMenuOpen(false)}>
+                ปิด
+              </Button>
+            </div>
           </Dialog>
         )}
       </AnimatePresence>

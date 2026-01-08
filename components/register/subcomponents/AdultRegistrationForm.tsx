@@ -123,7 +123,7 @@ const AdultRegistrationForm: FC<AdultRegistrationFormProps> = ({
           })}
         />
       </div>
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="grid grid-cols-1 gap-2 sm:gap-1.5 sm:grid-cols-2">
         <TextField
           label={tx("tel")}
           {...register(fp("tel"), {

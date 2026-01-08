@@ -24,7 +24,8 @@ export const fetchAPI = async <T extends object | string | null = null>(
   cookies?: NextApiRequestCookies,
 ): Promise<APIResponse<T>> => {
   const isDevMode = process.env.NODE_ENV === "development";
-  const hasBody = typeof options.body !== "undefined" || options.body !== null;
+  const isServer = typeof window === "undefined";
+  const hasBody = typeof options.body !== "undefined" && options.body !== null;
 
   const response = await fetch(
     process.env.NEXT_PUBLIC_OPENHOUSE_API_URL + path,
@@ -33,16 +34,25 @@ export const fetchAPI = async <T extends object | string | null = null>(
       credentials: isDevMode ? options.credentials : "include",
       headers: {
         ...options.headers,
+        // If we're in development, add the `auth_token` via an `Authorization`
+        // header.
         ...(isDevMode
           ? {
               Authorization:
                 "Bearer " +
-                (typeof window === "undefined"
+                (isServer
                   ? cookies?.["auth_token"]
                   : (localStorage.getItem("skopen26-sessionToken") ?? "")),
             }
           : {}),
+        // Add a `Content-Type` header automatically if the caller provided a
+        // body.
         ...(hasBody ? { "Content-Type": "application/json" } : {}),
+        // If we're fetching on the server in production, add the `auth_token`
+        // cookie via a `Cookie` header.
+        ...(isServer && typeof cookies !== "undefined"
+          ? { Cookie: "auth_token=" + cookies["auth_token"] }
+          : {}),
       },
     },
   );

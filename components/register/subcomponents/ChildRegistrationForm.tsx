@@ -53,7 +53,7 @@ const ChildRegistrationForm: FC<ChildRegisterationFormProps> = ({
       </div>
 
       {/* Fields */}
-      <div className="grid grid-cols-3 gap-1.5">
+      <div className="grid grid-cols-[5rem_1fr_1fr] gap-1.5">
         <Select
           label={tx("prefix")}
           {...register(fp("prefix"), { required: true })}

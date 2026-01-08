@@ -2,10 +2,10 @@ import Card from "@/components/common/Card";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import MapsMRTStationLocation from "@/components/landing/subcomponents/MapsMRTStationLocation";
-import { StylableFC } from "@/utils/types/common";
 import { useTranslations } from "next-intl";
+import type { FC } from "react";
 
-const TransitGuideMRTSection: StylableFC<{}> = ({}) => {
+const TransitGuideMRTSection: FC = () => {
   const t = useTranslations("landing");
 
   const MRT_LOCATIONS = [

@@ -53,7 +53,7 @@ const ChildRegistrationForm: FC<ChildRegisterationFormProps> = ({
       </div>
 
       {/* Fields */}
-      <div className="grid grid-cols-[5rem_1fr_1fr] gap-1.5">
+      <div className="flex w-full gap-1.5">
         <Select
           label={tx("prefix")}
           {...register(fp("prefix"), { required: true })}
@@ -67,6 +67,7 @@ const ChildRegistrationForm: FC<ChildRegisterationFormProps> = ({
             required: true,
             setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
           })}
+          className="grow"
         />
         <TextField
           label={tx("lastname")}
@@ -74,6 +75,7 @@ const ChildRegistrationForm: FC<ChildRegisterationFormProps> = ({
             required: true,
             setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
           })}
+          className="grow"
         />
       </div>
       <div className="grid grid-cols-2 gap-1.5">
@@ -94,7 +96,10 @@ const ChildRegistrationForm: FC<ChildRegisterationFormProps> = ({
           })}
         />
       </div>
-      <div className="grid grid-cols-4 gap-1.5">
+      <div
+        className="grid grid-cols-2 gap-x-1.5 gap-y-2 sm:grid-cols-4
+          sm:gap-y-1.5"
+      >
         <TextField
           className="col-span-2!"
           label={tx("nickname")}
@@ -103,7 +108,7 @@ const ChildRegistrationForm: FC<ChildRegisterationFormProps> = ({
           })}
         />
         <Select
-          label="ศึกษาต่อชั้น..."
+          label="สนใจศึกษาต่อชั้น..."
           {...register(fp("child.next_grade"), {
             required: true,
           })}

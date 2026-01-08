@@ -59,7 +59,7 @@ const AdultRegistrationForm: FC<AdultRegistrationFormProps> = ({
     <Card className="flex-col">
       {/* Indicator chips */}
       <div className="grid grid-cols-2">
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-row gap-1 flex-wrap">
           <Chip variant="surface" apperance="rounded">
             {t("adult") + " " + count}
           </Chip>
@@ -81,10 +81,11 @@ const AdultRegistrationForm: FC<AdultRegistrationFormProps> = ({
       </div>
 
       {/* Fields */}
-      <div className="grid grid-cols-[5rem_1fr_1fr] gap-1.5">
+      <div className="flex gap-1.5">
         <Select
           label={tx("prefix")}
           {...register(fp("prefix"), { required: true })}
+          className="max-w-20"
         >
           <option value={Prefix.Mr}>{t("prefix.mr")}</option>
           <option value={Prefix.Ms}>{t("prefix.ms")}</option>
@@ -96,6 +97,7 @@ const AdultRegistrationForm: FC<AdultRegistrationFormProps> = ({
             required: true,
             setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
           })}
+          className="grow"
         />
         <TextField
           label={tx("lastname")}
@@ -103,9 +105,10 @@ const AdultRegistrationForm: FC<AdultRegistrationFormProps> = ({
             required: true,
             setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
           })}
+          className="grow"
         />
       </div>
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="flex gap-1.5">
         <Select
           label={tx("gender")}
           {...register(fp("gender"), { required: true })}
@@ -123,7 +126,7 @@ const AdultRegistrationForm: FC<AdultRegistrationFormProps> = ({
           })}
         />
       </div>
-      <div className="grid grid-cols-1 gap-2 sm:gap-1.5 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-1.5">
         <TextField
           label={tx("tel")}
           {...register(fp("tel"), {

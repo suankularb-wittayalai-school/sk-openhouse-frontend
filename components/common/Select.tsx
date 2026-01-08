@@ -1,5 +1,6 @@
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
+import cn from "@/utils/helpers/cn";
 import type { StylableFC } from "@/utils/types/common";
 import type { ReactNode, SelectHTMLAttributes } from "react";
 
@@ -10,10 +11,10 @@ type SelectProps = StylableFC<
   } & SelectHTMLAttributes<HTMLSelectElement>
 >;
 
-const Select: SelectProps = ({ label, children, ...props }) => (
-  <div className="flex flex-1 flex-col gap-0.5">
+const Select: SelectProps = ({ label, children, className, ...props }) => (
+  <div className={cn("flex flex-1 flex-col gap-0.5", className)}>
     <Text type="body">{label}</Text>
-    <div className="self-strech relative flex flex-col">
+    <div className="relative flex flex-col">
       <select
         className="border-primary-border text-tertiary h-8 appearance-none
           gap-2.5 rounded-sm border py-1 pr-8 pl-2 text-sm leading-[120%]

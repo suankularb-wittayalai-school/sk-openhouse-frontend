@@ -64,7 +64,7 @@ const PassportScanDialog: FC<{ person: ChildPerson; onClose: () => void }> = ({
     <Dialog onClickOutside={onClose}>
       <div className="flex flex-col">
         <Text type="body">{t("scanner.title")}</Text>
-        <Text type="headline" className="text-xl!">
+        <Text type="headline">
           {constructName(pick(person, ["firstname", "lastname", "prefix"]))}
         </Text>
       </div>

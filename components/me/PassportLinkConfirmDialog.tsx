@@ -36,9 +36,7 @@ const PassportLinkConfirmDialog: FC<PassportLinkConfirmDialogProps> = ({
   return (
     <Dialog onClickOutside={onClose}>
       <div className="flex flex-col gap-2">
-        <Text type="headline" className="text-xl!">
-          {t("scanner.dialog.confirm.title")}
-        </Text>
+        <Text type="headline">{t("scanner.dialog.confirm.title")}</Text>
         <p className="flex flex-col gap-0">
           <Text type="title" className="text-tertiary!">
             {t("scanner.dialog.confirm.description")}

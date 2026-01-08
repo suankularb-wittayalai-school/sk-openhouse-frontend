@@ -10,9 +10,7 @@ const MissingInformationDialog: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <Dialog>
       <div className="flex flex-col gap-2">
-        <Text type="headline" className="text-xl!">
-          {t("title.missingInformation")}
-        </Text>
+        <Text type="headline">{t("title.missingInformation")}</Text>
         <Text type="title" className="text-tertiary!">
           {t("title.checkAgain")}
         </Text>

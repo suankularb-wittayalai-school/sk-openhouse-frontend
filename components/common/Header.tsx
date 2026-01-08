@@ -83,9 +83,7 @@ const Header: FC = () => {
       <AnimatePresence>
         {userMenuOpen && isLoggedIn && (
           <Dialog onClickOutside={() => setUserMenuOpen(false)}>
-            <Text type="headline" className="text-xl!">
-              บัญชีของคุณ
-            </Text>
+            <Text type="headline">บัญชีของคุณ</Text>
             {user && user.profile_url && (
               <div
                 className="border-primary-border flex items-center gap-2

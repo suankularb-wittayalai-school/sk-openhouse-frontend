@@ -11,7 +11,10 @@ type RegisterationTicketDialogProps = {
   onClose: () => void;
 };
 
-const RegisterationTicketDialog: FC<RegisterationTicketDialogProps> = ({ people, onClose }) => (
+const RegisterationTicketDialog: FC<RegisterationTicketDialogProps> = ({
+  people,
+  onClose,
+}) => (
   <Dialog onClickOutside={() => onClose()}>
     <div
       className="flex flex-col gap-4 print:fixed print:top-0 print:left-0
@@ -19,9 +22,7 @@ const RegisterationTicketDialog: FC<RegisterationTicketDialogProps> = ({ people,
     >
       <div className="flex flex-col">
         <Text type="body">ตั๋วเข้าหอประชุม</Text>
-        <Text type="headline" className="text-xl!">
-          การบรรยายและนำเสนอหลักสูตร
-        </Text>
+        <Text type="headline">การบรรยายและนำเสนอหลักสูตร</Text>
         <Text type="title">SK Open House 2026 • 11 มกราคม 2569</Text>
       </div>
       <div className="flex flex-col gap-2">

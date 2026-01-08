@@ -1,63 +1,79 @@
+import Button from "@/components/common/Button";
+import MaterialIcon from "@/components/common/MaterialIcon";
 import StageIndicatorCard from "@/components/common/StageIndicatorCard";
 import AccountSection from "@/components/register/AccountSection";
-import EventsSection from "@/components/register/EventsSection";
+import ActivitiesSection from "@/components/register/ActivitiesSection";
 import FamilySection from "@/components/register/FamilySection";
-import { useUser } from "@/contexts/UserContext";
-import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
-import type { FamilyCreate } from "@/utils/types/person";
+import fetchAPI from "@/utils/helpers/fetchAPI";
+import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
+import {
+  gender,
+  person,
+  prefix,
+  relationshipToChild,
+} from "@/utils/types/person";
+import { user } from "@/utils/types/user";
 import { AnimatePresence, motion } from "motion/react";
-import type { GetStaticProps } from "next";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
-import {
-  type Dispatch,
-  Fragment,
-  type SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { useState } from "react";
 
-const RegisterationPage = () => {
+const RegisterLoginPage = () => {
   const tx = useTranslations("register");
-  const registerationStages = [
+
+  const router = useRouter();
+
+  const stages = [
     tx("stage.account"),
     tx("stage.family"),
     tx("stage.activity"),
-  ] as const;
+  ];
 
-  const router = useRouter();
-  const { user, isLoading: userIsLoading } = useUser();
-
-  const [registerationStep, setRegisterationStep] = useState(0);
-  const [formData, setFormData] = useState<FamilyCreate>();
-
-  useEffect(
-    () => {
-      if (userIsLoading) return;
-
-      if (user === null) {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        return setRegisterationStep(1);
-      }
-      if (typeof user.onboarded_at === "string") {
-        router.push("/me");
-        return;
-      } else setRegisterationStep(2);
+  const [page, setPage] = useState<number>(0);
+  const [expStageIndicator, setExpStageIndicator] = useState<boolean>(false);
+  const [familyForm, setFamilyForm] = useState<{
+    registrant: { user: user; person: person };
+    adult: person[];
+    child: person[];
+  }>({
+    registrant: {
+      user: {
+        email: "",
+        onboarded_at: null,
+        event_expectations: "",
+        registered_events: [],
+      },
+      person: {
+        firstname: "",
+        lastname: "",
+        gender: gender.male,
+        relationship_to_child: relationshipToChild.father,
+        tel: "",
+        prefix: prefix.mr,
+        birthdate: "",
+        child: {
+          nickname: undefined,
+          expected_graduation_year: undefined,
+          next_grade: "m1",
+          school: undefined,
+          passport_id: undefined,
+        },
+      },
     },
-    [userIsLoading], // eslint-disable-line react-hooks/exhaustive-deps
-  );
-
-  if (userIsLoading) return <></>;
+    adult: [],
+    child: [],
+  });
 
   return (
     <div className="flex flex-col gap-6 p-3">
       <StageIndicatorCard
-        stages={registerationStages}
-        active={registerationStep}
+        stages={stages}
+        active={page}
+        experimental={expStageIndicator}
       />
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
-          key={registerationStep}
+          key={page}
           initial={{ translateY: "-1rem", opacity: 0 }}
           animate={{ translateY: 0, opacity: 1 }}
           exit={{ translateY: "1rem", opacity: 0 }}
@@ -65,42 +81,32 @@ const RegisterationPage = () => {
         >
           {
             [
-              // Placeholder step
-              <Fragment key={0}>{/* Empty */}</Fragment>,
-
-              // Step 1
               <AccountSection
-                type="register"
-                onRedirect={() =>
-                  typeof user?.onboarded_at !== "string"
-                    ? setRegisterationStep(2)
-                    : router.push("/me")
-                }
-                key={1}
+                onRedirect={() => {
+                  fetchAPI("/v1/user", {
+                    method: "GET",
+                  })
+                    .then((res) => res.json())
+                    .then((data) => {
+                      if (typeof data.data.onboarded_at !== "string") {
+                        setPage(1);
+                      } else {
+                        router.push("/me");
+                      }
+                    });
+                }}
               />,
-
-              // Step 2
-              user !== null && (
-                <FamilySection
-                  user={user}
-                  setFormData={setFormData}
-                  setRegisterationStep={setRegisterationStep}
-                  key={2}
-                />
-              ),
-
-              // Step 3
-              user !== null && typeof formData !== "undefined" && (
-                <EventsSection
-                  formData={formData}
-                  setFormData={
-                    setFormData as Dispatch<SetStateAction<FamilyCreate>>
-                  }
-                  setRegisterationStep={setRegisterationStep}
-                  key={3}
-                />
-              ),
-            ][registerationStep]
+              <FamilySection
+                family={familyForm}
+                onFamilyChange={setFamilyForm}
+                onRedirect={() => setPage(2)}
+              />,
+              <ActivitiesSection
+                family={familyForm}
+                onFamilyChange={setFamilyForm}
+                onBack={() => setPage(1)}
+              />,
+            ][page]
           }
         </motion.div>
       </AnimatePresence>
@@ -108,12 +114,12 @@ const RegisterationPage = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export async function getStaticProps() {
   const messages = await getStaticTranslations("common", "register", "person");
 
   return {
     props: { messages },
   };
-};
+}
 
-export default RegisterationPage;
+export default RegisterLoginPage;

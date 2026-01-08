@@ -1,4 +1,6 @@
-import { ScheduleItem, StylableFC } from "@/utils/types/common";
+// Imports
+import { StylableFC } from "@/utils/types/common";
+import { scheduleItem } from "@/utils/types/schedule";
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
 
@@ -6,7 +8,7 @@ import Text from "@/components/common/Text";
  * A card that shows information of a schedule item.
  * @param scheduleItem The schedule item to show.
  */
-const ScheduleCard: StylableFC<{ scheduleItem: ScheduleItem }> = ({
+const ScheduleCard: StylableFC<{ scheduleItem: scheduleItem }> = ({
   scheduleItem,
 }) => {
   return (
@@ -18,13 +20,13 @@ const ScheduleCard: StylableFC<{ scheduleItem: ScheduleItem }> = ({
         <div className="mt-1 flex flex-col gap-1">
           <Text type="title" className="text-tertiary!">
             {scheduleItem.description.split(" ณ ").length == 1
-              ? ""
-              : scheduleItem.description.split(" ณ ")[0]}
+                  ? ""
+                  : scheduleItem.description.split(" ณ ")[0]}
           </Text>
-          <div className="flex flex-wrap gap-1">
+          <div className="flex gap-1 flex-wrap">
             <div
-              className="border-primary-border h-max w-max rounded-full border
-                px-2 py-0.5"
+              className="border-primary-border h-max w-max rounded-full
+                border px-2 py-0.5"
             >
               <Text type="title" className="text-tertiary!">
                 {scheduleItem.start_time.slice(0, 5) +
@@ -34,8 +36,8 @@ const ScheduleCard: StylableFC<{ scheduleItem: ScheduleItem }> = ({
               </Text>
             </div>
             <div
-              className="border-primary-border h-max w-max rounded-full border
-                px-2 py-0.5"
+              className="border-primary-border h-max w-max rounded-full
+                border px-2 py-0.5"
             >
               <Text type="title" className="text-tertiary!">
                 {scheduleItem.description.split(" ณ ").length == 1

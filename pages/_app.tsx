@@ -1,17 +1,15 @@
 import Header from "@/components/common/Header";
-import { UserProvider } from "@/contexts/UserContext";
+import { LoginProvider } from "@/contexts/LoginContext";
 import "@/styles/globals.css";
 import cn from "@/utils/helpers/cn";
 import { NextIntlClientProvider } from "next-intl";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import type { FC } from "react";
 
-const lineSeedSans = localFont({
+const lineSeed = localFont({
   src: [
     {
       path: "../public/fonts/LINESeedSansTH_W_Rg.woff2",
@@ -27,22 +25,18 @@ const lineSeedSans = localFont({
   variable: "--font-line-seed",
 });
 
-const App: FC<AppProps> = ({ Component, pageProps }) => {
+function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-
   return (
-    <UserProvider>
+    <LoginProvider>
       <NextIntlClientProvider
         locale={router.locale}
         timeZone="Asia/Bangkok"
         messages={pageProps.messages}
       >
-        <Head>
-          <title>SK Open House 2026</title>
-        </Head>
         <div
           className={cn(
-            lineSeedSans.variable,
+            lineSeed.variable,
             "font-line-seed",
             "max-w-content-max mx-auto flex min-h-dvh flex-col",
           )}
@@ -64,7 +58,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
             <br />© 2026 โรงเรียนสวนกุหลาบวิทยาลัย
           </div>
           <Image
-            src="/longbuilding.svg"
+            src={"/longbuilding.svg"}
             alt="Suankularb Building (Long Building)"
             width={1920}
             height={396.35}
@@ -73,8 +67,8 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
           />
         </div>
       </NextIntlClientProvider>
-    </UserProvider>
+    </LoginProvider>
   );
-};
+}
 
 export default App;

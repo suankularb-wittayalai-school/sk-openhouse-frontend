@@ -7,17 +7,20 @@ import TransitGuideMRTSection from "@/components/landing/TransitGuideMRTSection"
 import MapsSchoolLocation from "@/components/landing/subcomponents/MapsSchoolLocation";
 import ScheduleCard from "@/components/landing/subcomponents/ScheduleCard";
 import SchoolMap from "@/components/me/SchoolMap";
-import { fetchAPI } from "@/utils/helpers/fetchAPI";
-import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
-import type { BusRoutes, ScheduleItem } from "@/utils/types/common";
-import type { GetServerSideProps } from "next";
+import fetchAPI from "@/utils/helpers/fetchAPI";
+import { getStaticTranslations } from "@/utils/helpers/getStaticTranslations";
+import { ActivitiesList, BusRoute, Faqs } from "@/utils/types/landing";
+import { scheduleItem } from "@/utils/types/schedule";
+import { GetStaticProps } from "next";
 import { useTranslations } from "next-intl";
-import type { FC } from "react";
+import { FC } from "react";
 
 const LandingPage: FC<{
-  busRoutes: BusRoutes;
-  scheduleItems: ScheduleItem[];
-}> = ({ busRoutes, scheduleItems }) => {
+  activities: ActivitiesList[];
+  faqs: Faqs[];
+  busRoute: BusRoute;
+  scheduleItems: scheduleItem[];
+}> = ({ activities, faqs, busRoute, scheduleItems }) => {
   const t = useTranslations("landing");
   return (
     <div className="mt-5.5 flex flex-col gap-6 p-3 pt-0">
@@ -29,7 +32,7 @@ const LandingPage: FC<{
         <Text type="body">{t("section.schedule")}</Text>
         <CardContainer>
           {scheduleItems.map((scheduleItem) => (
-            <ScheduleCard scheduleItem={scheduleItem} key={scheduleItem.id} />
+            <ScheduleCard scheduleItem={scheduleItem} />
           ))}
         </CardContainer>
       </div>
@@ -45,7 +48,7 @@ const LandingPage: FC<{
         <div className="flex w-full flex-col gap-1">
           <div className="flex flex-col gap-1 md:flex-row">
             <TransitGuideMRTSection />
-            <TransitGuideBusSection routes={busRoutes} />
+            <TransitGuideBusSection route={busRoute} />
           </div>
           <MapsSchoolLocation />
         </div>
@@ -54,9 +57,10 @@ const LandingPage: FC<{
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const messages = await getStaticTranslations("common", "landing");
-  const busRoutes: BusRoutes = {
+
+  const busRoute: BusRoute = {
     infront: ["6 / 4-1", "43 / 4-11"],
     opposite: [
       "3 / 2-37",
@@ -71,11 +75,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
       "82 / 4-15 ",
     ],
   };
-  const body = await fetchAPI<ScheduleItem[]>("/v1/schedule");
-  const scheduleItems = body.success ? body.data : [];
+
+  const { data: scheduleItems } = await fetchAPI("/v1/schedule", {
+    method: "GET",
+  }).then((res) => res.json());
 
   return {
-    props: { messages, busRoutes, scheduleItems },
+    props: { messages, busRoute, scheduleItems },
   };
 };
 

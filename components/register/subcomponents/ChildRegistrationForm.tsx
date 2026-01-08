@@ -1,44 +1,26 @@
+import { StylableFC } from "@/utils/types/common";
 import Card from "@/components/common/Card";
 import Chip from "@/components/common/Chip";
-import DatePicker from "@/components/common/DatePicker";
-import MaterialIcon from "@/components/common/MaterialIcon";
-import Select from "@/components/common/Select";
 import TextField from "@/components/common/TextField";
-import getDateEighteenYearsAgo from "@/utils/helpers/register/getDateEighteenYearsAgo";
-import {
-  type FamilyCreate,
-  FamilyUpdate,
-  Gender,
-  Prefix,
-  SchoolGrade,
-} from "@/utils/types/person";
+import Select from "@/components/common/Select";
+import DatePicker from "@/components/common/DatePicker";
+import { gender, person, prefix } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
-import type { FC } from "react";
-import { type FieldPath, useFormContext } from "react-hook-form";
+import MaterialIcon from "@/components/common/MaterialIcon";
+import getDateEighteenYearsAgo from "@/utils/helpers/register/getDateEighteenYearsAgo";
 
-const GRADUATION_YEARS = Array.from({ length: 12 }, (_, i) => 2569 + i);
-
-type ChildRegisterationFormProps = {
+const ChildRegistrationForm: StylableFC<{
+  person: person;
   count: number;
-  onDelete: (idx: number, personId?: string) => void;
-};
-
-const ChildRegistrationForm: FC<ChildRegisterationFormProps> = ({
-  count,
-  onDelete,
-}) => {
+  handlePersonChange: (person: person) => void;
+  handleDeletePerson: () => void;
+}> = ({ person, count, handlePersonChange, handleDeletePerson }) => {
   const t = useTranslations("person");
   const tx = useTranslations("register.family.label");
-
-  const { register, getValues } = useFormContext<FamilyCreate | FamilyUpdate>();
-  const fp = (
-    s: FieldPath<(FamilyCreate | FamilyUpdate)["children"]["0"]>,
-  ): FieldPath<FamilyCreate | FamilyUpdate> =>
-    (`children.${count - 1}.` + s) as FieldPath<FamilyCreate | FamilyUpdate>;
-
+  const NEXT_GRADE = ["m1", "m4"];
+  const GRADUATION_YEAR = Array.from({ length: 12 }, (_, i) => 2569 + i);
   return (
     <Card className="flex-col">
-      {/* Indicator chips */}
       <div className="grid grid-cols-2 gap-1">
         <Chip variant="surface" apperance="rounded" className="h-max">
           {t("child") + " " + count}
@@ -46,92 +28,119 @@ const ChildRegistrationForm: FC<ChildRegisterationFormProps> = ({
         <div
           className="grid cursor-pointer place-items-center justify-self-end
             rounded-full"
-          onClick={() => onDelete(count - 1, getValues(fp("id")) as string)}
+          onClick={() => {
+            handleDeletePerson();
+          }}
         >
           <MaterialIcon icon="close" className="text-2xl!" />
         </div>
       </div>
-
-      {/* Fields */}
       <div className="grid grid-cols-3 gap-1.5">
         <Select
+          name="prefix"
+          value={person.prefix}
           label={tx("prefix")}
-          {...register(fp("prefix"), { required: true })}
+          setValue={(prefix) => {
+            handlePersonChange({ ...person, prefix: prefix });
+          }}
         >
-          <option value={Prefix.Master}>{t("prefix.master")}</option>
-          <option value={Prefix.Miss}>{t("prefix.miss")}</option>
+          <option value={prefix.master}>{t("prefix.master")}</option>
+          <option value={prefix.miss}>{t("prefix.miss")}</option>
         </Select>
         <TextField
+          name="firstname"
           label={tx("firstname")}
-          {...register(fp("firstname"), {
-            required: true,
-            setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
-          })}
+          value={person.firstname}
+          setValue={(firstname) => {
+            handlePersonChange({ ...person, firstname: firstname });
+          }}
         />
         <TextField
+          name="lastname"
           label={tx("lastname")}
-          {...register(fp("lastname"), {
-            required: true,
-            setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
-          })}
+          value={person.lastname}
+          setValue={(lastname) => {
+            handlePersonChange({ ...person, lastname: lastname });
+          }}
         />
       </div>
       <div className="grid grid-cols-2 gap-1.5">
         <Select
+          name="gender"
+          value={person.gender}
           label={tx("gender")}
-          {...register(fp("gender"), { required: true })}
+          setValue={(gender) => {
+            handlePersonChange({ ...person, gender: gender });
+          }}
         >
-          <option value={Gender.Male}>{t("gender.male")}</option>
-          <option value={Gender.Female}>{t("gender.female")}</option>
-          <option value={Gender.Other}>{t("gender.other")}</option>
+          <option value={gender.male}>{t("gender.male")}</option>
+          <option value={gender.female}>{t("gender.female")}</option>
+          <option value={gender.other}>{t("gender.other")}</option>
         </Select>
         <DatePicker
+          name="birthdate"
           label={tx("birthdate")}
-          {...register(fp("birthdate"), {
-            required: true,
-            min: getDateEighteenYearsAgo(),
-            setValueAs: (v: string) => (v === "" ? undefined : v),
-          })}
+          date={person.birthdate}
+          setDate={(birthdate) => {
+            handlePersonChange({ ...person, birthdate: birthdate });
+          }}
+          min={getDateEighteenYearsAgo()}
         />
       </div>
       <div className="grid grid-cols-4 gap-1.5">
         <TextField
-          className="col-span-2!"
+          name="nickname"
           label={tx("nickname")}
-          {...register(fp("child.nickname"), {
-            setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
-          })}
+          value={person.child.nickname || ""}
+          setValue={(nickname) => {
+            handlePersonChange({
+              ...person,
+              child: { ...person.child, nickname: nickname },
+            });
+          }}
+          className="col-span-2!"
         />
         <Select
-          label="ศึกษาต่อชั้น..."
-          {...register(fp("child.next_grade"), {
-            required: true,
-          })}
+          name="expectedGraduationYear"
+          value={person.child.next_grade || NEXT_GRADE[0]}
+          label={"ศึกษาต่อชั้น..."}
+          setValue={(year) => {
+            handlePersonChange({
+              ...person,
+              child: { ...person.child, next_grade: year },
+            });
+          }}
         >
-          <option value={SchoolGrade.M1}>ม.1</option>
-          <option value={SchoolGrade.M4}>ม.4</option>
+          <option value={"m1"}>ม.1</option>
+          <option value={"m4"}>ม.4</option>
         </Select>
         <Select
-          label="...ในปีการศึกษา"
-          {...register(fp("child.expected_graduation_year"), {
-            required: true,
-            valueAsNumber: true,
-          })}
+          name="expectedGraduationYear"
+          value={person.child.expected_graduation_year || GRADUATION_YEAR[0]}
+          label={"...ในปีการศึกษา"}
+          setValue={(year) => {
+            handlePersonChange({
+              ...person,
+              child: { ...person.child, expected_graduation_year: year },
+            });
+          }}
         >
-          {GRADUATION_YEARS.map((year) => (
-            <option value={year} key={year}>
-              {year}
-            </option>
+          {GRADUATION_YEAR.map((year) => (
+            <option value={year}>{year}</option>
           ))}
         </Select>
       </div>
       <div className="grid grid-cols-1">
         <TextField
+          name="school"
           label={tx("school")}
-          {...register(fp("child.school"), {
-            required: true,
-            setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
-          })}
+          value={person.child.school || ""}
+          setValue={(school) => {
+            handlePersonChange({
+              ...person,
+              child: { ...person.child, school: school },
+            });
+          }}
         />
       </div>
     </Card>

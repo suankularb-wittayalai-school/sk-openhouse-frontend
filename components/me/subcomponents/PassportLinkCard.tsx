@@ -1,24 +1,28 @@
+// Imports
+import Button from "@/components/common/Button";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import PassportScanDialog from "@/components/me/PassportScanDialog";
 import cn from "@/utils/helpers/cn";
 import constructName from "@/utils/helpers/constructName";
-import type { ChildPerson } from "@/utils/types/person";
+import { StylableFC } from "@/utils/types/common";
+import { person } from "@/utils/types/person";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import { pick } from "radash";
-import { FC, useState } from "react";
+import { useState } from "react";
 
 /**
  * A card that shows if a child is linked to a passport or not and allows the
  * user to link his / her child to a passport.
  * @param person The person (child) to show.
  */
-const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
+const PassportLinkCard: StylableFC<{ person: person }> = ({ person }) => {
   const t = useTranslations("passport");
 
-  const isLinked = typeof person.child.linked_passport_id === "string";
-  const [scanDialogOpen, setScanDialogOpen] = useState(false);
+  const isLinked = !!person.child.passport_id;
+
+  const [scanDialogOpen, setScanDialogOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -55,7 +59,9 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
         {scanDialogOpen && (
           <PassportScanDialog
             person={person}
-            onClose={() => setScanDialogOpen(false)}
+            onClose={() => {
+              setScanDialogOpen(false);
+            }}
           />
         )}
       </AnimatePresence>

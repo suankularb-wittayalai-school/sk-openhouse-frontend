@@ -1,29 +1,28 @@
-import type { ChildPerson, Person } from "@/utils/types/person";
+import { person } from "@/utils/types/person";
 
-const REQUIRED_PERSON_FIELDS: (keyof Person)[] = [
-  "firstname",
-  "lastname",
-  "birthdate",
-] as const;
+export default function isMissingRequiredTextField(
+  type: "registrant" | "adult" | "child",
+  person: person,
+): boolean {
+  // Required for everyone
+  const REQUIRED_PERSON_FIELDS: (keyof person)[] = [
+    "firstname",
+    "lastname",
+    "birthdate",
+  ];
+  const REQUIRED_CHILD_FIELDS: (keyof person["child"])[] = [
+    "nickname",
+    "school",
+  ];
 
-const REQUIRED_CHILD_FIELDS: (keyof ChildPerson["child"])[] = [
-  "school",
-  "expected_graduation_year",
-  "next_grade",
-] as const;
-
-const isMissingRequiredTextField = (person: Partial<Person>): boolean => {
-  for (const field of REQUIRED_PERSON_FIELDS) {
-    if (typeof person[field] === "undefined") return true;
+  for (let field of REQUIRED_PERSON_FIELDS) {
+    if (!person[field]) return true;
   }
-
-  if ("child" in person && typeof person.child !== "undefined") {
-    for (const field of REQUIRED_CHILD_FIELDS) {
-      if (typeof person.child[field] === "undefined") return true;
+  if (type == "child") {
+    for (let field of REQUIRED_CHILD_FIELDS) {
+      if (!person.child[field]) return true;
     }
   }
 
   return false;
-};
-
-export default isMissingRequiredTextField;
+}

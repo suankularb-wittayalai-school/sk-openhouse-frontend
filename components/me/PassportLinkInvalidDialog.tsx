@@ -12,9 +12,7 @@ const PassportLinkInvalidDialog: StylableFC<{
   return (
     <Dialog onClickOutside={onClose}>
       <div className="flex flex-col gap-2">
-        <Text type="headline" className="text-xl!">
-          {t("scanner.dialog.invalid.title")}
-        </Text>
+        <Text type="headline">{t("scanner.dialog.invalid.title")}</Text>
         <p className="flex flex-col gap-0">
           <Text type="title" className="text-tertiary!">
             {t("scanner.dialog.invalid.description")}

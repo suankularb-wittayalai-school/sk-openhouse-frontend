@@ -1,10 +1,10 @@
-import { StylableFC } from "@/utils/types/common";
 import Text from "@/components/common/Text";
 import FAQDropdown from "@/components/landing/subcomponents/FAQDropdown";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import type { FC } from "react";
 
-const questions = [
+const QUESTIONS = [
   {
     question: "ลงทะเบียนเข้าร่วมงาน SK Open House 2026 อย่างไร",
     answer: (
@@ -55,14 +55,14 @@ const questions = [
             นิทรรศการ SK Open House ในบริเวณต่างๆ ของโรงเรียน ได้แก่
             โซนนิทรรศการ ใต้อาคาร 123 ปี สวนกุหลาบวิทยาลัยเกี่ยวกับหลักสูตรปกติ,
             GATE Program, Gifted Science, EPLUS+ และหลักสูตรใหม่
-            "วิทยาศาสตร์หุ่นยนต์"
+            “วิทยาศาสตร์หุ่นยนต์”
           </li>
         </ol>
         อีกทั้งยังมีการให้ข้อมูลเกี่ยวกับการรับนักเรียน
         ความสำเร็จของโรงเรียนในปีที่ผ่านมา
         นิทรรศการจากครูแนะแนวและความร่วมมือทางวิชาการ นอกจากนี้ ยังมีกิจกรรม
-        "ตึกยาวทรงคุณค่า" ณ บริเวณพิพิธภัณฑ์ตึกยาว, "SK Sports Challenge" ณ
-        บริเวณหน้าทางเดินตึกยาว และ "ท้องฟ้าจำลองสิรินธร"
+        “ตึกยาวทรงคุณค่า” ณ บริเวณพิพิธภัณฑ์ตึกยาว, “SK Sports Challenge” ณ
+        บริเวณหน้าทางเดินตึกยาว และ “uท้องฟ้าจำลองสิรินธร”
       </div>
     ),
   },
@@ -146,17 +146,17 @@ const questions = [
       </>
     ),
   },
-];
+] as const;
 
-const FAQsContainer: StylableFC = ({ className, style }) => {
+const FAQsContainer: FC = () => {
   const t = useTranslations("landing");
   return (
     <div className="flex flex-col gap-2">
       <Text type="body">{t("section.faq")}</Text>
       <div className="flex flex-col gap-1">
-        {questions.map((faq, i) => (
-          <FAQDropdown question={faq.question} key={i}>
-            {faq.answer}
+        {QUESTIONS.map((faqItem) => (
+          <FAQDropdown question={faqItem.question} key={faqItem.question}>
+            {faqItem.answer}
           </FAQDropdown>
         ))}
       </div>

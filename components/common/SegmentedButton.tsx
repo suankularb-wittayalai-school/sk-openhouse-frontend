@@ -1,4 +1,3 @@
-// Imports
 import { StylableFC } from "@/utils/types/common";
 import cn from "@/utils/helpers/cn";
 const SegmentedButton: StylableFC<{ children: React.ReactNode }> = ({

@@ -1,29 +1,21 @@
 import Button from "@/components/common/Button";
-import Card from "@/components/common/Card";
-import GSIButton from "@/components/common/GSIButton";
+import GSIButton, { GSIStatus } from "@/components/common/GSIButton";
 import Text from "@/components/common/Text";
-import TextField from "@/components/common/TextField";
-import fetchAPI from "@/utils/helpers/fetchAPI";
 import { AnimatePresence, motion } from "motion/react";
-import Link from "next/link";
-import { FC, useState } from "react";
-import { GSIStatus } from "@/components/common/GSIButton";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { type FC, useEffect, useState } from "react";
 
 const AccountSection: FC<{
-  type?: "register" | "signIn";
+  type: "register" | "login";
   onRedirect: () => void;
-}> = ({ type = "register", onRedirect }) => {
+}> = ({ type, onRedirect }) => {
   const t = useTranslations("register");
 
-  const [state, setState] = useState<GSIStatus>(GSIStatus.initial);
+  const [currentState, setCurrentState] = useState(GSIStatus.initial);
 
   useEffect(() => {
-    if (state == GSIStatus.redirecting) {
-      onRedirect();
-    }
-  }, [state]);
+    if (currentState === GSIStatus.redirecting) onRedirect();
+  }, [onRedirect, currentState]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -35,7 +27,7 @@ const AccountSection: FC<{
       <div>
         <AnimatePresence mode="wait">
           <motion.div
-            key={state}
+            key={currentState}
             initial={{ opacity: 0, y: "-0.5rem", filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: "0.5rem", filter: "blur(4px)" }}
@@ -43,7 +35,7 @@ const AccountSection: FC<{
           >
             {
               {
-                [GSIStatus.initial]: <GSIButton onStateChange={setState} />,
+                [GSIStatus.initial]: <GSIButton onStateChange={setCurrentState} />,
                 [GSIStatus.chooserShown]: (
                   <div className="flex flex-col gap-2">
                     <Text type="title">
@@ -51,7 +43,7 @@ const AccountSection: FC<{
                     </Text>
                     <Button
                       variant="primarySurface"
-                      onClick={() => setState(GSIStatus.initial)}
+                      onClick={() => setCurrentState(GSIStatus.initial)}
                       className="w-full max-w-max"
                     >
                       {t("account.google.action.cancel")}
@@ -59,12 +51,12 @@ const AccountSection: FC<{
                   </div>
                 ),
                 [GSIStatus.processing]: (
-                  <Text type="title"> {t("account.google.processing")}</Text>
+                  <Text type="title">{t("account.google.processing")}</Text>
                 ),
                 [GSIStatus.redirecting]: (
-                  <Text type="title"> {t("account.google.redirecting")}</Text>
+                  <Text type="title">{t("account.google.redirecting")}</Text>
                 ),
-              }[state]
+              }[currentState]
             }
           </motion.div>
         </AnimatePresence>

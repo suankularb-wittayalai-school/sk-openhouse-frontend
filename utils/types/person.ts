@@ -1,76 +1,101 @@
-import { user } from "./user";
+import type { User } from "@/utils/types/user";
 
 /**
  * The prefix of a person.
  */
-export enum prefix {
-  master = "master",
-  mr = "mr",
-  miss = "miss",
-  ms = "ms",
-  mrs = "mrs",
+export enum Prefix {
+  Master = "master",
+  Mr = "mr",
+  Miss = "miss",
+  Ms = "ms",
+  Mrs = "mrs",
 }
 
 /**
  * The gender of a person.
  */
-export enum gender {
-  male = "male",
-  female = "female",
-  other = "other",
+export enum Gender {
+  Male = "male",
+  Female = "female",
+  Other = "other",
 }
 
 /**
- * The K12 grade options. To be used alongside expected_graduation_year
+ * The school grade options.
  */
-export enum next_grade {
-  m1 = "m1",
-  m4 = "m4",
-}
-
-export enum track_interest {
-  "ห้องเรียนพิเศษ GATE Program ม.1",
-  "ห้องเรียนพิเศษ EPLUS+ ม.1",
-  "ห้องเรียนวิทยาศาสตร์หุ่นยนต์ (โครงการปกติ) ม.1",
-  "ห้องเรียนปกติ ม.1",
-  "ห้องเรียนพิเศษ GATE Program ม.4",
-  "ห้องเรียนพิเศษ Gifted Science ม.4",
-  "ห้องเรียนพิเศษ EPLUS+ ม.4",
-  "ห้องเรียนปกติ ม.4",
+export enum SchoolGrade {
+  M1 = "m1",
+  M4 = "m4",
 }
 
 /**
  * The relationship of a person to his / her child(ren).
  */
-export enum relationshipToChild {
-  father = "father",
-  mother = "mother",
-  legal_guardian = "legal_guardian",
-  other = "other",
+export enum RelationshipToChild {
+  Father = "father",
+  Mother = "mother",
+  LegalGuardian = "legal_guardian",
+  Other = "other",
 }
 
-export type person = {
-  id?: string;
-  created_at?: string;
-  prefix: prefix;
+export type Person = AdultPerson | ChildPerson;
+
+type BasePerson = {
+  id: string;
+  created_at: string;
+  prefix: Prefix;
   firstname: string;
   lastname: string;
   birthdate: string;
-  gender: gender;
+  gender: Gender;
   tel?: string;
-  is_child?: boolean;
-  relationship_to_child?: relationshipToChild;
-  child: {
-    nickname: string | undefined;
-    school: string | undefined;
-    expected_graduation_year: number | undefined;
-    next_grade: string | undefined;
-    passport_id?: string | undefined;
-  };
+};
+
+export type AdultPerson = {
+  relationship_to_child: RelationshipToChild;
+} & BasePerson;
+
+export type ChildPerson = { child: Child } & BasePerson;
+
+export type Child = {
+  nickname?: string;
+  school: string;
+  expected_graduation_year: number;
+  next_grade: SchoolGrade;
+  linked_passport_id?: string;
+};
+
+export type DeprecatedFamily = {
+  registrant: { user: User; person: Person };
+  adult: Person[];
+  child: Person[];
+};
+
+export type FetchedFamily = {
+  registrant: Person;
+  family_members: Person[];
 };
 
 export type Family = {
-  registrant: { user: user; person: person };
-  adult: person[];
-  child: person[];
+  registrant: AdultPerson;
+  adults: AdultPerson[];
+  children: ChildPerson[];
+};
+
+export type FamilyCreate = {
+  registrant: Partial<Omit<AdultPerson, "id" | "created_at">> & {
+    event_expectations?: string;
+    registered_events: string[];
+  };
+  adults: Partial<Omit<AdultPerson, "id" | "created_at">>[];
+  children: Partial<Omit<ChildPerson, "id" | "created_at">>[];
+};
+
+export type FamilyUpdate = {
+  registrant: Partial<Omit<AdultPerson, "created_at">> & {
+    id: string;
+    event_expectations?: string;
+  };
+  adults: Partial<Omit<AdultPerson, "created_at">>[];
+  children: Partial<Omit<ChildPerson, "created_at">>[];
 };

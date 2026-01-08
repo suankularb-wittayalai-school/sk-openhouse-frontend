@@ -4,42 +4,41 @@ import Text from "@/components/common/Text";
 import PassportLinkConfirmDialog from "@/components/me/PassportLinkConfirmDialog";
 import PassportLinkInvalidDialog from "@/components/me/PassportLinkInvalidDialog";
 import constructName from "@/utils/helpers/constructName";
-import { StylableFC } from "@/utils/types/common";
-import { person } from "@/utils/types/person";
+import type { ChildPerson } from "@/utils/types/person";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import QrScanner from "qr-scanner";
 import { pick } from "radash";
-import { useEffect, useRef, useState } from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 
-const PassportScanDialog: StylableFC<{
-  person: person;
-  onClose: () => void;
-}> = ({ person, onClose }) => {
+const PassportScanDialog: FC<{ person: ChildPerson; onClose: () => void }> = ({
+  person,
+  onClose,
+}) => {
   const t = useTranslations("passport");
 
   const videoRef = useRef(null);
   const openedDialogRef = useRef(false);
 
-  const [passportID, setPassportID] = useState<string>("");
-  const [openConfirmDialog, setOpenConfirmDialog] = useState<boolean>(false);
-  const [openInvalidDialog, setOpenInvalidDialog] = useState<boolean>(false);
-
-  const passportRegex =
-    /^https:\/\/o\.mysk\.school\/p\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+  const [passportId, setPassportId] = useState<string>();
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [openInvalidDialog, setOpenInvalidDialog] = useState(false);
 
   useEffect(() => {
     openedDialogRef.current = openConfirmDialog || openInvalidDialog;
   }, [openConfirmDialog, openInvalidDialog]);
 
   useEffect(() => {
+    const PASSPORT_REGEX =
+      /^https:\/\/o\.mysk\.school\/p\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
     if (videoRef.current) {
       const qrScanner = new QrScanner(
         videoRef.current,
         (result) => {
           if (!openedDialogRef.current) {
-            if (passportRegex.test(result.data) === true) {
-              setPassportID(result.data);
+            if (PASSPORT_REGEX.test(result.data) === true) {
+              setPassportId(result.data);
               setOpenConfirmDialog(true);
             } else {
               setOpenInvalidDialog(true);
@@ -56,9 +55,8 @@ const PassportScanDialog: StylableFC<{
 
       // This is a bit finicky on dev, on build it's "fine".
       qrScanner.start();
-      return () => {
-        qrScanner.stop();
-      };
+
+      return () => qrScanner.stop();
     }
   }, [videoRef]);
 
@@ -66,7 +64,7 @@ const PassportScanDialog: StylableFC<{
     <Dialog onClickOutside={onClose}>
       <div className="flex flex-col">
         <Text type="body">{t("scanner.title")}</Text>
-        <Text type="headline" className="text-xl!">
+        <Text type="headline">
           {constructName(pick(person, ["firstname", "lastname", "prefix"]))}
         </Text>
       </div>
@@ -100,12 +98,12 @@ const PassportScanDialog: StylableFC<{
       </Button>
 
       <AnimatePresence>
-        {openConfirmDialog && (
+        {openConfirmDialog && typeof passportId === "string" && (
           <PassportLinkConfirmDialog
             person={person}
             onClose={() => setOpenConfirmDialog(false)}
             onScannerDialogClose={onClose}
-            passportID={passportID}
+            passportId={passportId}
           />
         )}
         {openInvalidDialog && (

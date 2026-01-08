@@ -23,7 +23,7 @@ const Select: SelectProps = ({ label, children, ...props }) => (
         {children}
       </select>
       <div
-        className="text-primary pointer-events-none absolute top-1/2 right-2
+        className="text-primary pointer-events-none absolute top-1/2 right-1
           flex -translate-y-1/2 flex-col items-center"
       >
         <MaterialIcon icon="arrow_drop_down" />

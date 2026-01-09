@@ -130,7 +130,11 @@ const PassportPage: FC<{
                 </div>
                 <Text type="body">
                   เมื่อ:{" "}
-                  {getTimeString(new Date(passport.redeemed_at), "minutes")} น.
+                  {getTimeString(
+                    new Date(passport.redeemed_at ?? "1970-01-01"),
+                    "minutes",
+                  )}{" "}
+                  น.
                 </Text>
               </div>
             ) : (

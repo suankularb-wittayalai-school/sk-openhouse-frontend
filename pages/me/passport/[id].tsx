@@ -5,17 +5,20 @@ import PassportQRCard from "@/components/passport/PassportQRCard";
 import { useUser } from "@/contexts/UserContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
-import type { Activity, Passport } from "@/utils/types/passport";
-import { ChildPerson, FetchedFamily } from "@/utils/types/person";
+import type {
+  Activity,
+  Passport,
+  RedeemedPassport,
+  UnredeemedLinkedPassport,
+} from "@/utils/types/passport";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/navigation";
 import { useEffect, type FC } from "react";
 
 const PassportPage: FC<{
-  child: ChildPerson;
-  passport: Passport;
+  passport: UnredeemedLinkedPassport | RedeemedPassport;
   activities: Activity[];
-}> = ({ child, passport, activities }) => {
+}> = ({ passport, activities }) => {
   const router = useRouter();
   const { user, isLoading: userIsLoading } = useUser();
 
@@ -43,11 +46,11 @@ const PassportPage: FC<{
           print:z-100 print:h-dvh print:w-dvw print:bg-white"
       >
         <PassportQRCard
-          passport={passport.id}
+          passportId={passport.id}
           owner={
-            `${child.firstname} ${child.lastname}` +
-            (typeof child.child.nickname !== "undefined"
-              ? ` ${child.child.nickname}`
+            `${passport.child.firstname} ${passport.child.lastname}` +
+            (typeof passport.child.nickname !== "undefined"
+              ? ` (${passport.child.nickname})`
               : "")
           }
           className="m-auto"
@@ -108,6 +111,9 @@ const PassportPage: FC<{
   );
 };
 
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export const getServerSideProps: GetServerSideProps = async ({
   query,
   req,
@@ -115,47 +121,41 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const messages = await getStaticTranslations("common");
 
-  // TODO: Fix all below
   const passportId = query.id;
-  if (typeof passportId !== "string") return { notFound: true };
-  const family = await fetchAPI<FetchedFamily>(
-    "/v1/user/family",
-    {},
-    req.cookies,
-  );
-  if (!family.success) {
-    res.setHeader("Set-Cookie", "auth_token=");
-    return { redirect: { destination: "/", permanent: false } };
-  }
+  if (typeof passportId !== "string" || !UUID_REGEX.test(passportId))
+    return { notFound: true };
 
   const passport = await fetchAPI<Passport>(
     `/v1/passport/${passportId}?detailed=true`,
     {},
     req.cookies,
   );
-  if (!passport.success) {
-    res.setHeader("Set-Cookie", "auth_token=");
+  if (!passport.success || passport.data.child === null) {
+    res.setHeader(
+      "Set-Cookie",
+      `auth_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+    );
     return { redirect: { destination: "/", permanent: false } };
   }
 
+  // FIXME: Move activities into a client-side context, for better performance
+  // FIXME: (long term) and less server load.
   const activities = await fetchAPI<Activity[]>(
     "/v1/activities",
     {},
     req.cookies,
   );
   if (!activities.success) {
-    res.setHeader("Set-Cookie", "auth_token=");
+    res.setHeader(
+      "Set-Cookie",
+      `auth_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+    );
     return { redirect: { destination: "/", permanent: false } };
   }
 
   return {
     props: {
       messages,
-      child: family.data.family_members.filter(
-        (person) =>
-          person.id === passport.data.child_id &&
-          (person as ChildPerson).child.linked_passport_id === passportId,
-      )[0],
       passport: passport.data,
       activities: activities.data,
     },

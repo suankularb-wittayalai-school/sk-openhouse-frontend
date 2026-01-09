@@ -17,24 +17,43 @@ export enum PrizeTier {
   Large = "large",
 }
 
-export type Passport = UnredeemedPassport | RedeemedPassport;
+export type CompactPassport = {
+  firstname: string;
+  lastname: string;
+  nickname?: string;
+};
 
-export type BasePassport = {
+export type Passport =
+  | UnredeemedUnlinkedPassport
+  | UnredeemedLinkedPassport
+  | RedeemedPassport;
+
+type BasePassport = {
   id: string;
   created_at: string;
   format: PassportType;
   completed_activities: string[];
 };
 
-export type UnredeemedPassport = {
-  child_id: string | null; // `null` means unlinked, which also means the format *should* be `physical`
+type UnredeemedPassport = {
   redeemed_at: undefined;
   redeemed_points: undefined;
   redeemed_tier: undefined;
 } & BasePassport;
 
+export type UnredeemedUnlinkedPassport = {
+  registrant: null;
+  child: null;
+} & UnredeemedPassport;
+
+export type UnredeemedLinkedPassport = {
+  registrant: CompactPassport;
+  child: CompactPassport;
+} & UnredeemedPassport;
+
 export type RedeemedPassport = {
-  child_id: string;
+  registrant: CompactPassport;
+  child: CompactPassport;
   redeemed_at: string;
   redeemed_points: number;
   redeemed_tier: PrizeTier;

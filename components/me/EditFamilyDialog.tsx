@@ -3,7 +3,7 @@ import Dialog from "@/components/common/Dialog";
 import Text from "@/components/common/Text";
 import FamilyForm from "@/components/register/FamilyForm";
 import { fetchAPI } from "@/utils/helpers/fetchAPI";
-import isMissingRequiredTextField from "@/utils/helpers/register/isMissingRequiredTextFields";
+import isMissingRequiredTextField from "@/utils/helpers/register/isMissingRequiredTextField";
 import type { Family, FamilyUpdate } from "@/utils/types/person";
 import type { User } from "@/utils/types/user";
 import { useTranslations } from "next-intl";

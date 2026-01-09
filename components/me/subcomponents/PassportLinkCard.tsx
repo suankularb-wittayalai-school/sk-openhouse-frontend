@@ -1,3 +1,4 @@
+import Button from "@/components/common/Button";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import PassportScanDialog from "@/components/me/PassportScanDialog";
@@ -6,6 +7,7 @@ import constructName from "@/utils/helpers/constructName";
 import type { ChildPerson } from "@/utils/types/person";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { pick } from "radash";
 import { FC, useState } from "react";
 
@@ -17,7 +19,7 @@ import { FC, useState } from "react";
 const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
   const t = useTranslations("passport");
 
-  const isLinked = typeof person.child.linked_passport_id === "string";
+  const isLinked = typeof person.child.linked_passport_id !== "string";
   const [scanDialogOpen, setScanDialogOpen] = useState(false);
 
   return (
@@ -34,22 +36,26 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
             {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
           </Text>
         </div>
-        <Text type="body" className="text-tertiary! opacity-50!">
+        {/* <Text type="body" className="text-tertiary! opacity-50!">
           {t("linkCard.notAvailable")}
-        </Text>
-        {/* <Button
+        </Text> */}
+        {/* TODO: ADD LINKING FUNC */}
+        <Button
           className={cn(
-            "ml-auto h-8! rounded-lg!",
-            isLinked ? "border-primary-border border" : null,
+            "border-primary-border ml-auto h-8! rounded-lg! border",
           )}
-          variant={isLinked ? "transparent" : "primary"}
+          variant="transparent"
           onClick={() => {
             setScanDialogOpen(true);
           }}
-          disabled={isLinked}
+          disabled={true}
         >
-          {isLinked ? t("linkCard.connected") : t("linkCard.connect")}
-        </Button> */}
+          เปลี่ยนเป็นกระดาษ
+          {/*{isLinked ? t("linkCard.connected") : t("linkCard.connect")}*/}
+        </Button>
+        <Link href={`/me/passport/${person.child.linked_passport_id}`} className="pl-2 flex items-center">
+          <MaterialIcon icon="chevron_right" />
+        </Link>
       </div>
       <AnimatePresence>
         {scanDialogOpen && (

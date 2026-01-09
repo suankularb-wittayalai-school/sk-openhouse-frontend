@@ -10,8 +10,8 @@ const Card: StylableFC<{ children: React.ReactNode }> = ({
     <div
       style={style}
       className={cn(
-        "bg-on-background border-primary-border flex gap-2 rounded-lg",
-        "border p-3",
+        `bg-on-background border-primary-border flex gap-2 rounded-lg border
+        p-3`,
         className,
       )}
     >

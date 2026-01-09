@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
+
 export async function middleware(req: NextRequest) {
   // Get original destination
   const route = req.nextUrl.pathname;
@@ -14,7 +15,7 @@ export async function middleware(req: NextRequest) {
 
   // Get current page protection type
   const pageRole = (() => {
-    if (route === "/me") return "user";
+    if (route.startsWith("/me")) return "user";
     else return "public";
   })();
 

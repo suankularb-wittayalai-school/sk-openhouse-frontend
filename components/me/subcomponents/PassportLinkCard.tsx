@@ -7,6 +7,7 @@ import constructName from "@/utils/helpers/constructName";
 import type { ChildPerson } from "@/utils/types/person";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { pick } from "radash";
 import { FC, useState } from "react";
 
@@ -38,19 +39,23 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
         {/* <Text type="body" className="text-tertiary! opacity-50!">
           {t("linkCard.notAvailable")}
         </Text> */}
+        {/* TODO: ADD LINKING FUNC */}
         <Button
           className={cn(
-            "ml-auto h-8! rounded-lg!",
-            isLinked ? "border-primary-border border" : null,
+            "border-primary-border ml-auto h-8! rounded-lg! border",
           )}
-          variant={isLinked ? "transparent" : "primary"}
+          variant="transparent"
           onClick={() => {
             setScanDialogOpen(true);
           }}
-          disabled={isLinked}
+          disabled={true}
         >
-          {isLinked ? t("linkCard.connected") : t("linkCard.connect")}
+          เปลี่ยนเป็นกระดาษ
+          {/*{isLinked ? t("linkCard.connected") : t("linkCard.connect")}*/}
         </Button>
+        <Link href={`/me/passport/${person.child.linked_passport_id}`} className="pl-2 flex items-center">
+          <MaterialIcon icon="chevron_right" />
+        </Link>
       </div>
       <AnimatePresence>
         {scanDialogOpen && (

@@ -1,7 +1,6 @@
 import Text from "@/components/common/Text";
 import cn from "@/utils/helpers/cn";
 import { StylableFC } from "@/utils/types/common";
-import { Person } from "@/utils/types/person";
 import Image from "next/image";
 import QRCode from "react-qr-code";
 

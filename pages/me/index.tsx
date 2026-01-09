@@ -5,13 +5,17 @@ import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
 import type { Family, FetchedFamily } from "@/utils/types/person";
 import type { GetServerSideProps } from "next";
+import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { type FC, useEffect } from "react";
 
 const MyRegistrationPage: FC<{ family: Family }> = ({ family }) => {
   const router = useRouter();
+  const params = useParams()
   const { user, isLoading: userIsLoading } = useUser();
 
+  console.warn(params);
+  
   useEffect(
     () => {
       if (userIsLoading) return;

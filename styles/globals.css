@@ -2,19 +2,30 @@
 
 :root {
   --spacing-content-max: 1280px;
-
   --background: #fbfafa;
   --on-background: #ffffff;
-  --primary-surface: #e8ecf4;
   --on-surface-variant: #0000007f;
-  --foreground: #171717;
-  --primary: #1e4394;
-  --priamry-surface: #e8ecf4;
-  --on-primary: #ffffff;
-  --primary-border: #cfd5e6;
-  --secondary: #ff7474;
-  --on-secondary: #ffffff;
   --tertiary: #070d1d;
+  --foreground: #171717;
+  .theme-blue {
+    --primary: #1e4394;
+    --on-primary: #ffffff;
+    --priamry-surface: #e8ecf4;
+    --primary-border: #cfd5e6;
+    --secondary: #ff7474;
+    --on-secondary: #ffffff;
+  }
+}
+
+.theme-orange {
+  --primary: #ff7474;
+  --on-primary: #ffffff;
+  --primary-surface: #fbeded;
+  --primary-border: #ffcdcd;
+  --secondary: #1e4394;
+  --on-secondary: #ffffff;
+  --secondary-surface: #e8ecf4;
+  --secondary-border: #cfd5e6;
 }
 
 @theme inline {
@@ -56,5 +67,5 @@ ol {
 
 input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
-  @apply hidden [-webkit-appearance:none]
+  @apply hidden [-webkit-appearance:none];
 }

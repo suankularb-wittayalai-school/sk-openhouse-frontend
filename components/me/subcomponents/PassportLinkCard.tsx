@@ -1,3 +1,4 @@
+import Button from "@/components/common/Button";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import PassportScanDialog from "@/components/me/PassportScanDialog";
@@ -17,7 +18,7 @@ import { FC, useState } from "react";
 const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
   const t = useTranslations("passport");
 
-  const isLinked = typeof person.child.linked_passport_id === "string";
+  const isLinked = typeof person.child.linked_passport_id !== "string";
   const [scanDialogOpen, setScanDialogOpen] = useState(false);
 
   return (
@@ -34,10 +35,10 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
             {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
           </Text>
         </div>
-        <Text type="body" className="text-tertiary! opacity-50!">
+        {/* <Text type="body" className="text-tertiary! opacity-50!">
           {t("linkCard.notAvailable")}
-        </Text>
-        {/* <Button
+        </Text> */}
+        <Button
           className={cn(
             "ml-auto h-8! rounded-lg!",
             isLinked ? "border-primary-border border" : null,
@@ -49,7 +50,7 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
           disabled={isLinked}
         >
           {isLinked ? t("linkCard.connected") : t("linkCard.connect")}
-        </Button> */}
+        </Button>
       </div>
       <AnimatePresence>
         {scanDialogOpen && (

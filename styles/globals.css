@@ -7,14 +7,12 @@
   --on-surface-variant: #0000007f;
   --tertiary: #070d1d;
   --foreground: #171717;
-  .theme-blue {
-    --primary: #1e4394;
-    --on-primary: #ffffff;
-    --priamry-surface: #e8ecf4;
-    --primary-border: #cfd5e6;
-    --secondary: #ff7474;
-    --on-secondary: #ffffff;
-  }
+  --primary: #1e4394;
+  --on-primary: #ffffff;
+  --priamry-surface: #e8ecf4;
+  --primary-border: #cfd5e6;
+  --secondary: #ff7474;
+  --on-secondary: #ffffff;
 }
 
 .theme-orange {

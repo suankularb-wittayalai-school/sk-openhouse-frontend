@@ -11,7 +11,7 @@
     "notAvailable": "ยังไม่เปิดให้บริการ"
   },
   "scanner": {
-    "title": "เชื่อมพาสปอร์ต Open House กับ",
+    "title": "แสกน QR Code บนพาสปอร์ตกระดาษ",
     "permissionRequest": "โปรดอนุญาตให้เว็บไซต์เข้าถึงกล้องของคุณ",
     "dialog": {
       "confirm": {

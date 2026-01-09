@@ -46,7 +46,7 @@ const Button: StylableFC<{
       <div
         className={cn(
           `flex flex-1 items-center justify-center gap-2 self-stretch px-6
-          py-2.5 text-sm leading-[140%] font-normal`,
+          py-2.5 text-sm leading-[140%] font-normal text-nowrap`,
           icon || (busy && "pl-4.5!"),
         )}
       >

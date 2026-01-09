@@ -42,16 +42,15 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
         {/* TODO: ADD LINKING FUNC */}
         <Button
           className={cn(
-            "border-primary-border ml-auto h-8! rounded-lg! border",
+            "border-primary-border! ml-auto h-8! rounded-lg! border [&>div]:px-2",
           )}
-          variant="transparent"
+          variant="outline"
           onClick={() => {
             setScanDialogOpen(true);
           }}
-          disabled={true}
+          // disabled={true}
         >
           เปลี่ยนเป็นกระดาษ
-          {/*{isLinked ? t("linkCard.connected") : t("linkCard.connect")}*/}
         </Button>
         <Link href={`/me/passport/${person.child.linked_passport_id}`} className="pl-2 flex items-center">
           <MaterialIcon icon="chevron_right" />

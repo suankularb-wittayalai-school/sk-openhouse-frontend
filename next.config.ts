@@ -1,6 +1,4 @@
-import { source } from "motion/react-client";
 import type { NextConfig } from "next";
-import { redirect } from "next/dist/server/api-utils";
 
 const nextConfig = {
   redirects: async () => [

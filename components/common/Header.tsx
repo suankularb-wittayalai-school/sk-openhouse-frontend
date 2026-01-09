@@ -126,7 +126,7 @@ const Header: FC = () => {
                     if (body.success) {
                       if (process.env.NODE_ENV === "development") {
                         localStorage.removeItem("skopen26-sessionToken");
-                        document.cookie = "auth_token";
+                        document.cookie = "";
                       }
 
                       setUser(null);

@@ -95,11 +95,13 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
             setOpenPassportScanDialog={() => setOpenPassportScanDialog(true)}
           />
         ) : (
-          <StaffRedemptionSection
-            passport={passport}
-            activities={activities}
-            setOpenPassportScanDialog={() => setOpenPassportScanDialog(true)}
-          />
+          passport && (
+            <StaffRedemptionSection
+              passport={passport}
+              activities={activities}
+              setOpenPassportScanDialog={() => setOpenPassportScanDialog(true)}
+            />
+          )
         )}
       </div>
       <AnimatePresence>

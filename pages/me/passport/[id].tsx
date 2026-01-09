@@ -45,7 +45,7 @@ const PassportPage: FC<{
         <PassportQRCard
           passport={passport.id}
           owner={
-            `${child.prefix} ${child.firstname} ${child.lastname}` +
+            `${child.firstname} ${child.lastname}` +
             (typeof child.child.nickname !== "undefined"
               ? ` ${child.child.nickname}`
               : "")

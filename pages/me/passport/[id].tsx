@@ -16,6 +16,9 @@ import type { GetServerSideProps } from "next";
 import { useRouter } from "next/navigation";
 import { useEffect, type FC } from "react";
 
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 const PassportPage: FC<{
   passport: UnredeemedLinkedPassport | RedeemedPassport;
   activities: Activity[];
@@ -146,9 +149,6 @@ const PassportPage: FC<{
     </div>
   );
 };
-
-const UUID_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 export const getServerSideProps: GetServerSideProps = async ({
   query,

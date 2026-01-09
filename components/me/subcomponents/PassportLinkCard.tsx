@@ -36,9 +36,6 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
             {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
           </Text>
         </div>
-        {/* <Text type="body" className="text-tertiary! opacity-50!">
-          {t("linkCard.notAvailable")}
-        </Text> */}
         {/* TODO: ADD LINKING FUNC */}
         <Button
           className={cn(
@@ -48,7 +45,6 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
           onClick={() => {
             setScanDialogOpen(true);
           }}
-          // disabled={true}
         >
           เปลี่ยนเป็นกระดาษ
         </Button>

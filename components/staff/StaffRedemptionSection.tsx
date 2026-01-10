@@ -151,22 +151,20 @@ const StaffRedemptionSection: FC<{
                 <Text type="body">4-7 ฐาน</Text>
               </div>
               {isRedeemed ? (
-                completedActivities.length >= 4 ? (
-                  <Button
-                    variant="primary"
-                    className={cn(
-                      `border-primary-border! ml-auto h-8! rounded-lg! border
-                        [&>div]:px-2`,
-                    )}
-                    onClick={() => handleRedeemItem("small")}
-                  >
-                    แลก
-                  </Button>
-                ) : (
-                  <Text type="body">แต้มไม่พอ</Text>
-                )
+                <Text type="body">ไม่มีสิทธิ์</Text>
+              ) : completedActivities.length >= 4 ? (
+                <Button
+                  variant="primary"
+                  className={cn(
+                    `border-primary-border! ml-auto h-8! rounded-lg! border
+                      [&>div]:px-2`,
+                  )}
+                  onClick={() => handleRedeemItem("small")}
+                >
+                  แลก
+                </Button>
               ) : (
-                <Text type="body">ไมมีสิทธิ์</Text>
+                <Text type="body">แต้มไม่พอ</Text>
               )}
             </div>
             <div
@@ -179,22 +177,20 @@ const StaffRedemptionSection: FC<{
                 <Text type="body">8-9 ฐาน</Text>
               </div>
               {isRedeemed ? (
-                completedActivities.length >= 8 ? (
-                  <Button
-                    variant="primary"
-                    className={cn(
-                      `border-primary-border! ml-auto h-8! rounded-lg! border
-                        [&>div]:px-2`,
-                    )}
-                    onClick={() => handleRedeemItem("medium")}
-                  >
-                    แลก
-                  </Button>
-                ) : (
-                  <Text type="body">แต้มไม่พอ</Text>
-                )
+                <Text type="body">ไม่มีสิทธิ์</Text>
+              ) : completedActivities.length >= 8 ? (
+                <Button
+                  variant="primary"
+                  className={cn(
+                    `border-primary-border! ml-auto h-8! rounded-lg! border
+                      [&>div]:px-2`,
+                  )}
+                  onClick={() => handleRedeemItem("medium")}
+                >
+                  แลก
+                </Button>
               ) : (
-                <Text type="body">ไมมีสิทธิ์</Text>
+                <Text type="body">แต้มไม่พอ</Text>
               )}
             </div>
             <div
@@ -207,22 +203,20 @@ const StaffRedemptionSection: FC<{
                 <Text type="body">10 ฐาน</Text>
               </div>
               {isRedeemed ? (
-                completedActivities.length >= 10 ? (
-                  <Button
-                    variant="primary"
-                    className={cn(
-                      `border-primary-border! ml-auto h-8! rounded-lg! border
-                        [&>div]:px-2`,
-                    )}
-                    onClick={() => handleRedeemItem("large")}
-                  >
-                    แลก
-                  </Button>
-                ) : (
-                  <Text type="body">แต้มไม่พอ</Text>
-                )
+                <Text type="body">ไม่มีสิทธิ์</Text>
+              ) : completedActivities.length >= 10 ? (
+                <Button
+                  variant="primary"
+                  className={cn(
+                    `border-primary-border! ml-auto h-8! rounded-lg! border
+                      [&>div]:px-2`,
+                  )}
+                  onClick={() => handleRedeemItem("large")}
+                >
+                  แลก
+                </Button>
               ) : (
-                <Text type="body">ไมมีสิทธิ์</Text>
+                <Text type="body">แต้มไม่พอ</Text>
               )}
             </div>
           </div>

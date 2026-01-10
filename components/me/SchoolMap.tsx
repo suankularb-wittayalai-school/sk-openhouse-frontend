@@ -1,5 +1,5 @@
 import Text from "@/components/common/Text";
-import map from "@/public/Map.svg";
+import map from "@/public/event-map.svg";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import type { FC } from "react";

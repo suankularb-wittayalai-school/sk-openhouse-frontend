@@ -70,7 +70,7 @@ const PassportScanDialog: FC<{ person: ChildPerson; onClose: () => void }> = ({
       </div>
       <div
         className={`grid aspect-square w-full place-items-center self-center
-          bg-[url('/ring.svg')] bg-cover`}
+          bg-[url('/rings-primary.svg')] bg-cover`}
       >
         <div
           className="border-primary-border bg-primary-surface relative

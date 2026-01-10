@@ -28,7 +28,7 @@ const Header: FC = () => {
     >
       <Link href="/" className="shrink-0">
         <Image
-          src={"/icons/OPH_logo.png"}
+          src={"/icons/event-logo.png"}
           alt="Open House Logo"
           width={64}
           height={64}

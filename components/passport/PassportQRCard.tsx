@@ -43,7 +43,7 @@ const PassportQRCard: StylableFC<{
           -translate-1/2"
       />
       <Image
-        src="/ring.svg"
+        src="/rings-primary.svg"
         width={512}
         height={512}
         alt=""

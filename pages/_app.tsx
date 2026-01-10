@@ -39,6 +39,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
       >
         <Head>
           <title>SK Open House 2026</title>
+          <link rel="icon" href="icons/OPH_logo.png"></link>
         </Head>
         <div
           className={cn(

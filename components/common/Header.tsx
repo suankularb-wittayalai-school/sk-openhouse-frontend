@@ -52,7 +52,7 @@ const Header: FC = () => {
             ) : (
               <Link href="/staff">
                 <Button variant="primary" className="text-nowrap">
-                  สตาฟ
+                  จัดการพาสปอร์ต
                 </Button>
               </Link>
             )}

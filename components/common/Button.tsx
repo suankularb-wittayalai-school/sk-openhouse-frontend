@@ -37,7 +37,6 @@ const Button: StylableFC<{
         self-stretch rounded-full transition-all`,
         BUTTON_VARIANT[variant],
         (disabled || busy) && "pointer-events-none brightness-60",
-        icon && "pr-1!",
         className,
       )}
       disabled={disabled}

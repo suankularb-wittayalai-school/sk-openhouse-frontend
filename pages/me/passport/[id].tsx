@@ -5,6 +5,7 @@ import PassportQRCard from "@/components/passport/PassportQRCard";
 import { useUser } from "@/contexts/UserContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
+import getTimeString from "@/utils/helpers/getTimeString";
 import type {
   Activity,
   Passport,
@@ -21,6 +22,8 @@ const PassportPage: FC<{
 }> = ({ passport, activities }) => {
   const router = useRouter();
   const { user, isLoading: userIsLoading } = useUser();
+
+  const isRedeemed = passport && typeof passport.redeemed_tier == "undefined";
 
   useEffect(
     () => {
@@ -89,18 +92,47 @@ const PassportPage: FC<{
 
       <div className="flex flex-col gap-1">
         <Text type="body" element="p">
-          แลกของรางวัล
+          การแลกของรางวัล
         </Text>
         <div
           className="border-primary-border rounded-lg border bg-white
             [&>div]:not-first:border-t"
         >
           <div className="border-primary-border flex items-center gap-2 p-2">
-            <div className="flex grow flex-col">
-              <Text type="body" element="p">
-                คุณยังไม่ได้แลกของรางวัล
-              </Text>
-            </div>
+            {!isRedeemed ? (
+              <div className="flex w-full items-center gap-2">
+                <MaterialIcon icon="package_2" className="text-primary" />
+                <div className="flex grow flex-col">
+                  <Text type="title">
+                    ของรางวัลระดับ{" "}
+                    {passport.redeemed_tier == "small"
+                      ? "Starter"
+                      : passport.redeemed_tier == "medium"
+                        ? "Power-Up"
+                        : "Ultimate"}
+                  </Text>
+                  <Text type="body">
+                    เข้าร่วม{" "}
+                    {passport.redeemed_tier == "small"
+                      ? "4-7"
+                      : passport.redeemed_tier == "medium"
+                        ? "8-9"
+                        : "10"}{" "}
+                    ฐาน • ได้รับแล้ว
+                  </Text>
+                </div>
+                <Text type="body">
+                  เมื่อ:{" "}
+                  {getTimeString(new Date(passport.redeemed_at), "minutes")} น.
+                </Text>
+              </div>
+            ) : (
+              <div className="flex grow flex-col">
+                <Text type="body" element="p">
+                  คุณยังไม่ได้แลกของรางวัล
+                </Text>
+              </div>
+            )}
           </div>
         </div>
         <Text type="body" element="p" className="text-right">

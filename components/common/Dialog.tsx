@@ -52,7 +52,8 @@ const Dialog: StylableFC<{
         <Card
           style={style}
           className={cn(
-            "m-auto mx-3 flex flex-col gap-4 rounded-[1.75rem]! p-6",
+            `m-auto mx-3 flex max-h-[calc(100dvh-2rem)] flex-col gap-4
+            rounded-[1.75rem]! p-6 overflow-auto`,
             className,
           )}
         >

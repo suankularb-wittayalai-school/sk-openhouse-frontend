@@ -22,6 +22,7 @@ const Header: FC = () => {
 
   return (
     <div
+      data-theme={getUserType(user ?? undefined) == "staff" ? "orange" : "blue"}
       className="max-w-content-max mb-6 flex w-screen items-center
         justify-between overflow-auto p-2 px-3 pb-0"
     >

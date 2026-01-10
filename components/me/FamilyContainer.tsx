@@ -5,6 +5,7 @@ import EditFamilyDialog from "@/components/me/EditFamilyDialog";
 import RegisterationTicketDialog from "@/components/me/RegisterationTicketDialog";
 import PersonCard from "@/components/me/subcomponents/PersonCard";
 import MissingInformationDialog from "@/components/register/MissingInformationDialog";
+import { useUser } from "@/contexts/UserContext";
 import type { Family, Person } from "@/utils/types/person";
 import type { User } from "@/utils/types/user";
 import { AnimatePresence } from "motion/react";
@@ -16,6 +17,8 @@ type FamilyContainerProps = {
   family: Family;
 };
 
+const INELIGIBLE_FOR_HALL_TIME = "2026-01-10T23:59:59+07:00"
+
 const FamilyContainer: FC<FamilyContainerProps> = ({ user, family }) => {
   const t = useTranslations("me");
 
@@ -26,6 +29,9 @@ const FamilyContainer: FC<FamilyContainerProps> = ({ user, family }) => {
   const [openTicketDialog, setOpenTicketDialog] = useState(false);
   const [openEditFamilyDialog, setOpenEditFamilyDialog] = useState(false);
   const [openMissingInfoDialog, setOpenMissingInfoDialog] = useState(false);
+
+  const ineligibleForHallEvent =
+    new Date(user.onboarded_at ?? "") > new Date(INELIGIBLE_FOR_HALL_TIME);
 
   return (
     <div className="flex flex-col gap-2">
@@ -49,8 +55,11 @@ const FamilyContainer: FC<FamilyContainerProps> = ({ user, family }) => {
           variant="primarySurface"
           className="w-full"
           onClick={() => setOpenTicketDialog(true)}
+          disabled={ineligibleForHallEvent}
         >
-          {t("action.registrationCard")}
+          {!ineligibleForHallEvent
+            ? t("action.registrationCard")
+            : "คุณไม่มีสิทธิ์ในการรับตั๋วเข้าหอประชุม"}
         </Button>
       </div>
 

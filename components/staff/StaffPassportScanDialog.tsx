@@ -17,7 +17,7 @@ import StaffInvalidPassportDialog from "@/components/staff/StaffInvalidPassportD
 const StaffPassportScanDialog: FC<{
   title: string;
   subTitle: string;
-  setUrl: Dispatch<SetStateAction<string | undefined>>;
+  setUrl: (url: string) => void;
   onClose: () => void;
 }> = ({ title, subTitle, setUrl, onClose }) => {
   const t = useTranslations("staff");
@@ -42,6 +42,7 @@ const StaffPassportScanDialog: FC<{
           if (!openedDialogRef.current) {
             if (PASSPORT_REGEX.test(result.data) === true) {
               setUrl(result.data);
+              onClose();
             } else {
               setOpenInvalidDialog(true);
             }

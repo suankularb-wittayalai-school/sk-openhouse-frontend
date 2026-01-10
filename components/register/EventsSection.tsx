@@ -43,6 +43,7 @@ const EventsSection: FC<EventsSectionProps> = ({
         method: "POST",
         body: JSON.stringify(formData.registrant),
       });
+      console.log(body, "bod");
       if (!body.success) throw new Error("Failed to onboard user");
 
       // If development, reset the auth token returned from the API

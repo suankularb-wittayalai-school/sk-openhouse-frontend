@@ -53,9 +53,13 @@ type BasePerson = {
 
 export type AdultPerson = {
   relationship_to_child: RelationshipToChild;
+  child: undefined;
 } & BasePerson;
 
-export type ChildPerson = { child: Child } & BasePerson;
+export type ChildPerson = {
+  relationship_to_child: undefined;
+  child: Child;
+} & BasePerson;
 
 export type Child = {
   nickname?: string;
@@ -72,7 +76,7 @@ export type DeprecatedFamily = {
 };
 
 export type FetchedFamily = {
-  registrant: Person;
+  registrant: AdultPerson;
   family_members: Person[];
 };
 

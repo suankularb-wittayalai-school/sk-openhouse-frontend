@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-:root {
+:root,
+[data-theme="blue"] {
   --spacing-content-max: 1280px;
   --background: #fbfafa;
   --on-background: #ffffff;
@@ -15,7 +16,7 @@
   --on-secondary: #ffffff;
 }
 
-.theme-orange {
+[data-theme="orange"] {
   --primary: #ff7474;
   --on-primary: #ffffff;
   --primary-surface: #fbeded;

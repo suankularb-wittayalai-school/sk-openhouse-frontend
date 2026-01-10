@@ -1,6 +1,14 @@
+export type Activity = {
+  id: string;
+  created_at: string;
+  number: number;
+  name: string;
+  location: string;
+};
+
 export enum PassportType {
-  Didital = "ditigal",
-  Paper = "paper",
+  Digital = "digital",
+  Physical = "physical",
 }
 
 export enum PrizeTier {
@@ -9,13 +17,44 @@ export enum PrizeTier {
   Large = "large",
 }
 
-export type Passport = {
+export type CompactPassport = {
+  firstname: string;
+  lastname: string;
+  nickname?: string;
+};
+
+export type Passport =
+  | UnredeemedUnlinkedPassport
+  | UnredeemedLinkedPassport
+  | RedeemedPassport;
+
+type BasePassport = {
   id: string;
   created_at: string;
-  child: string | { firstname: string; lastname: string; nickname: string };
   format: PassportType;
-  redeemed_at: string | undefined;
-  redeemed_points: number | undefined;
-  redeemed_tier: PrizeTier | undefined;
-  completed_activites: string[];
+  completed_activities: string[];
 };
+
+type UnredeemedPassport = {
+  redeemed_at: undefined;
+  redeemed_points: undefined;
+  redeemed_tier: undefined;
+} & BasePassport;
+
+export type UnredeemedUnlinkedPassport = {
+  registrant: null;
+  child: null;
+} & UnredeemedPassport;
+
+export type UnredeemedLinkedPassport = {
+  registrant: CompactPassport;
+  child: CompactPassport;
+} & UnredeemedPassport;
+
+export type RedeemedPassport = {
+  registrant: CompactPassport;
+  child: CompactPassport;
+  redeemed_at: string;
+  redeemed_points: number;
+  redeemed_tier: PrizeTier;
+} & BasePassport;

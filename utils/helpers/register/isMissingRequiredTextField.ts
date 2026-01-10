@@ -17,7 +17,7 @@ const isMissingRequiredTextField = (person: Partial<Person>): boolean => {
     if (typeof person[field] === "undefined") return true;
   }
 
-  if ("child" in person && typeof person.child !== "undefined") {
+  if (typeof person.child !== "undefined") {
     for (const field of REQUIRED_CHILD_FIELDS) {
       if (typeof person.child[field] === "undefined") return true;
     }

@@ -3,12 +3,7 @@ import PassportsContainer from "@/components/me/PassportsContainer";
 import { useUser } from "@/contexts/UserContext";
 import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
-import type {
-  AdultPerson,
-  ChildPerson,
-  Family,
-  FetchedFamily,
-} from "@/utils/types/person";
+import type { Family, FetchedFamily } from "@/utils/types/person";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { type FC, useEffect } from "react";
@@ -50,7 +45,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     "register",
     "passport",
   );
-  const body = await fetchAPI<FetchedFamily>(
+
+  const fetchedFamily = await fetchAPI<FetchedFamily>(
     "/v1/user/family",
     {},
     req.cookies,
@@ -58,25 +54,25 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   // If the API returns an error, we can probably assume that most of the time,
   // it's because the client is unauthenticated or unauthorized. We're going to
   // act on that assumption rather than throw an error.
-  if (!body.success) {
-    res.setHeader("Set-Cookie", "auth_token=");
+  if (!fetchedFamily.success) {
+    res.setHeader(
+      "Set-Cookie",
+      `auth_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+    );
     return { redirect: { destination: "/", permanent: false } };
   }
+
   const family = {
-    registrant: body.data.registrant as AdultPerson,
-    adults: body.data.family_members.filter(
-      (person) =>
-        "relationship_to_child" in person &&
-        typeof person.relationship_to_child !== "undefined",
-    ) as AdultPerson[],
-    children: body.data.family_members.filter(
-      (person) => "child" in person && typeof person.child !== "undefined",
-    ) as ChildPerson[],
+    registrant: fetchedFamily.data.registrant,
+    adults: fetchedFamily.data.family_members.filter(
+      (person) => typeof person.relationship_to_child !== "undefined",
+    ),
+    children: fetchedFamily.data.family_members.filter(
+      (person) => typeof person.child !== "undefined",
+    ),
   } satisfies Family;
 
-  return {
-    props: { messages, family },
-  };
+  return { props: { messages, family } };
 };
 
 export default MyRegistrationPage;

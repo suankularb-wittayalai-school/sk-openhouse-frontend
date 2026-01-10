@@ -9,7 +9,7 @@ const StaffInvalidPassportDialog: FC<{ onClose: () => void }> = ({
 }) => {
   const t = useTranslations("staff");
   return (
-    <Dialog onClickOutside={onClose} className="theme-orange">
+    <Dialog onClickOutside={onClose}>
       <div className="flex flex-col gap-2">
         <Text type="headline">{t("scanner.invalid.title")}</Text>
         <p className="flex flex-col gap-0">

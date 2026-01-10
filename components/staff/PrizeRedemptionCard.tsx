@@ -10,7 +10,7 @@ const PrizeRedemptionCard: StylableFC<{
   passport: Passport;
 }> = ({ tier, requirement, passport }) => {
   return (
-    <Card className="theme-orange items-center">
+    <Card className="items-center">
       <MaterialIcon icon="package_2" className="text-primary" />
       <div className="flex flex-1 flex-col">
         <Text type="title">{tier}</Text>

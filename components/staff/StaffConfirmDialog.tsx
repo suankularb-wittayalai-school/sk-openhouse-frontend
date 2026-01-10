@@ -15,18 +15,15 @@ const StaffConfirmDialog: StylableFC<{
 }> = ({ title, onClose, onCancel, onConfirm, from, to }) => {
   const t = useTranslations("staff.action");
   return (
-    <Dialog
-      onClickOutside={onClose}
-      className="theme-orange flex flex-col gap-4"
-    >
+    <Dialog onClickOutside={onClose} className="flex flex-col gap-4">
       <Text type="headline">{title}</Text>
       <div className="flex flex-col gap-1">
         <div
           className="border-primary-border flex items-center gap-2 rounded-lg
-            border p-1"
+            border p-2"
         >
           <MaterialIcon icon={from.icon} className="text-primary" />
-          <Text type="body" className="!opacity-100">
+          <Text type="title" className="text-tertiary!">
             {from.content}
           </Text>
         </div>
@@ -36,10 +33,10 @@ const StaffConfirmDialog: StylableFC<{
         />
         <div
           className="border-primary-border flex items-center gap-2 rounded-lg
-            border p-1"
+            border p-2"
         >
           <MaterialIcon icon={to.icon} className="text-primary" />
-          <Text type="body" className="!opacity-100">
+          <Text type="title" className="text-tertiary!">
             {to.content}
           </Text>
         </div>

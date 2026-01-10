@@ -5,18 +5,20 @@ import Text from "@/components/common/Text";
 import Button from "@/components/common/Button";
 import { useTranslations } from "next-intl";
 
-const StaffSwitchActivityCard: StylableFC<{
+const StaffCurrentActivityRibbon: StylableFC<{
   selectedActivity: Activity;
   onOpenSwitchDialog: () => void;
 }> = ({ selectedActivity, onOpenSwitchDialog }) => {
   const t = useTranslations("staff");
   return (
     <Card
-      className="theme-orange bg-primary-surface items-center
-        !rounded-[62.4375rem] py-2 pr-2"
+      className="bg-primary-surface items-center rounded-full! py-2
+        pr-2"
     >
-      <Text type="headline">{selectedActivity.number}</Text>
-      <Text type="title" className="flex-1">
+      <Text type="headline" element="h1" className="w-6 text-center">
+        {selectedActivity.number}
+      </Text>
+      <Text type="title" element="p" className="flex-1">
         {selectedActivity.name}
       </Text>
       <Button variant="primary" onClick={() => onOpenSwitchDialog()}>
@@ -26,4 +28,4 @@ const StaffSwitchActivityCard: StylableFC<{
   );
 };
 
-export default StaffSwitchActivityCard;
+export default StaffCurrentActivityRibbon;

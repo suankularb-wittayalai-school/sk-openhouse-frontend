@@ -84,7 +84,11 @@ const PassportPage: FC<{
                   {activity.location}
                 </Text>
               </div>
-              <MaterialIcon icon={"close"} className={"text-secondary"} />
+              {passport.completed_activities.includes(activity.id) ? (
+                <MaterialIcon icon={"check"} className={"text-primary"} />
+              ) : (
+                <MaterialIcon icon={"close"} className={"text-secondary"} />
+              )}
             </div>
           ))}
         </div>
@@ -99,7 +103,7 @@ const PassportPage: FC<{
             [&>div]:not-first:border-t"
         >
           <div className="border-primary-border flex items-center gap-2 p-2">
-            {!isRedeemed ? (
+            {isRedeemed ? (
               <div className="flex w-full items-center gap-2">
                 <MaterialIcon icon="package_2" className="text-primary" />
                 <div className="flex grow flex-col">

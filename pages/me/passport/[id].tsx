@@ -26,7 +26,7 @@ const PassportPage: FC<{
   const router = useRouter();
   const { user, isLoading: userIsLoading } = useUser();
 
-  const isRedeemed = passport && typeof passport.redeemed_tier == "undefined";
+  const isRedeemed = passport && typeof passport.redeemed_tier !== "undefined";
 
   useEffect(
     () => {
@@ -177,6 +177,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     );
     return { redirect: { destination: "/", permanent: false } };
   }
+
+  console.warn("PASSPORT: " + JSON.stringify(passport));
+  
 
   // FIXME: Move activities into a client-side context, for better performance
   // FIXME: (long term) and less server load.

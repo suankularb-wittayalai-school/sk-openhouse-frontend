@@ -15,7 +15,7 @@ const StaffRedemptionSection: FC<{
 }> = ({ passport, activities, setOpenPassportScanDialog }) => {
   console.log(passport);
 
-  const isRedeemed = passport && typeof passport.redeemed_tier == "undefined";
+  const isRedeemed = passport && typeof passport.redeemed_tier !== "undefined";
 
   // Get uncompleted activities by filtering out completed ones
   const completedActivities =

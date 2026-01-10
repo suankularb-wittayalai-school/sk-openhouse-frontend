@@ -8,9 +8,11 @@ import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
 import { Passport } from "@/utils/types/passport";
 import { Activity } from "@/utils/types/staff";
 import { GetServerSideProps } from "next";
+import { useTranslations } from "next-intl";
 import { FC, useEffect, useState } from "react";
 
 const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
+  const t = useTranslations("staff");
   const [selectedActivity, setSelectedActivity] = useState<Activity>(
     activities[0],
   );
@@ -58,12 +60,14 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
         />
       )}
       <Button variant="primary" onClick={() => setOpenPassportScanDialog(true)}>
-        Add
+        {t("action.addPoint")}
       </Button>
       {openPassportScanDialog && (
         <StaffPassportScanDialog
-          title="title"
-          subTitle="subtitle"
+          title={selectedActivity.name}
+          subTitle={
+            isRedeeming ? t("passport.scanPassport") : t("action.addPoint")
+          }
           setUrl={(url: string) => setPassportUrl(url)}
           onClose={() => setOpenPassportScanDialog(false)}
         />
@@ -72,7 +76,7 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
         typeof passport.child !== "string" &&
         openPassportConfirmDialog && (
           <StaffConfirmDialog
-            title="test"
+            title={t("title.confirmAddPoint")}
             onClose={() => setOpenPassportConfirmDialog(false)}
             onCancel={() => setOpenPassportConfirmDialog(false)}
             onConfirm={async () => {

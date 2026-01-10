@@ -4,9 +4,14 @@
     "cancel": "ยกเลิก",
     "confirm": "ยืนยัน",
     "scanAgain": "สแกนใหม่",
-    "switch": "เปลี่ยน"
+    "switch": "เปลี่ยน",
+    "addPoint": "ให้แต้มพาสปอร์ต",
+    "scanPassport": "แสกนพาสปอร์ต"
   },
-  "title": { "changeActivity": "เปลี่ยนฐาน" },
+  "title": {
+    "changeActivity": "เปลี่ยนฐาน",
+    "confirmAddPoint": "ยืนยันการให้แต้ม"
+  },
   "scanner": {
     "permissionRequest": "โปรดอนุญาตให้เว็บไซต์เข้าถึงกล้องของคุณ",
     "invalid": {

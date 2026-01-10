@@ -1,8 +1,12 @@
+import Button from "@/components/common/Button";
+import Dialog from "@/components/common/Dialog";
+import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import FAQDropdown from "@/components/landing/subcomponents/FAQDropdown";
+import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import type { FC } from "react";
+import { useState, type FC } from "react";
 
 const QUESTIONS = [
   {
@@ -150,17 +154,85 @@ const QUESTIONS = [
 
 const FAQsContainer: FC = () => {
   const t = useTranslations("landing");
+
+  const [openAIWarningDialog, setOpenAIWarningDialog] =
+    useState<boolean>(false);
+
   return (
-    <div className="flex flex-col gap-2">
-      <Text type="body">{t("section.faq")}</Text>
-      <div className="flex flex-col gap-1">
-        {QUESTIONS.map((faqItem) => (
-          <FAQDropdown question={faqItem.question} key={faqItem.question}>
-            {faqItem.answer}
-          </FAQDropdown>
-        ))}
+    <>
+      <div className="flex flex-col gap-2">
+        <Text type="body">{t("section.faq")}</Text>
+        <div className="flex flex-col gap-1">
+          {QUESTIONS.map((faqItem) => (
+            <FAQDropdown question={faqItem.question} key={faqItem.question}>
+              {faqItem.answer}
+            </FAQDropdown>
+          ))}
+        </div>
+
+        <Button
+          variant="primarySurface"
+          icon="comic_bubble"
+          className="w-full"
+          onClick={() => setOpenAIWarningDialog(true)}
+        >
+          คุยกับ ROSE-BOT 3.0
+        </Button>
       </div>
-    </div>
+      <AnimatePresence>
+        {openAIWarningDialog && (
+          <Dialog onClickOutside={() => setOpenAIWarningDialog(false)}>
+            <div className="flex flex-col gap-2">
+              <Text type="headline">
+                คุณกำลังดำเนินการต่อไปยัง
+                <br />
+                ROSE-BOT 3.0
+              </Text>
+              <Text type="title" className="text-tertiary">
+                กรุณาล็อกอินด้วย Gmail ก่อนเข้าใช้งานสอบถามข้อมูล
+              </Text>
+            </div>
+
+            <div
+              className="border-primary-border flex gap-2 rounded-lg border p-2"
+            >
+              <MaterialIcon icon="warning" className="text-secondary" />
+              <div className="flex flex-col gap-2">
+                <Text type="body" className="text-tertiary">
+                  ROSE-BOT 3.0 ถูกขับเคลื่อนด้วย Gemini Gem สำหรับงาน SK Open
+                  House 2026
+                  เพื่อตอบคำถามเกี่ยวกับการรับสมัครนักเรียนและข้อมูลเกี่ยวกับโรงเรียนเบื้องต้น
+                </Text>
+                <Text type="body" className="text-tertiary">
+                  ทั้งนี้ ROSE-BOT 3.0 อาจให้ข้อมูลที่คลาดเคลื่อน
+                  ควรตรวจสอบจากครู บุคลากร
+                  หรือนักเรียนภายในโรงเรียนสวนกุหลาบวิทยาลัยอีกครั้ง
+                </Text>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                variant="primarySurface"
+                onClick={() => setOpenAIWarningDialog(false)}
+              >
+                ยกเลิก
+              </Button>
+              <Link
+                href={
+                  "https://gemini.google.com/gem/1RnxVcA4XMQV0loZ6myZteUalF-UwcsDW"
+                }
+                target="_blank"
+              >
+                <Button variant="primary" className="w-full">
+                  ต่อไป
+                </Button>
+              </Link>
+            </div>
+          </Dialog>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

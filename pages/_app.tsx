@@ -52,7 +52,8 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
           <div className="m-auto w-full max-w-3xl grow">
             <Component {...pageProps} />
           </div>
-          <div className="text-tertiary/50 p-2 pt-0 text-center text-xs">
+          <div className="text-tertiary/50 p-2.5 pt-0 text-center text-xs">
+            © 2026 โรงเรียนสวนกุหลาบวิทยาลัย<br />
             Made with <span className="text-tertiary">🩷🩵</span> by{" "}
             <Link
               href="https://github.com/suankularb-wittayalai-school"
@@ -62,7 +63,6 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
               SK IT Solutions
             </Link>{" "}
             Student Team
-            <br />© 2026 โรงเรียนสวนกุหลาบวิทยาลัย
           </div>
           <BackgroundDecoration />
         </div>

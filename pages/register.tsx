@@ -4,6 +4,7 @@ import EventsSection from "@/components/register/EventsSection";
 import FamilySection from "@/components/register/FamilySection";
 import { useUser } from "@/contexts/UserContext";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
+import getUserType from "@/utils/helpers/getUserType";
 import type { FamilyCreate } from "@/utils/types/person";
 import { AnimatePresence, motion } from "motion/react";
 import type { GetStaticProps } from "next";
@@ -35,16 +36,22 @@ const RegisterationPage = () => {
     () => {
       if (userIsLoading) return;
 
-      if (user === null) {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        return setRegisterationStep(1);
-      }
-      if (typeof user.onboarded_at === "string") {
-        router.push("/me");
-        return;
-      } else setRegisterationStep(2);
+      const handleUserRedirects = async () => {
+        if (user === null) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect
+          return setRegisterationStep(1);
+        }
+        if (getUserType(user)) {
+          return router.push("/staff");
+        }
+        if (typeof user.onboarded_at === "string") {
+          return router.push("/me");
+        } else setRegisterationStep(2);
+      };
+
+      handleUserRedirects();
     },
-    [userIsLoading], // eslint-disable-line react-hooks/exhaustive-deps
+    [userIsLoading, user], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   if (userIsLoading) return <></>;

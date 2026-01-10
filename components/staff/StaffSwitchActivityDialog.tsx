@@ -14,11 +14,14 @@ const StaffSwitchActivityDialog: StylableFC<{
 }> = ({ activities, onChangeSelectedActivity, onClose }) => {
   const t = useTranslations("staff");
   return (
-    <Dialog className="theme-orange bg-background gap-4">
+    <Dialog className="bg-background gap-4" onClickOutside={() => onClose()}>
       <Text type="headline">{t("title.changeActivity")}</Text>
       <CardContainer>
-        {activities.map((activity) => (
-          <Card className="hover:bg-primary/10 flex-col !p-2">
+        {activities.map((activity, idx) => (
+          <Card
+            className="hover:bg-primary/10 cursor-pointer flex-col p-2!
+              transition-colors"
+          >
             <div
               className="flex flex-col"
               onClick={() => {

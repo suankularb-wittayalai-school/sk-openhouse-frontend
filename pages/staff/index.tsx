@@ -26,17 +26,17 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
   const [isRedeeming, setIsRedeeming] = useState<boolean>(false);
 
   useEffect(() => {
-    const passportId = passportUrl?.split("/").at(-1);
     const fetchPassport = async () => {
+      const passportId = passportUrl?.split("/").at(-1);
       const body = await fetchAPI<Passport>(
-        `/v1/passport/${"a51a5888-f55d-443a-af3e-4f3b503d9bc7"}?detailed=true`,
+        `/v1/passport/${passportId}?detailed=true`,
       );
       if (body.success) {
         setPassport(body.data);
+        setOpenPassportConfirmDialog(true);
       }
     };
-    fetchPassport();
-    setOpenPassportConfirmDialog(true);
+    if (passportUrl !== undefined) fetchPassport();
   }, [passportUrl]);
 
   useEffect(() => {
@@ -82,13 +82,13 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
             onConfirm={async () => {
               if (isRedeeming) {
               } else {
-                const body = await fetchAPI(
-                  `/v1/passport/${passport.id}/play`,
-                  {
-                    method: "PUT",
-                    body: JSON.stringify({ activity_id: selectedActivity.id }),
-                  },
-                );
+                await fetchAPI(`/v1/passport/${passport.id}/play`, {
+                  method: "PUT",
+                  body: JSON.stringify({ activity_id: selectedActivity.id }),
+                });
+                setPassport(undefined);
+                setPassportUrl(undefined);
+                setOpenPassportConfirmDialog(false);
               }
             }}
             from={

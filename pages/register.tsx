@@ -41,7 +41,7 @@ const RegisterationPage = () => {
           // eslint-disable-next-line react-hooks/set-state-in-effect
           return setRegisterationStep(1);
         }
-        if (getUserType(user)) {
+        if (getUserType(user) == "staff") {
           return router.push("/staff");
         }
         if (typeof user.onboarded_at === "string") {

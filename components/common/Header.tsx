@@ -24,7 +24,7 @@ const Header: FC = () => {
     <div
       className="max-w-content-max mb-6 flex w-screen items-center
         justify-between overflow-auto p-2 px-3 pb-0"
-      data-theme={getUserType(user ?? undefined) ? "orange" : "blue"}
+      data-theme={getUserType(user ?? undefined) == "staff" ? "orange" : "blue"}
     >
       <Link href="/" className="shrink-0">
         <Image

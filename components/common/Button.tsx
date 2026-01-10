@@ -37,6 +37,7 @@ const Button: StylableFC<{
         self-stretch rounded-full transition-all`,
         BUTTON_VARIANT[variant],
         (disabled || busy) && "pointer-events-none brightness-60",
+        icon && "pr-1!",
         className,
       )}
       disabled={disabled}
@@ -45,8 +46,8 @@ const Button: StylableFC<{
       <div
         className={cn(
           `flex flex-1 items-center justify-center gap-2 self-stretch px-6
-          py-2.5 text-sm leading-[140%] font-normal`,
-          icon || busy && "pl-4.5!"
+          py-2.5 text-sm leading-[140%] font-normal text-nowrap`,
+          icon || (busy && "pl-4.5!"),
         )}
       >
         {busy && (

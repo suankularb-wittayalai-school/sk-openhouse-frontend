@@ -19,7 +19,7 @@ type PersonCardProps = { person: Person; count?: number };
 const PersonCard: FC<PersonCardProps> = ({ person, count }) => {
   const t = useTranslations("person");
 
-  const isChild = "child" in person && typeof person.child !== "undefined";
+  const isChild = typeof person.child !== "undefined";
   const countIsSet = typeof count !== "undefined";
 
   return (

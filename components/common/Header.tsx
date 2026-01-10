@@ -24,7 +24,6 @@ const Header: FC = () => {
     <div
       className="max-w-content-max mb-6 flex w-screen items-center
         justify-between overflow-auto p-2 px-3 pb-0"
-      data-theme={getUserType(user ?? undefined) == "staff" ? "orange" : "blue"}
     >
       <Link href="/" className="shrink-0">
         <Image
@@ -43,11 +42,19 @@ const Header: FC = () => {
                 {t("header.details")}
               </Button>
             </Link>
-            <Link href="/me">
-              <Button variant="primary" className="text-nowrap">
-                {t("header.myregistration")}
-              </Button>
-            </Link>
+            {getUserType(user ?? undefined) != "staff" ? (
+              <Link href="/me">
+                <Button variant="primary" className="text-nowrap">
+                  {t("header.myregistration")}
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/staff">
+                <Button variant="primary" className="text-nowrap">
+                  สตาฟ
+                </Button>
+              </Link>
+            )}
             <div
               className="bg-primary-surface border-primary-border flex h-10 w-10
                 cursor-pointer items-center justify-center rounded-full border"
@@ -118,7 +125,7 @@ const Header: FC = () => {
                     if (body.success) {
                       if (process.env.NODE_ENV === "development") {
                         localStorage.removeItem("skopen26-sessionToken");
-                        document.cookie = "";
+                        document.cookie = "auth_token";
                       }
 
                       setUser(null);

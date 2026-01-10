@@ -3,8 +3,10 @@
     "close": "ปิด",
     "cancel": "ยกเลิก",
     "confirm": "ยืนยัน",
-    "scanAgain": "สแกนใหม่"
+    "scanAgain": "สแกนใหม่",
+    "switch": "เปลี่ยน"
   },
+  "title": { "changeActivity": "เปลี่ยนฐาน" },
   "scanner": {
     "permissionRequest": "โปรดอนุญาตให้เว็บไซต์เข้าถึงกล้องของคุณ",
     "invalid": {

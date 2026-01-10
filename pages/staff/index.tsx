@@ -1,29 +1,34 @@
-import Button from "@/components/common/Button";
-import StaffConfirmDialog from "@/components/staff/StaffConfirmDialog";
-import StaffPassportScanDialog from "@/components/staff/StaffPassportScanDialog";
-import StaffSwitchActivityCard from "@/components/staff/StaffSwitchActivityCard";
-import StaffSwitchActivityDialog from "@/components/staff/StaffSwitchActivityDialog";
+import StaffActivitySection from "@/components/staff/StaffActivitySection";
+import StaffRedemptionSection from "@/components/staff/StaffRedemptionSection";
+import StaffConfirmDialog from "@/components/staff/subcomponents/StaffConfirmDialog";
+import StaffCurrentActivityRibbon from "@/components/staff/subcomponents/StaffCurrentActivityRibbon";
+import StaffPassportScanDialog from "@/components/staff/subcomponents/StaffPassportScanDialog";
+import StaffSwitchActivityDialog from "@/components/staff/subcomponents/StaffSwitchActivityDialog";
+import { useUser } from "@/contexts/UserContext";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
 import { Passport } from "@/utils/types/passport";
 import { Activity } from "@/utils/types/staff";
+import { AnimatePresence } from "motion/react";
 import { GetServerSideProps } from "next";
 import { useTranslations } from "next-intl";
 import { FC, useEffect, useState } from "react";
 
 const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
   const t = useTranslations("staff");
-  const [selectedActivity, setSelectedActivity] = useState<Activity>(
-    activities[0],
-  );
+
+  const { user } = useUser();
+
+  const [selectedActivity, setSelectedActivity] = useState<number>(0);
+  const [passportUrl, setPassportUrl] = useState<string | undefined>();
+  const [passport, setPassport] = useState<Passport | undefined>();
+  const [isRedeeming, setIsRedeeming] = useState<boolean>(false);
+
   const [openSwitchDialog, setOpenSwitchDialog] = useState<boolean>(false);
   const [openPassportScanDialog, setOpenPassportScanDialog] =
     useState<boolean>(false);
   const [openPassportConfirmDialog, setOpenPassportConfirmDialog] =
     useState<boolean>(false);
-  const [passportUrl, setPassportUrl] = useState<string | undefined>();
-  const [passport, setPassport] = useState<Passport | undefined>();
-  const [isRedeeming, setIsRedeeming] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPassport = async () => {
@@ -40,41 +45,58 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
   }, [passportUrl]);
 
   useEffect(() => {
-    if (selectedActivity.number == null) {
+    if (selectedActivity == null) {
       setIsRedeeming(true);
     } else setIsRedeeming(false);
   }, [selectedActivity]);
+
+  useEffect(() => {
+    console.log(user);
+    console.log(activities);
+  }, [user, activities]);
+
+  if (!user) return;
+
   return (
-    <div className="theme-orange flex flex-col gap-3">
-      <StaffSwitchActivityCard
-        selectedActivity={selectedActivity}
-        onOpenSwitchDialog={() => setOpenSwitchDialog(true)}
-      />
-      {openSwitchDialog && (
-        <StaffSwitchActivityDialog
-          activities={activities}
-          onChangeSelectedActivity={(activity: Activity) =>
-            setSelectedActivity(activity)
-          }
-          onClose={() => setOpenSwitchDialog(false)}
+    <div data-theme="orange" className="p-3 pt-0">
+      <div className="flex flex-col gap-6">
+        <StaffCurrentActivityRibbon
+          selectedActivity={activities[selectedActivity]}
+          onOpenSwitchDialog={() => setOpenSwitchDialog(true)}
         />
-      )}
-      <Button variant="primary" onClick={() => setOpenPassportScanDialog(true)}>
-        {t("action.addPoint")}
-      </Button>
-      {openPassportScanDialog && (
-        <StaffPassportScanDialog
-          title={selectedActivity.name}
-          subTitle={
-            isRedeeming ? t("passport.scanPassport") : t("action.addPoint")
-          }
-          setUrl={(url: string) => setPassportUrl(url)}
-          onClose={() => setOpenPassportScanDialog(false)}
-        />
-      )}
-      {passport &&
-        typeof passport.child !== "string" &&
-        openPassportConfirmDialog && (
+
+        {selectedActivity != activities.length - 1 ? (
+          <StaffActivitySection
+            user={user}
+            activities={activities}
+            selectedActivity={selectedActivity}
+            setOpenPassportScanDialog={() => setOpenPassportScanDialog(true)}
+          />
+        ) : (
+          <StaffRedemptionSection />
+        )}
+      </div>
+      <AnimatePresence>
+        {openSwitchDialog && (
+          <StaffSwitchActivityDialog
+            activities={activities}
+            onChangeSelectedActivity={(activity: number) =>
+              setSelectedActivity(activity)
+            }
+            onClose={() => setOpenSwitchDialog(false)}
+          />
+        )}
+        {openPassportScanDialog && (
+          <StaffPassportScanDialog
+            title={activities[selectedActivity].name}
+            subTitle={
+              isRedeeming ? t("passport.scanPassport") : t("action.addPoint")
+            }
+            setUrl={(url: string) => setPassportUrl(url)}
+            onClose={() => setOpenPassportScanDialog(false)}
+          />
+        )}
+        {passport && openPassportConfirmDialog && (
           <StaffConfirmDialog
             title={t("title.confirmAddPoint")}
             onClose={() => setOpenPassportConfirmDialog(false)}
@@ -84,40 +106,51 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
               } else {
                 await fetchAPI(`/v1/passport/${passport.id}/play`, {
                   method: "PUT",
-                  body: JSON.stringify({ activity_id: selectedActivity.id }),
+                  body: JSON.stringify({
+                    activity_id: activities[selectedActivity].id,
+                  }),
                 });
                 setPassport(undefined);
                 setPassportUrl(undefined);
                 setOpenPassportConfirmDialog(false);
+
+                // window.location.reload();
               }
             }}
             from={
               isRedeeming
                 ? { icon: "", content: "" }
-                : { icon: "flag", content: selectedActivity.name }
+                : { icon: "flag", content: activities[selectedActivity].name }
             }
             to={
               isRedeeming
                 ? { icon: "", content: "" }
                 : {
                     icon: "qr_code_scanner",
-                    content:
-                      passport.child.firstname + " " + passport.child.lastname,
+                    content: passport.child
+                      ? passport.child.firstname + " " + passport.child.lastname
+                      : "พาสปอร์ตกระดาษ (ยังไม่ได้เชื่อม)",
                   }
             }
           />
         )}
+      </AnimatePresence>
     </div>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const messages = await getStaticTranslations("common", "staff");
+  const messages = await getStaticTranslations("common", "person", "staff");
+
   const body = await fetchAPI<Activity[]>("/v1/activities", {}, req.cookies);
   let activities;
   if (body.success) {
     activities = body.data;
-    activities.push({ name: "แลกของรางวัล", location: "ใต้อาคาร 123 ปีฯ" });
+    activities.push({
+      number: 11,
+      name: "แลกของรางวัล",
+      location: "ใต้อาคาร 123 ปีฯ",
+    });
   }
   return { props: { messages, activities } };
 };

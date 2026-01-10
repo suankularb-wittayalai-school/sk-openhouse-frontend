@@ -1,16 +1,11 @@
 import Button from "@/components/common/Button";
 import Dialog from "@/components/common/Dialog";
 import Text from "@/components/common/Text";
-import StaffInvalidPassportDialog from "@/components/staff/StaffInvalidPassportDialog";
+import StaffInvalidPassportDialog from "@/components/staff/subcomponents/StaffInvalidPassportDialog";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import QrScanner from "qr-scanner";
-import {
-  type FC,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 
 const StaffPassportScanDialog: FC<{
   title: string;

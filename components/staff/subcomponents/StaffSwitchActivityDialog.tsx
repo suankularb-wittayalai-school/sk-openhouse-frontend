@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 
 const StaffSwitchActivityDialog: StylableFC<{
   activities: Activity[];
-  onChangeSelectedActivity: (activity: Activity) => void;
+  onChangeSelectedActivity: (activity: number) => void;
   onClose: () => void;
 }> = ({ activities, onChangeSelectedActivity, onClose }) => {
   const t = useTranslations("staff");
@@ -25,7 +25,7 @@ const StaffSwitchActivityDialog: StylableFC<{
             <div
               className="flex flex-col"
               onClick={() => {
-                onChangeSelectedActivity(activity);
+                onChangeSelectedActivity(idx);
                 onClose();
               }}
             >

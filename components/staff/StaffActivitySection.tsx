@@ -6,6 +6,7 @@ import { Activity } from "@/utils/types/staff";
 import { User } from "@/utils/types/user";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
+import getFieldById from "@/utils/helpers/getFieldById";
 
 const StaffActivitySection: FC<{
   user: User;
@@ -15,14 +16,6 @@ const StaffActivitySection: FC<{
 }> = ({ user, activities, setOpenPassportScanDialog }) => {
   const t = useTranslations("staff");
   const tx = useTranslations("person");
-
-  function getActivityNumberFromID(id: string) {
-    for (let i = 0; i < activities.length; i++) {
-      if (activities[i].id == id) {
-        return activities[i].number;
-      }
-    }
-  }
 
   return (
     <>
@@ -50,7 +43,13 @@ const StaffActivitySection: FC<{
                           : "พาสปอร์ตกระดาษ (ยังไม่ได้เชื่อม)"}
                       </Text>
                       <Text type="body">
-                        ฐานที่ {getActivityNumberFromID(activity.activity_id)} •{" "}
+                        ฐานที่{" "}
+                        {getFieldById(
+                          activity.activity_id,
+                          "number",
+                          activities,
+                        )}{" "}
+                        •{" "}
                         {getTimeString(
                           new Date(activity.created_at),
                           "minutes",

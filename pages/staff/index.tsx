@@ -1,3 +1,6 @@
+import Button from "@/components/common/Button";
+import Dialog from "@/components/common/Dialog";
+import Text from "@/components/common/Text";
 import StaffActivitySection from "@/components/staff/StaffActivitySection";
 import StaffRedemptionSection from "@/components/staff/StaffRedemptionSection";
 import StaffConfirmDialog from "@/components/staff/subcomponents/StaffConfirmDialog";
@@ -9,6 +12,7 @@ import fetchAPI from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
 import { Passport } from "@/utils/types/passport";
 import { Activity } from "@/utils/types/staff";
+import { error } from "console";
 import { AnimatePresence } from "motion/react";
 import { GetServerSideProps } from "next";
 import { useTranslations } from "next-intl";
@@ -29,6 +33,30 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
     useState<boolean>(false);
   const [openPassportConfirmDialog, setOpenPassportConfirmDialog] =
     useState<boolean>(false);
+  const [
+    openPassportAlreadyScannedDialog,
+    setOpenPassportAlreadyScannedDialog,
+  ] = useState<boolean>(false);
+
+  // To-do: Remove this dependency
+  const [scanCount, setScanCount] = useState(0);
+
+  useEffect(() => {
+    const storedSelectedActivity = localStorage.getItem(
+      "skopen26-staffSelectedActivity",
+    );
+    if (storedSelectedActivity !== null) {
+      setSelectedActivity(Number(storedSelectedActivity));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "skopen26-staffSelectedActivity",
+      String(selectedActivity),
+    );
+    setIsRedeeming(selectedActivity == activities.length - 1);
+  }, [selectedActivity]);
 
   useEffect(() => {
     const fetchPassport = async () => {
@@ -38,17 +66,11 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
       );
       if (body.success) {
         setPassport(body.data);
-        setOpenPassportConfirmDialog(true);
+        !isRedeeming && setOpenPassportConfirmDialog(true);
       }
     };
     if (passportUrl !== undefined) fetchPassport();
-  }, [passportUrl]);
-
-  useEffect(() => {
-    if (selectedActivity == null) {
-      setIsRedeeming(true);
-    } else setIsRedeeming(false);
-  }, [selectedActivity]);
+  }, [scanCount]);
 
   useEffect(() => {
     console.log(user);
@@ -65,7 +87,7 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
           onOpenSwitchDialog={() => setOpenSwitchDialog(true)}
         />
 
-        {selectedActivity != activities.length - 1 ? (
+        {!isRedeeming ? (
           <StaffActivitySection
             user={user}
             activities={activities}
@@ -73,7 +95,11 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
             setOpenPassportScanDialog={() => setOpenPassportScanDialog(true)}
           />
         ) : (
-          <StaffRedemptionSection />
+          <StaffRedemptionSection
+            passport={passport}
+            activities={activities}
+            setOpenPassportScanDialog={() => setOpenPassportScanDialog(true)}
+          />
         )}
       </div>
       <AnimatePresence>
@@ -90,9 +116,12 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
           <StaffPassportScanDialog
             title={activities[selectedActivity].name}
             subTitle={
-              isRedeeming ? t("passport.scanPassport") : t("action.addPoint")
+              isRedeeming ? t("action.scanPassport") : t("action.addPoint")
             }
-            setUrl={(url: string) => setPassportUrl(url)}
+            setUrl={(url: string) => {
+              setPassportUrl(url);
+              setScanCount((c) => c + 1);
+            }}
             onClose={() => setOpenPassportScanDialog(false)}
           />
         )}
@@ -104,17 +133,22 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
             onConfirm={async () => {
               if (isRedeeming) {
               } else {
-                await fetchAPI(`/v1/passport/${passport.id}/play`, {
+                const res = await fetchAPI(`/v1/passport/${passport.id}/play`, {
                   method: "PUT",
                   body: JSON.stringify({
                     activity_id: activities[selectedActivity].id,
                   }),
                 });
-                setPassport(undefined);
-                setPassportUrl(undefined);
-                setOpenPassportConfirmDialog(false);
 
-                // window.location.reload();
+                if (res.success) {
+                  setPassport(undefined);
+                  setPassportUrl(undefined);
+                  setOpenPassportConfirmDialog(false);
+                  window.location.reload();
+                } else {
+                  setOpenPassportAlreadyScannedDialog(true);
+                  setOpenPassportConfirmDialog(false);
+                }
               }
             }}
             from={
@@ -134,6 +168,24 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
             }
           />
         )}
+        {openPassportAlreadyScannedDialog && (
+          <Dialog
+            onClickOutside={() => setOpenPassportAlreadyScannedDialog(false)}
+          >
+            <div className="flex flex-col gap-2">
+              <Text type="headline">ไม่สามารถให้คะแนนพาสปอร์ตนี้ได้</Text>
+              <Text type="title" className="text-tertiary">
+                พาสปอร์ตนี้อาจถูกแสกนไปแล้ว หากไม่ใช่ โปรดลองใหม่อีกครั้ง
+              </Text>
+            </div>
+            <Button
+              variant="primary"
+              onClick={() => setOpenPassportAlreadyScannedDialog(false)}
+            >
+              ปิด
+            </Button>
+          </Dialog>
+        )}
       </AnimatePresence>
     </div>
   );
@@ -142,8 +194,8 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const messages = await getStaticTranslations("common", "person", "staff");
 
-  const body = await fetchAPI<Activity[]>("/v1/activities", {}, req.cookies);
   let activities;
+  const body = await fetchAPI<Activity[]>("/v1/activities", {}, req.cookies);
   if (body.success) {
     activities = body.data;
     activities.push({

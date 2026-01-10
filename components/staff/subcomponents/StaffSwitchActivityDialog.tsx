@@ -21,6 +21,7 @@ const StaffSwitchActivityDialog: StylableFC<{
           <Card
             className="hover:bg-primary/10 cursor-pointer flex-col p-2!
               transition-colors"
+            key={idx}
           >
             <div
               className="flex flex-col"

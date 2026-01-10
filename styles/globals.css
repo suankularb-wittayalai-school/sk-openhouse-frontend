@@ -53,3 +53,8 @@ a.faq-links {
 ol {
   @apply ml-6 list-decimal;
 }
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  @apply hidden [-webkit-appearance:none]
+}

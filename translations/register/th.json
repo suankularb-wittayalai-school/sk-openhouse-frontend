@@ -24,11 +24,11 @@
       "firstname": "ชื่อจริง",
       "lastname": "นามสกุล",
       "gender": "เพศ",
-      "birthdate": "วันเกิด",
+      "birthdate": "วันเกิด (ค.ศ.)",
       "tel": "เบอร์โทรศัพท์ (ไม่จำเป็น)",
       "relationshipToChild": "ความสัมพันธ์ของคุณกับนักเรียน",
       "email": "อีเมล",
-      "eventExpectations": "สิ่งที่อยากทราบจากงาน",
+      "eventExpectations": "สิ่งที่อยากทราบจากงาน (ไม่จำเป็น)",
       "nickname": "ชื่อเล่น",
       "expectedGraduationYear": "จะจบระดับชั้น ป.6 ในปีการศึกษา",
       "school": "โรงเรียนที่ศึกษาอยู่ในปัจจุบัน"

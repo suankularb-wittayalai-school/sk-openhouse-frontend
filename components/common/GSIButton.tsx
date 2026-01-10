@@ -11,7 +11,7 @@ export enum GSIStatus {
 }
 
 const GSIButton: StylableFC<{
-  onStateChange?: (state: GSIStatus) => void;
+  onStateChange: (state: GSIStatus) => void;
 }> = ({ onStateChange, style, className }) => {
   const buttonRef = useRef<HTMLDivElement>(null);
 

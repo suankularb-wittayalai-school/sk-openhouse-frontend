@@ -1,138 +1,68 @@
-import { StylableFC } from "@/utils/types/common";
+import Button from "@/components/common/Button";
 import Text from "@/components/common/Text";
 import AdultRegistrationForm from "@/components/register/subcomponents/AdultRegistrationForm";
 import ChildRegistrationForm from "@/components/register/subcomponents/ChildRegistrationForm";
-import Button from "@/components/common/Button";
 import {
-  Family,
-  gender,
-  prefix,
-  relationshipToChild,
-  person,
+  FamilyCreate,
+  FamilyUpdate,
+  Gender,
+  Prefix,
+  RelationshipToChild,
 } from "@/utils/types/person";
+import type { User } from "@/utils/types/user";
 import { useTranslations } from "next-intl";
+import type { Dispatch, FC, SetStateAction } from "react";
+import { useFieldArray, useFormContext } from "react-hook-form";
 
-const FamilyForm: StylableFC<{
-  family: Family;
-  onFamilyChange: (family: Family) => void;
-  onDeleteAdult?: (index: number) => void;
-  onDeleteChild?: (index: number) => void;
-  hideRegistrantEventExpectations?: boolean;
-}> = ({
-  family,
-  onFamilyChange,
-  onDeleteAdult,
-  onDeleteChild,
-  hideRegistrantEventExpectations = false,
-  className,
+type FamilyFormProps = {
+  user: User;
+  showEventExpectations?: boolean;
+  setDeletedPersonIds?: Dispatch<SetStateAction<string[]>>;
+};
+
+const FamilyForm: FC<FamilyFormProps> = ({
+  user,
+  showEventExpectations = false,
+  setDeletedPersonIds,
 }) => {
   const t = useTranslations("register.family");
 
-  const handleRegistrantChange = (updatedPerson: person) => {
-    onFamilyChange({
-      ...family,
-      registrant: { ...family.registrant, person: updatedPerson },
-    });
-  };
-
-  const handleRegistrantUserChange = (
-    updatedUser: Family["registrant"]["user"],
-  ) => {
-    onFamilyChange({
-      ...family,
-      registrant: { ...family.registrant, user: updatedUser },
-    });
-  };
-
-  const handleAdultChange = (updatedPerson: person, index: number) => {
-    const newAdult = [...family.adult];
-    newAdult[index] = updatedPerson;
-    onFamilyChange({ ...family, adult: newAdult });
-  };
-
-  const handleChildChange = (updatedPerson: person, index: number) => {
-    const newChild = [...family.child];
-    newChild[index] = updatedPerson;
-    onFamilyChange({ ...family, child: newChild });
-  };
-
-  const handleAdultDelete = (index: number) => {
-    if (onDeleteAdult) {
-      onDeleteAdult(index);
-      return;
-    }
-    const adult = [...family.adult];
-    onFamilyChange({ ...family, adult: adult.toSpliced(index, 1) });
-  };
-
-  const handleChildDelete = (index: number) => {
-    if (onDeleteChild) {
-      onDeleteChild(index);
-      return;
-    }
-    const child = [...family.child];
-    onFamilyChange({ ...family, child: child.toSpliced(index, 1) });
-  };
-
-  const addAdult = () => {
-    const newAdult: person = {
-      firstname: "",
-      lastname: "",
-      gender: gender.male,
-      relationship_to_child: relationshipToChild.father,
-      tel: "",
-      prefix: prefix.mr,
-      is_child: false,
-      birthdate: "",
-      child: {
-        nickname: undefined,
-        expected_graduation_year: undefined,
-        next_grade: "m1",
-        school: undefined,
-        passport_id: undefined,
-      },
-    };
-
-    onFamilyChange({ ...family, adult: [...family.adult, newAdult] });
-  };
-
-  const addChild = () => {
-    const newChild: person = {
-      firstname: "",
-      lastname: "",
-      gender: gender.male,
-      prefix: prefix.master,
-      birthdate: "",
-      child: {
-        nickname: "",
-        expected_graduation_year: 2569,
-        next_grade: "m1",
-        school: "",
-        passport_id: undefined,
-      },
-    };
-
-    onFamilyChange({ ...family, child: [...family.child, newChild] });
-  };
+  const { control } = useFormContext<FamilyCreate | FamilyUpdate>();
+  const {
+    fields: adultFields,
+    append: appendAdultField,
+    remove: removeAdultField,
+  } = useFieldArray({
+    control,
+    name: "adults",
+  });
+  const {
+    fields: childFields,
+    append: appendChildField,
+    remove: removeChildField,
+  } = useFieldArray({
+    control,
+    name: "children",
+  });
 
   return (
-    <div className={`flex flex-col gap-2 ${className ?? ""}`}>
+    <div className="flex flex-col gap-2">
+      {/* Registrant */}
       <div className="flex flex-col gap-1">
         <Text type="body">{t("title.you")}</Text>
         <AdultRegistrationForm
-          type="registrant"
-          person={family.registrant.person}
-          user={family.registrant.user}
           count={1}
-          handlePersonChange={handleRegistrantChange}
-          handleUserChange={handleRegistrantUserChange}
-          hideEventExpectations={hideRegistrantEventExpectations}
+          isRegistrant={true}
+          user={user}
+          showEventExpectations={showEventExpectations}
         />
       </div>
+
+      {/* Additional adults */}
       <div className="flex flex-col gap-1">
         <Text type="body">{t("title.otherAdultMembers")}</Text>
         <div className="flex flex-col gap-1">
-          {family.adult.length === 0 && (
+          {adultFields.length === 0 && (
             <div
               className="text-primary border-primary-border rounded-lg border
                 bg-white px-3 py-16 text-center text-xs"
@@ -140,14 +70,17 @@ const FamilyForm: StylableFC<{
               {t("title.noOtherAdultMembers")}
             </div>
           )}
-          {family.adult.map((member, count) => (
+          {adultFields.map((field, idx) => (
             <AdultRegistrationForm
-              key={`adult-${count}`}
-              type="member"
-              person={member}
-              count={count + 2}
-              handlePersonChange={(person) => handleAdultChange(person, count)}
-              handleDeletePerson={() => handleAdultDelete(count)}
+              count={idx + 2}
+              onDelete={(idx, personId) => {
+                removeAdultField(idx);
+                setDeletedPersonIds?.((deletedPersonIds) => [
+                  ...deletedPersonIds,
+                  ...(typeof personId === "string" ? [personId] : []),
+                ]);
+              }}
+              key={field.id}
             />
           ))}
         </div>
@@ -155,14 +88,22 @@ const FamilyForm: StylableFC<{
           variant="primarySurface"
           icon="face"
           className="grow"
-          onClick={addAdult}
+          onClick={() =>
+            appendAdultField({
+              prefix: Prefix.Mr,
+              gender: Gender.Male,
+              relationship_to_child: RelationshipToChild.Father,
+            })
+          }
         >
           {t("action.addAdult")}
         </Button>
       </div>
+
+      {/* Additional children */}
       <div className="flex flex-col gap-1">
         <Text type="body">{t("title.otherChildMembers")}</Text>
-        {family.child.length === 0 && (
+        {childFields.length === 0 && (
           <div
             className="text-primary border-primary-border rounded-lg border
               bg-white px-3 py-16 text-center text-xs"
@@ -171,20 +112,26 @@ const FamilyForm: StylableFC<{
             <p>{t("title.childRegistrationRequired")}</p>
           </div>
         )}
-        {family.child.map((member, count) => (
+        {childFields.map((field, idx) => (
           <ChildRegistrationForm
-            key={`child-${count}`}
-            person={member}
-            count={count + 1}
-            handlePersonChange={(person) => handleChildChange(person, count)}
-            handleDeletePerson={() => handleChildDelete(count)}
+            count={idx + 1}
+            onDelete={(idx, personId) => {
+              removeChildField(idx);
+              setDeletedPersonIds?.((deletedPersonIds) => [
+                ...deletedPersonIds,
+                ...(typeof personId === "string" ? [personId] : []),
+              ]);
+            }}
+            key={field.id}
           />
         ))}
         <Button
           variant="primarySurface"
           icon="child_hat"
           className="grow"
-          onClick={addChild}
+          onClick={() =>
+            appendChildField({ prefix: Prefix.Master, gender: Gender.Male })
+          }
         >
           {t("action.addChild")}
         </Button>

@@ -1,29 +1,27 @@
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
 import PassportLinkCard from "@/components/me/subcomponents/PassportLinkCard";
-import { StylableFC } from "@/utils/types/common";
-import { Family, person } from "@/utils/types/person";
-import { user } from "@/utils/types/user";
+import type { Family } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
+import type { FC } from "react";
 
-const PassportLinkContainer: StylableFC<{
-  family: Family;
-}> = ({ family }) => {
+type PassportsContainerProps = { family: Family };
+
+const PassportsContainer: FC<PassportsContainerProps> = ({ family }) => {
   const t = useTranslations("me");
 
-  const children = family.child;
-  if (children.length === 0) return;
+  if (family.children.length === 0) return;
 
   return (
     <div className="flex flex-col gap-2">
       <Text type="body">{t("section.passport")}</Text>
       <Card className="flex flex-col gap-0! p-0!">
-        {children.map((person, i) => (
-          <PassportLinkCard person={person} key={i} />
+        {family.children.map((person) => (
+          <PassportLinkCard person={person} key={person.id} />
         ))}
       </Card>
     </div>
   );
 };
 
-export default PassportLinkContainer;
+export default PassportsContainer;

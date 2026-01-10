@@ -1,12 +1,13 @@
 import Card from "@/components/common/Card";
 import Text from "@/components/common/Text";
-import { StylableFC } from "@/utils/types/common";
-import { BusRoute } from "@/utils/types/landing";
+import type { StylableFC, BusRoutes } from "@/utils/types/common";
 import { useTranslations } from "next-intl";
 import MaterialIcon from "../common/MaterialIcon";
 import BusRouteContainer from "./subcomponents/BusRouteContainer";
 
-const TransitGuideBusSection: StylableFC<{ route: BusRoute }> = ({ route }) => {
+const TransitGuideBusSection: StylableFC<{ routes: BusRoutes }> = ({
+  routes,
+}) => {
   const t = useTranslations("landing");
   return (
     <Card className="w-full flex-col">
@@ -28,7 +29,7 @@ const TransitGuideBusSection: StylableFC<{ route: BusRoute }> = ({ route }) => {
             </Text>
           </div>
           <div className="border-primary-border h-full border-t p-2">
-            <BusRouteContainer routes={route.infront} />
+            <BusRouteContainer routes={routes.infront} />
           </div>
         </div>
         <div
@@ -42,7 +43,7 @@ const TransitGuideBusSection: StylableFC<{ route: BusRoute }> = ({ route }) => {
             </Text>
           </div>
           <div className="border-primary-border h-full border-t p-2">
-            <BusRouteContainer routes={route.opposite} />
+            <BusRouteContainer routes={routes.opposite} />
           </div>
         </div>
       </div>

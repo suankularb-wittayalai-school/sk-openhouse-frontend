@@ -1,10 +1,10 @@
-import { StylableFC } from "@/utils/types/common";
 import Text from "@/components/common/Text";
 import FAQDropdown from "@/components/landing/subcomponents/FAQDropdown";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import type { FC } from "react";
 
-const questions = [
+const QUESTIONS = [
   {
     question: "ลงทะเบียนเข้าร่วมงาน SK Open House 2026 อย่างไร",
     answer: (
@@ -55,14 +55,14 @@ const questions = [
             นิทรรศการ SK Open House ในบริเวณต่างๆ ของโรงเรียน ได้แก่
             โซนนิทรรศการ ใต้อาคาร 123 ปี สวนกุหลาบวิทยาลัยเกี่ยวกับหลักสูตรปกติ,
             GATE Program, Gifted Science, EPLUS+ และหลักสูตรใหม่
-            "วิทยาศาสตร์หุ่นยนต์"
+            “วิทยาศาสตร์หุ่นยนต์”
           </li>
         </ol>
         อีกทั้งยังมีการให้ข้อมูลเกี่ยวกับการรับนักเรียน
         ความสำเร็จของโรงเรียนในปีที่ผ่านมา
         นิทรรศการจากครูแนะแนวและความร่วมมือทางวิชาการ นอกจากนี้ ยังมีกิจกรรม
-        "ตึกยาวทรงคุณค่า" ณ บริเวณพิพิธภัณฑ์ตึกยาว, "SK Sports Challenge" ณ
-        บริเวณหน้าทางเดินตึกยาว และ "ท้องฟ้าจำลองสิรินธร"`,
+        “ตึกยาวทรงคุณค่า” ณ บริเวณพิพิธภัณฑ์ตึกยาว, “SK Sports Challenge” ณ
+        บริเวณหน้าทางเดินตึกยาว และ “uท้องฟ้าจำลองสิรินธร”
       </div>
     ),
   },
@@ -116,17 +116,47 @@ const questions = [
       </div>
     ),
   },
-];
+  {
+    question: "ต้องการเข้าฟังบรรยายบนหอประชุม ต้องทำอย่างไร",
+    answer: (
+      <>
+        ทุกท่านที่ลงทะเบียนในช่วงเวลาที่กำหนด
+        จะได้รับตั๋วเข้าหอประชุมเพื่อใช้สำหรับเข้าหอประชุมได้ครับ
+        ในกรณีที่ไม่ได้เข้าหอประชุมพร้อมกัน ให้บันทึกหน้าจอ
+        หรือพิมพ์ตั๋วให้กับผู้เข้าร่วมคนอื่น ๆ เพื่อใช้ในการผ่านประตู ทั้งนี้
+        การลงทะเบียนมิได้เป็นการสำรองที่นั่ง ผู้ที่มาถึงหอประชุมก่อนในวันงาน
+        มีสิทธิ์ได้ที่นั่งก่อนครับ
+      </>
+    ),
+  },
+  {
+    question: "หากที่นั่งบนหอประชุมเต็มแล้ว สามารถรับชมการบรรยายได้ที่ใด",
+    answer: (
+      <>
+        โรงเรียนได้จัดสรรพื้นที่สำหรับรับชมถ่ายทอดสดการบรรยายไว้ ณ ห้องนวัตกรรม
+        ตึกดำรงราชานุภาพ โรงเรียนสวนกุหลาบวิทยาลัย และการถ่ายทอดสดผ่านทาง{" "}
+        <Link
+          href="https://www.facebook.com/PRsuankularb"
+          className="faq-links"
+          target="_blank"
+        >
+          Facebook
+        </Link>{" "}
+        ไว้สำหรับผู้ที่ไม่สะดวกรับชมภายในงานครับ
+      </>
+    ),
+  },
+] as const;
 
-const FAQsContainer: StylableFC = ({ className, style }) => {
+const FAQsContainer: FC = () => {
   const t = useTranslations("landing");
   return (
     <div className="flex flex-col gap-2">
       <Text type="body">{t("section.faq")}</Text>
       <div className="flex flex-col gap-1">
-        {questions.map((faq, i) => (
-          <FAQDropdown question={faq.question} key={i}>
-            {faq.answer}
+        {QUESTIONS.map((faqItem) => (
+          <FAQDropdown question={faqItem.question} key={faqItem.question}>
+            {faqItem.answer}
           </FAQDropdown>
         ))}
       </div>

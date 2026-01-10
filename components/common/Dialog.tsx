@@ -31,9 +31,7 @@ const Dialog: StylableFC<{
         type: "spring",
         bounce: 0,
       }}
-      onClick={() => {
-        onClickOutside && onClickOutside();
-      }}
+      onClick={() => onClickOutside && onClickOutside()}
     >
       <motion.div
         id="card"

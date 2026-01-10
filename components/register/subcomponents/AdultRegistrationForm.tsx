@@ -1,176 +1,177 @@
-import { StylableFC } from "@/utils/types/common";
 import Card from "@/components/common/Card";
 import Chip from "@/components/common/Chip";
-import TextField from "@/components/common/TextField";
-import Select from "@/components/common/Select";
 import DatePicker from "@/components/common/DatePicker";
-import {
-  gender,
-  person,
-  prefix,
-  relationshipToChild,
-} from "@/utils/types/person";
-import { useTranslations } from "next-intl";
-import { user } from "@/utils/types/user";
 import MaterialIcon from "@/components/common/MaterialIcon";
+import Select from "@/components/common/Select";
+import TextField from "@/components/common/TextField";
 import getDateEighteenYearsAgo from "@/utils/helpers/register/getDateEighteenYearsAgo";
+import {
+  type FamilyCreate,
+  FamilyUpdate,
+  Gender,
+  Prefix,
+  RelationshipToChild,
+} from "@/utils/types/person";
+import type { User } from "@/utils/types/user";
+import { useTranslations } from "next-intl";
+import type { FC } from "react";
+import { type FieldPath, useFormContext } from "react-hook-form";
 
-const AdultRegistrationForm: StylableFC<{
-  type: "registrant" | "member";
-  person: person;
-  user?: user;
+type AdultRegistrationFormProps =
+  | AdditionalAdultRegisterationFormProps
+  | RegistrantFormProps;
+
+type AdditionalAdultRegisterationFormProps = {
   count: number;
-  handlePersonChange: (person: person) => void;
-  handleUserChange?: (user: user) => void;
-  handleDeletePerson?: () => void;
-  hideEventExpectations?: boolean;
-}> = ({
-  type,
-  person,
-  user,
+  isRegistrant?: false;
+  user?: undefined;
+  showEventExpectations?: false;
+  onDelete: (idx: number, personId?: string) => void;
+};
+
+type RegistrantFormProps = {
+  count: 1;
+  isRegistrant: true;
+  user: User;
+  showEventExpectations?: boolean;
+  onDelete?: undefined;
+};
+
+const AdultRegistrationForm: FC<AdultRegistrationFormProps> = ({
   count,
-  handlePersonChange,
-  handleUserChange,
-  handleDeletePerson,
-  hideEventExpectations = false,
+  isRegistrant,
+  user,
+  showEventExpectations,
+  onDelete,
 }) => {
   const t = useTranslations("person");
   const tx = useTranslations("register.family.label");
+
+  const { register, getValues } = useFormContext<FamilyCreate | FamilyUpdate>();
+  const fp = (
+    s: FieldPath<FamilyCreate["registrant"] | FamilyUpdate["registrant"]>,
+  ): FieldPath<FamilyCreate | FamilyUpdate> =>
+    ((isRegistrant ? "registrant." : `adults.${count - 2}.`) + s) as FieldPath<
+      FamilyCreate | FamilyUpdate
+    >;
+
   return (
     <Card className="flex-col">
+      {/* Indicator chips */}
       <div className="grid grid-cols-2">
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-row gap-1 flex-wrap">
           <Chip variant="surface" apperance="rounded">
             {t("adult") + " " + count}
           </Chip>
-          {type == "registrant" && (
+          {isRegistrant && (
             <Chip variant="outline" apperance="rounded">
               {t("registrant")}
             </Chip>
           )}
         </div>
-        {!user && handleDeletePerson && (
+        {!isRegistrant && (
           <div
             className="grid cursor-pointer place-items-center justify-self-end
               rounded-full"
-            onClick={() => {
-              handleDeletePerson();
-            }}
+            onClick={() => onDelete(count - 2, getValues(fp("id")) as string)}
           >
             <MaterialIcon icon="close" className="text-2xl!" />
           </div>
         )}
       </div>
-      <div className="grid grid-cols-3 gap-1.5">
+
+      {/* Fields */}
+      <div className="flex gap-1.5">
         <Select
-          name="prefix"
-          value={person.prefix}
           label={tx("prefix")}
-          setValue={(prefix) => {
-            handlePersonChange({ ...person, prefix: prefix });
-          }}
+          {...register(fp("prefix"), { required: true })}
+          className="max-w-20"
         >
-          <option value={prefix.mr}>{t("prefix.mr")}</option>
-          <option value={prefix.ms}>{t("prefix.ms")}</option>
-          <option value={prefix.mrs}>{t("prefix.mrs")}</option>
+          <option value={Prefix.Mr}>{t("prefix.mr")}</option>
+          <option value={Prefix.Ms}>{t("prefix.ms")}</option>
+          <option value={Prefix.Mrs}>{t("prefix.mrs")}</option>
         </Select>
         <TextField
-          name="firstname"
           label={tx("firstname")}
-          value={person.firstname}
-          setValue={(firstname) => {
-            handlePersonChange({ ...person, firstname: firstname });
-          }}
+          {...register(fp("firstname"), {
+            required: true,
+            setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
+          })}
+          className="grow"
         />
         <TextField
-          name="lastname"
           label={tx("lastname")}
-          value={person.lastname}
-          setValue={(lastname) => {
-            handlePersonChange({ ...person, lastname: lastname });
-          }}
+          {...register(fp("lastname"), {
+            required: true,
+            setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
+          })}
+          className="grow"
         />
       </div>
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="flex gap-1.5">
         <Select
-          name="gender"
-          value={person.gender}
           label={tx("gender")}
-          setValue={(gender) => {
-            handlePersonChange({ ...person, gender: gender });
-          }}
+          {...register(fp("gender"), { required: true })}
         >
-          <option value={gender.male}>{t("gender.male")}</option>
-          <option value={gender.female}>{t("gender.female")}</option>
-          <option value={gender.other}>{t("gender.other")}</option>
+          <option value={Gender.Male}>{t("gender.male")}</option>
+          <option value={Gender.Female}>{t("gender.female")}</option>
+          <option value={Gender.Other}>{t("gender.other")}</option>
         </Select>
         <DatePicker
-          name="birthdate"
           label={tx("birthdate")}
-          date={person.birthdate}
-          setDate={(birthdate) => {
-            handlePersonChange({ ...person, birthdate: birthdate });
-          }}
-          max={getDateEighteenYearsAgo()}
+          {...register(fp("birthdate"), {
+            required: true,
+            max: getDateEighteenYearsAgo(),
+            setValueAs: (v: string) => (v === "" ? undefined : v),
+          })}
         />
       </div>
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-1.5">
         <TextField
-          name="tel"
           label={tx("tel")}
-          value={person.tel || ""}
-          setValue={(tel) => {
-            handlePersonChange({ ...person, tel: tel });
-          }}
+          {...register(fp("tel"), {
+            setValueAs: (v: string) => (v.trim() === "" ? undefined : v.trim()),
+          })}
         />
         <Select
-          name="relationshipToChild"
-          value={person.relationship_to_child}
           label={tx("relationshipToChild")}
-          setValue={(relationshipToChild) => {
-            handlePersonChange({
-              ...person,
-              relationship_to_child: relationshipToChild,
-            });
-          }}
+          {...register(fp("relationship_to_child"), { required: true })}
         >
-          <option value={relationshipToChild.father}>
+          <option value={RelationshipToChild.Father}>
             {t("relationshipToChild.father")}
           </option>
-          <option value={relationshipToChild.mother}>
+          <option value={RelationshipToChild.Mother}>
             {t("relationshipToChild.mother")}
           </option>
-          <option value={relationshipToChild.legal_guardian}>
+          <option value={RelationshipToChild.LegalGuardian}>
             {t("relationshipToChild.legal_guardian")}
           </option>
-          <option value={relationshipToChild.other}>
+          <option value={RelationshipToChild.Other}>
             {t("relationshipToChild.other")}
           </option>
         </Select>
       </div>
-      {type == "registrant" && user && handleUserChange && (
+
+      {/* Registrant-exclusive fields */}
+      {isRegistrant && (
         <>
           <div className="grid grid-cols-1">
             <TextField
               name="email"
               label={tx("email")}
               value={user.email}
-              setValue={() => {}}
               disabled={true}
             />
           </div>
-          {!hideEventExpectations && (
+          {showEventExpectations && (
             <div className="grid grid-cols-1">
               <TextField
-                name="eventExpectations"
                 label={tx("eventExpectations")}
                 value={user.event_expectations}
-                setValue={(expectations) => {
-                  handleUserChange({
-                    ...user,
-                    event_expectations: expectations,
-                  });
-                }}
+                {...register(fp("event_expectations"), {
+                  setValueAs: (v: string) =>
+                    v.trim() === "" ? undefined : v.trim(),
+                })}
               />
             </div>
           )}

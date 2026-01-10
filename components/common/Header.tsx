@@ -2,33 +2,22 @@ import Button from "@/components/common/Button";
 import Dialog from "@/components/common/Dialog";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
-import { useLogin } from "@/contexts/LoginContext";
-import fetchAPI from "@/utils/helpers/fetchAPI";
+import { useUser } from "@/contexts/UserContext";
+import { fetchAPI } from "@/utils/helpers/fetchAPI";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 const Header: FC = () => {
   const t = useTranslations("common");
   const router = useRouter();
-
-  const { isLoggedIn, setIsLoggedIn } = useLogin();
+  const { user, setUser } = useUser();
+  const isLoggedIn = user !== null;
 
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
-  // Frontend User and Backend User is not compatable here!
-  const [user, setUser] = useState<any>();
-
-  useEffect(() => {
-    isLoggedIn &&
-      fetchAPI("/v1/user", { method: "GET" })
-        .then((res) => res.json())
-        .then((data) => {
-          setUser(data);
-        });
-  }, [isLoggedIn]);
 
   return (
     <div
@@ -62,17 +51,17 @@ const Header: FC = () => {
                 cursor-pointer items-center justify-center rounded-full border"
               onClick={() => setUserMenuOpen(true)}
             >
-              {/* {user.data.profile_url !== undefined ? (
+              {user && user.profile_url ? (
                 <Image
-                  src={user.data.profile_url}
+                  src={user.profile_url}
                   width={40}
                   height={40}
                   alt="User Avatar"
-                  className="block aspect-square h-10 w-10 rounded-lg"
+                  className="block aspect-square h-10 w-10 rounded-full"
                 />
-              ) : ( */}
+              ) : (
                 <MaterialIcon icon="face" size={24} className="text-primary" />
-              {/* )} */}
+              )}
             </div>
           </>
         ) : (
@@ -94,50 +83,56 @@ const Header: FC = () => {
       <AnimatePresence>
         {userMenuOpen && isLoggedIn && (
           <Dialog onClickOutside={() => setUserMenuOpen(false)}>
-            <Text type="headline" className="text-xl!">
-              บัญชีของคุณ
-            </Text>
-            {/* {user.data.profile_url !== "undefined" && (
+            <Text type="headline">บัญชีของคุณ</Text>
+            {user && user.profile_url && (
               <div
                 className="border-primary-border flex items-center gap-2
                   rounded-lg border p-2"
               >
                 <Image
-                  src={user.data.profile_url}
+                  src={user.profile_url}
                   width={40}
                   height={40}
                   alt="User Avatar"
-                  className="block aspect-square h-10 w-10 rounded-lg"
+                  className="block aspect-square h-10 w-10 rounded-full"
                 />
                 <div className="flex flex-col">
                   <Text type="body" className="text-tertiary">
                     {t("header.loggedAccount")}
                   </Text>
                   <Text type="title" className="text-tertiary">
-                    {user.data.email}
+                    {user.email}
                   </Text>
                 </div>
               </div>
-            )} */}
-            <Button
-              variant="primary"
-              onClick={() => {
-                fetchAPI("/v1/user/signout", {
-                  method: "POST",
-                }).then((res) => {
-                  if (res.ok) {
-                    if (typeof window !== undefined) {
-                      localStorage.removeItem("loginStatus");
+            )}
+            <div className="flex flex-col gap-1">
+              <Button
+                variant="primarySurface"
+                onClick={() => {
+                  fetchAPI("/v1/user/signout", {
+                    method: "POST",
+                  }).then((body) => {
+                    if (body.success) {
+                      if (process.env.NODE_ENV === "development") {
+                        localStorage.removeItem("skopen26-sessionToken");
+                        document.cookie = "";
+                      }
+
+                      setUser(null);
+                      setUserMenuOpen(false);
                     }
-                    setIsLoggedIn(false);
-                    setUserMenuOpen(false);
-                    router.push("/");
-                  }
-                });
-              }}
-            >
-              ออกจากระบบ
-            </Button>
+
+                    router.push("/").then(() => window.location.reload());
+                  });
+                }}
+              >
+                ออกจากระบบ
+              </Button>
+              <Button variant="primary" onClick={() => setUserMenuOpen(false)}>
+                ปิด
+              </Button>
+            </div>
           </Dialog>
         )}
       </AnimatePresence>

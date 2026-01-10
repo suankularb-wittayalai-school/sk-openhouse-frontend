@@ -1,47 +1,42 @@
-// Imports
-import Card from "@/components/common/Card";
+import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import cn from "@/utils/helpers/cn";
 import constructName from "@/utils/helpers/constructName";
-import { StylableFC } from "@/utils/types/common";
-import { gender, person } from "@/utils/types/person";
+import { type AdultPerson, Gender, type Person } from "@/utils/types/person";
 import { differenceInYears } from "date-fns";
 import { useTranslations } from "next-intl";
 import { pick } from "radash";
-import MaterialIcon from "@/components/common/MaterialIcon";
+import type { FC } from "react";
+
+type PersonCardProps = { person: Person; count?: number };
 
 /**
  * A card that shows details of a person.
  * @param person The person to show.
  * @param count Number to show at the begining of the card. (optional)
  */
-const PersonCard: StylableFC<{ person: person; count?: number }> = ({
-  person,
-  count,
-  style,
-  className,
-}) => {
+
+const PersonCard: FC<PersonCardProps> = ({ person, count }) => {
   const t = useTranslations("person");
+
+  const isChild = typeof person.child !== "undefined";
+  const countIsSet = typeof count !== "undefined";
 
   return (
     <div
-      style={style}
-      className={cn(
-        `border-primary-border text-primary flex items-center gap-2 border-t p-2
-        first:border-t-0`,
-        className,
-      )}
+      className="border-primary-border text-primary flex items-center gap-2
+        border-t p-2 first:border-t-0"
     >
       {count && (
         <Text type="body" className="w-4 text-right opacity-100!">
-          {count + ". "}
+          {`${count}. `}
         </Text>
       )}
       <MaterialIcon
         icon={
-          person.child !== undefined
+          isChild
             ? "face_5"
-            : person.gender == gender.female
+            : person.gender === Gender.Female
               ? "face_4"
               : "face"
         }
@@ -49,7 +44,7 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
       <div
         className={cn(
           "flex grow",
-          !count ? "flex-col" : "items-center justify-between",
+          countIsSet ? "items-center justify-between" : "flex-col",
         )}
       >
         <Text type="title">
@@ -57,15 +52,18 @@ const PersonCard: StylableFC<{ person: person; count?: number }> = ({
         </Text>
 
         <Text type="body">
-          {(person.child !== undefined
+          {(isChild
             ? t("isChild")
-            : t(`relationshipToChild.${person.relationship_to_child}`)) +
-            (!count
-              ? " • " +
+            : t(
+                "relationshipToChild." +
+                  (person as AdultPerson).relationship_to_child,
+              )) +
+            (countIsSet
+              ? ""
+              : " • " +
                 differenceInYears(new Date(), person.birthdate) +
                 " " +
-                t("year")
-              : "")}
+                t("year"))}
         </Text>
       </div>
     </div>

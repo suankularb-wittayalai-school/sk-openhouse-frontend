@@ -4,11 +4,12 @@ import Text from "@/components/common/Text";
 import cn from "@/utils/helpers/cn";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import getFieldById from "@/utils/helpers/getFieldById";
-import { Activity, Passport } from "@/utils/types/passport";
+import { Passport } from "@/utils/types/passport";
+import { Activity } from "@/utils/types/staff";
 import { FC } from "react";
 
 const StaffRedemptionSection: FC<{
-  passport: Passport;
+  passport: Passport | undefined;
   activities: Activity[];
   setOpenPassportScanDialog: () => void;
 }> = ({ passport, activities, setOpenPassportScanDialog }) => {
@@ -26,10 +27,13 @@ const StaffRedemptionSection: FC<{
     .slice(0, -1); // Remove the last item
 
   async function handleRedeemItem(size: "small" | "medium" | "large") {
-    const res = await fetchAPI(`/v1/passport/${passport.id}/redeem`, {
-      method: "PUT",
-      body: JSON.stringify({ prize_tier: size }),
-    });
+    const res = await fetchAPI(
+      `/v1/passport/${passport?.id ?? "missing_id"}/redeem`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ prize_tier: size }),
+      },
+    );
 
     if (res.success) {
       return window.location.reload();
@@ -132,7 +136,8 @@ const StaffRedemptionSection: FC<{
           แสกนพาสปอร์ต
         </Button>
       </div>
-      <div>
+      {/* TODO: REWRITE THIS PART */}
+      {passport && (
         <div className="flex flex-col gap-2">
           <Text type="body">แลกของรางวัล</Text>
           <div
@@ -222,7 +227,7 @@ const StaffRedemptionSection: FC<{
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

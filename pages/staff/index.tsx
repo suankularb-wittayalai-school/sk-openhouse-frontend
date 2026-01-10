@@ -12,7 +12,6 @@ import fetchAPI from "@/utils/helpers/fetchAPI";
 import getStaticTranslations from "@/utils/helpers/getStaticTranslations";
 import { Passport } from "@/utils/types/passport";
 import { Activity } from "@/utils/types/staff";
-import { error } from "console";
 import { AnimatePresence } from "motion/react";
 import { GetServerSideProps } from "next";
 import { useTranslations } from "next-intl";
@@ -95,13 +94,11 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
             setOpenPassportScanDialog={() => setOpenPassportScanDialog(true)}
           />
         ) : (
-          passport && (
-            <StaffRedemptionSection
-              passport={passport}
-              activities={activities}
-              setOpenPassportScanDialog={() => setOpenPassportScanDialog(true)}
-            />
-          )
+          <StaffRedemptionSection
+            passport={passport}
+            activities={activities}
+            setOpenPassportScanDialog={() => setOpenPassportScanDialog(true)}
+          />
         )}
       </div>
       <AnimatePresence>

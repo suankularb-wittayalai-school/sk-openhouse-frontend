@@ -152,12 +152,17 @@ const StaffPage: FC<{ activities: Activity[] }> = ({ activities }) => {
             }}
             from={
               isRedeeming
-                ? { icon: "", content: "" }
+                ? {
+                    icon: "qr_code_scanner",
+                    content: passport.child
+                      ? passport.child.firstname + " " + passport.child.lastname
+                      : "พาสปอร์ตกระดาษ (ยังไม่ได้เชื่อม)",
+                  }
                 : { icon: "flag", content: activities[selectedActivity].name }
             }
             to={
               isRedeeming
-                ? { icon: "", content: "" }
+                ? { icon: "package_2", content: "" }
                 : {
                     icon: "qr_code_scanner",
                     content: passport.child

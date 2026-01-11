@@ -1,21 +1,27 @@
 import Button from "@/components/common/Button";
 import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
+import StaffConfirmDialog from "@/components/staff/subcomponents/StaffConfirmDialog";
 import cn from "@/utils/helpers/cn";
 import fetchAPI from "@/utils/helpers/fetchAPI";
 import getFieldById from "@/utils/helpers/getFieldById";
 import { Passport } from "@/utils/types/passport";
 import { Activity } from "@/utils/types/staff";
-import { FC } from "react";
+import { AnimatePresence } from "motion/react";
+import { FC, useState } from "react";
+
+type PrizeLevels = "small" | "medium" | "large";
 
 const StaffRedemptionSection: FC<{
   passport: Passport | undefined;
   activities: Activity[];
   setOpenPassportScanDialog: () => void;
 }> = ({ passport, activities, setOpenPassportScanDialog }) => {
-  console.log(passport);
-
   const isRedeemed = passport && typeof passport.redeemed_tier !== "undefined";
+
+  const [openRedemptionConfirmDialog, setOpenRedemptionConfirmDialog] =
+    useState<boolean>(false);
+  const [redeemLevel, setRedeemLevel] = useState<PrizeLevels>("small");
 
   // Get uncompleted activities by filtering out completed ones
   const completedActivities =
@@ -26,18 +32,9 @@ const StaffRedemptionSection: FC<{
     .filter((activity) => !completedActivities.includes(activity.id))
     .slice(0, -1); // Remove the last item
 
-  async function handleRedeemItem(size: "small" | "medium" | "large") {
-    const res = await fetchAPI(
-      `/v1/passport/${passport?.id ?? "missing_id"}/redeem`,
-      {
-        method: "PUT",
-        body: JSON.stringify({ prize_tier: size }),
-      },
-    );
-
-    if (res.success) {
-      return window.location.reload();
-    }
+  async function handleRedeemItem(size: PrizeLevels) {
+    setRedeemLevel(size);
+    setOpenRedemptionConfirmDialog(true);
   }
 
   return (
@@ -222,6 +219,50 @@ const StaffRedemptionSection: FC<{
           </div>
         </div>
       )}
+      <AnimatePresence>
+        {passport && openRedemptionConfirmDialog && (
+          <StaffConfirmDialog
+            title={"ยืนยันการแลกของรางวัล"}
+            onClose={() => setOpenRedemptionConfirmDialog(false)}
+            onCancel={() => setOpenRedemptionConfirmDialog(false)}
+            onConfirm={async () => {
+              const res = await fetchAPI(
+                `/v1/passport/${passport?.id ?? "missing_id"}/redeem`,
+                {
+                  method: "PUT",
+                  body: JSON.stringify({ prize_tier: redeemLevel }),
+                },
+              );
+              if (res.success) {
+                return window.location.reload();
+              } else {
+                window.alert(
+                  "เกิดข้อผิดพลาดขึ้น\nพาสปอร์ตนี้อาจแลกของรางวัลไปแล้ว\nหรือโปรดลองใหม่อีกครั้ง",
+                );
+                return window.location.reload();
+              }
+            }}
+            from={{
+              icon: "qr_code_scanner",
+              content: passport.child
+                ? passport.child.firstname + " " + passport.child.lastname
+                : "พาสปอร์ตกระดาษ (ยังไม่ได้เชื่อม)",
+            }}
+            to={{
+              icon: "package_2",
+              // TODO: Translation
+              content: `ของรางวัลระดับ
+                    ${
+                      redeemLevel == "small"
+                        ? "Starter"
+                        : redeemLevel == "medium"
+                          ? "Power-Up"
+                          : "Ultimate"
+                    }`,
+            }}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };

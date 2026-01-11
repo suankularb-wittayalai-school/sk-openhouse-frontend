@@ -112,6 +112,7 @@ const PassportPage: FC<{
                 <div className="flex grow flex-col">
                   <Text type="title">
                     ของรางวัลระดับ{" "}
+                    {/* TODO: Translation */}
                     {passport.redeemed_tier == "small"
                       ? "Starter"
                       : passport.redeemed_tier == "medium"

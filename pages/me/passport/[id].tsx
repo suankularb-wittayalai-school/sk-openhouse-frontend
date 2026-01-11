@@ -179,9 +179,6 @@ export const getServerSideProps: GetServerSideProps = async ({
     return { redirect: { destination: "/", permanent: false } };
   }
 
-  console.warn("PASSPORT: " + JSON.stringify(passport));
-  
-
   // FIXME: Move activities into a client-side context, for better performance
   // FIXME: (long term) and less server load.
   const activities = await fetchAPI<Activity[]>(

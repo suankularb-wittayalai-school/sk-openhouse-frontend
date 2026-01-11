@@ -2,6 +2,7 @@ import Button from "@/components/common/Button";
 import Dialog from "@/components/common/Dialog";
 import Text from "@/components/common/Text";
 import constructName from "@/utils/helpers/constructName";
+import fetchAPI from "@/utils/helpers/fetchAPI";
 import type { ChildPerson } from "@/utils/types/person";
 import { useTranslations } from "next-intl";
 import { pick } from "radash";
@@ -27,9 +28,21 @@ const PassportLinkConfirmDialog: FC<PassportLinkConfirmDialogProps> = ({
   const handleLinkPassport = () => {
     setIsBusy(true);
     // TODO: API IMPLEMENTATION FUNCTIONALITY
-    setTimeout(() => {
+    setTimeout(async () => {
       onClose();
-      onScannerDialogClose();
+      const req = await fetchAPI(`/v1/passport/${passportId}/link`, {
+        method: "POST",
+        body: JSON.stringify({ child_id: person.id }),
+      });
+
+      if (req.success) {
+        window.location.reload();
+        onScannerDialogClose();
+      } else {
+        window.alert("การเปลี่ยนเป็นกระดาษล้มเหลว โปรดลองใหม่อีกครั้ง")
+        onScannerDialogClose();
+      }
+
     }, 1000);
   };
 

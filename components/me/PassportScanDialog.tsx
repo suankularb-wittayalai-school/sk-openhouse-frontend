@@ -38,7 +38,7 @@ const PassportScanDialog: FC<{ person: ChildPerson; onClose: () => void }> = ({
         (result) => {
           if (!openedDialogRef.current) {
             if (PASSPORT_REGEX.test(result.data) === true) {
-              setPassportId(result.data);
+              setPassportId(result.data.split("/").at(-1));
               setOpenConfirmDialog(true);
             } else {
               setOpenInvalidDialog(true);

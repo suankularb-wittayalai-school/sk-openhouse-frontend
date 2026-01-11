@@ -3,13 +3,12 @@ import MaterialIcon from "@/components/common/MaterialIcon";
 import Text from "@/components/common/Text";
 import PassportScanDialog from "@/components/me/PassportScanDialog";
 import cn from "@/utils/helpers/cn";
-import constructName from "@/utils/helpers/constructName";
+import fetchAPI from "@/utils/helpers/fetchAPI";
+import type { Passport } from "@/utils/types/passport";
 import type { ChildPerson } from "@/utils/types/person";
 import { AnimatePresence } from "motion/react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { pick } from "radash";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 /**
  * A card that shows if a child is linked to a passport or not and allows the
@@ -17,10 +16,20 @@ import { FC, useState } from "react";
  * @param person The person (child) to show.
  */
 const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
-  const t = useTranslations("passport");
-
-  const isLinked = typeof person.child.linked_passport_id !== "string";
   const [scanDialogOpen, setScanDialogOpen] = useState(false);
+  const [passport, setPassport] = useState<Passport>();
+
+  useEffect(() => {
+    const fetchPassport = async () => {
+      const req = await fetchAPI<any>(
+        `/v1/passport/${person.child.linked_passport_id}?detailed=true`,
+      );
+      if (req.success) {
+        setPassport(req.data);
+      }
+    };
+    fetchPassport();
+  }, []);
 
   return (
     <>
@@ -35,18 +44,20 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
           <Text type="title">{person.firstname}</Text>
         </div>
         <div className="flex gap-1">
-          <Button
-            className={cn(
-              `border-primary-border! ml-auto h-8! rounded-lg! border
-              [&>div]:px-2`,
-            )}
-            variant="outline"
-            onClick={() => {
-              setScanDialogOpen(true);
-            }}
-          >
-            เปลี่ยนเป็นกระดาษ
-          </Button>
+          {passport?.format == "digital" && (
+            <Button
+              className={cn(
+                `border-primary-border! ml-auto h-8! rounded-lg! border
+                [&>div]:px-2`,
+              )}
+              variant="outline"
+              onClick={() => {
+                setScanDialogOpen(true);
+              }}
+            >
+              เปลี่ยนเป็นกระดาษ
+            </Button>
+          )}
           <Link
             href={`/me/passport/${person.child.linked_passport_id}`}
             className="flex items-center"

@@ -32,25 +32,36 @@ const PassportLinkCard: FC<{ person: ChildPerson }> = ({ person }) => {
       >
         <div className="flex items-center gap-2">
           <MaterialIcon icon="face_5" />
-          <Text type="title">
-            {constructName(pick(person, ["prefix", "firstname", "lastname"]))}
-          </Text>
+          <Text type="title">{person.firstname}</Text>
         </div>
-        {/* TODO: ADD LINKING FUNC */}
-        <Button
-          className={cn(
-            "border-primary-border! ml-auto h-8! rounded-lg! border [&>div]:px-2",
-          )}
-          variant="outline"
-          onClick={() => {
-            setScanDialogOpen(true);
-          }}
-        >
-          เปลี่ยนเป็นกระดาษ
-        </Button>
-        <Link href={`/me/passport/${person.child.linked_passport_id}`} className="pl-2 flex items-center">
-          <MaterialIcon icon="chevron_right" />
-        </Link>
+        <div className="flex gap-1">
+          <Button
+            className={cn(
+              `border-primary-border! ml-auto h-8! rounded-lg! border
+              [&>div]:px-2`,
+            )}
+            variant="outline"
+            onClick={() => {
+              setScanDialogOpen(true);
+            }}
+          >
+            เปลี่ยนเป็นกระดาษ
+          </Button>
+          <Link
+            href={`/me/passport/${person.child.linked_passport_id}`}
+            className="flex items-center"
+          >
+            <Button
+              className={cn(
+                `border-primary-border! ml-auto h-8! w-8 rounded-lg! border
+                [&>div]:px-0!`,
+              )}
+              variant="primary"
+            >
+              <MaterialIcon icon="chevron_right" />
+            </Button>
+          </Link>
+        </div>
       </div>
       <AnimatePresence>
         {scanDialogOpen && (

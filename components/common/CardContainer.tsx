@@ -5,10 +5,8 @@ const CardContainer: StylableFC<{ children: React.ReactNode }> = ({
 }) => {
   return (
     <div
-      className="![&>*:first-child]:rounded-t-[0.0625rem]
-        ![&>*:last-child]:rounded-b-[0.0625rem] [&>*:first-child]:rounded-b-none
-        [&>*:last-child]:rounded-t-none [&>*:not(:first-child)]:border-t-0
-        [&>*:not(:first-child):not(:last-child)]:rounded-none"
+      className="border-primary-border overflow-hidden rounded-lg border
+        *:rounded-none *:border-0 [&>*:not(:first-child)]:border-t-1"
     >
       {children}
     </div>

@@ -16,7 +16,7 @@ import type { FC } from "react";
 
 const LandingPage: FC<{
   busRoutes: BusRoutes;
-  scheduleItems: ScheduleItem[];
+  scheduleItems: ScheduleItem[] | null;
 }> = ({ busRoutes, scheduleItems }) => {
   const t = useTranslations("landing");
   return (
@@ -27,11 +27,24 @@ const LandingPage: FC<{
       {/* Schedule */}
       <div className="flex flex-col gap-2">
         <Text type="body">{t("section.schedule")}</Text>
-        <CardContainer>
-          {scheduleItems.map((scheduleItem) => (
-            <ScheduleCard scheduleItem={scheduleItem} key={scheduleItem.id} />
-          ))}
-        </CardContainer>
+        {scheduleItems ? (
+          <CardContainer>
+            {scheduleItems.map((scheduleItem) => (
+              <ScheduleCard scheduleItem={scheduleItem} key={scheduleItem.id} />
+            ))}
+          </CardContainer>
+        ) : (
+          <div
+            data-theme="orange"
+            className="border-primary-border text-primary flex flex-col gap-0.5
+              rounded-lg! border bg-white p-2"
+          >
+            <p className="text-sm">
+              Oops, we've messed up. Please try again later!
+            </p>
+            <p className="text-xs opacity-50">(API Endpoint Unreachable)</p>
+          </div>
+        )}
       </div>
 
       <SchoolMap />
@@ -71,8 +84,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
       "82 / 4-15 ",
     ],
   };
+
   const body = await fetchAPI<ScheduleItem[]>("/v1/schedule");
-  const scheduleItems = body.success ? body.data : [];
+  const scheduleItems = body.success ? body.data : null;
 
   return {
     props: { messages, busRoutes, scheduleItems },
